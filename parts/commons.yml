@@ -1,0 +1,30 @@
+components:
+  responses:
+    Unauthorized:
+      description: Authorization information is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            - success: false
+              status_code: 7
+              status_message: 'Invalid API key: You must be granted a valid key.'
+  schemas:
+    # Schema for error response body
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+        status_code:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 47
+        status_message:
+          type: string
+      required:
+        - success
+        - status_code
+        - status_message

@@ -1,0 +1,5 @@
+repos:
+-   repo: https://github.com/APIDevTools/swagger-cli
+    rev: v4.0.4
+    hooks:
+      - id: swagger-validation

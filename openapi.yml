@@ -1,0 +1,95 @@
+openapi: 3.0.3
+info:
+  title: TMDB API
+  description: The Movie Database (TMDB) API
+  version: 0.1.0
+servers:
+  - url: 'https://api.themoviedb.org/3'
+tags:
+  - name: Configuration
+paths:
+  /configuration:
+    get:
+      summary: Details
+      description: Query the API configuration details.
+      operationId: ConfigurationDetails
+      tags:
+        - Configuration
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  images:
+                    type: object
+                    properties:
+                      base_url:
+                        type: string
+                        example: 'http://image.tmdb.org/t/p/'
+                      secure_base_url:
+                        type: string
+                        example: 'https://image.tmdb.org/t/p/'
+                      backdrop_sizes:
+                        type: array
+                        items:
+                          type: string
+                          example: w300
+                      logo_sizes:
+                        type: array
+                        items:
+                          type: string
+                          example: w45
+                      poster_sizes:
+                        type: array
+                        items:
+                          type: string
+                          example: w92
+                      profile_sizes:
+                        type: array
+                        items:
+                          type: string
+                          example: w45
+                      still_sizes:
+                        type: array
+                        items:
+                          type: string
+                          example: w92
+                  change_keys:
+                    type: array
+                    items:
+                      type: string
+                      example: adult
+        '401':
+          description: Authorization information is missing or invalid.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  status_code:
+                    type: integer
+                    format: int32
+                    minimum: 1
+                    maximum: 47
+                  status_message:
+                    type: string
+                required:
+                  - success
+                  - status_code
+                  - status_message
+              example:
+                - success: false
+                  status_code: 7
+                  status_message: 'Invalid API key: You must be granted a valid key.'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+security:
+  - bearerAuth: []

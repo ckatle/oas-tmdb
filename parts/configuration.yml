@@ -1,0 +1,58 @@
+components:
+  paths:
+    Details:
+      get:
+        summary: Details
+        description: Query the API configuration details.
+        operationId: ConfigurationDetails
+        tags:
+          - Configuration
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    images:
+                      type: object
+                      properties:
+                        base_url:
+                          type: string
+                          example: 'http://image.tmdb.org/t/p/'
+                        secure_base_url:
+                          type: string
+                          example: 'https://image.tmdb.org/t/p/'
+                        backdrop_sizes:
+                          type: array
+                          items:
+                            type: string
+                            example: 'w300'
+                        logo_sizes:
+                          type: array
+                          items:
+                            type: string
+                            example: 'w45'
+                        poster_sizes:
+                          type: array
+                          items:
+                            type: string
+                            example: 'w92'
+                        profile_sizes:
+                          type: array
+                          items:
+                            type: string
+                            example: 'w45'
+                        still_sizes:
+                          type: array
+                          items:
+                            type: string
+                            example: 'w92'
+                    change_keys:
+                      type: array
+                      items:
+                        type: string
+                        example: 'adult'
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'
