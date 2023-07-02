@@ -67,21 +67,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  status_code:
-                    type: integer
-                    format: int32
-                    minimum: 1
-                    maximum: 47
-                  status_message:
-                    type: string
-                required:
-                  - success
-                  - status_code
-                  - status_message
+                $ref: '#/components/schemas/Error'
               example:
                 - success: false
                   status_code: 7
@@ -111,25 +97,44 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  additionalProperties: false
-                  properties:
-                    iso_3166_1:
-                      type: string
-                      description: ISO 3166-1 tag
-                      minLength: 2
-                      maxLength: 2
-                      pattern: '^[A-Z]{2}$'
-                      example: AD
-                    english_name:
-                      type: string
-                      example: Andorra
-                    native_name:
-                      type: string
-                      example: Andorra
+                  $ref: '#/components/schemas/Country'
         '401':
           $ref: '#/paths/~1configuration/get/responses/401'
 components:
+  schemas:
+    Country:
+      type: object
+      additionalProperties: false
+      properties:
+        iso_3166_1:
+          type: string
+          description: ISO 3166-1 tag
+          minLength: 2
+          maxLength: 2
+          pattern: '^[A-Z]{2}$'
+          example: AD
+        english_name:
+          type: string
+          example: Andorra
+        native_name:
+          type: string
+          example: Andorra
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+        status_code:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 47
+        status_message:
+          type: string
+      required:
+        - success
+        - status_code
+        - status_message
   securitySchemes:
     bearerAuth:
       type: http
