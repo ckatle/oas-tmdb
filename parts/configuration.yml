@@ -1,0 +1,96 @@
+components:
+  paths:
+    Details:
+      get:
+        summary: Details
+        description: Query the API configuration details.
+        operationId: ConfigurationDetails
+        tags:
+          - Configuration
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    images:
+                      type: object
+                      properties:
+                        base_url:
+                          type: string
+                          example: 'http://image.tmdb.org/t/p/'
+                        secure_base_url:
+                          type: string
+                          example: 'https://image.tmdb.org/t/p/'
+                        backdrop_sizes:
+                          type: array
+                          items:
+                            type: string
+                            example: w300
+                        logo_sizes:
+                          type: array
+                          items:
+                            type: string
+                            example: w45
+                        poster_sizes:
+                          type: array
+                          items:
+                            type: string
+                            example: w92
+                        profile_sizes:
+                          type: array
+                          items:
+                            type: string
+                            example: w45
+                        still_sizes:
+                          type: array
+                          items:
+                            type: string
+                            example: w92
+                    change_keys:
+                      type: array
+                      items:
+                        type: string
+                        example: adult
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'
+    Countries:
+      get:
+        summary: Countries
+        description: Get the list of countries (ISO 3166-1 tags) used throughout TMDB.
+        operationId: ConfigurationCountries
+        tags:
+          - Configuration
+        parameters:
+          - $ref: 'commons.yml#/components/parameters/Language'
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Country'
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'
+  schemas:
+    Country:
+      type: object
+      additionalProperties: false
+      properties:
+        iso_3166_1:
+          type: string
+          description: ISO 3166-1 tag
+          minLength: 2
+          maxLength: 2
+          pattern: ^[A-Z]{2}$
+          example: AD
+        english_name:
+          type: string
+          example: Andorra
+        native_name:
+          type: string
+          example: Andorra

@@ -1,0 +1,26 @@
+openapi: 3.0.3
+info:
+  title: TMDB API
+  description: The Movie Database (TMDB) API
+  version: 0.2.1
+servers:
+  - url: 'https://api.themoviedb.org/3'
+tags:
+  - name: Configuration
+paths:
+  /configuration:
+    $ref: 'configuration.yml#/components/paths/Details'
+  /configuration/countries:
+    $ref: 'configuration.yml#/components/paths/Countries'
+components:
+  schemas:
+    Country:
+      $ref: 'configuration.yml#/components/schemas/Country'
+    Error:
+      $ref: "commons.yml#/components/schemas/Error"
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+security:
+  - bearerAuth: []

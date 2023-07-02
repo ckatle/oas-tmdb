@@ -1,0 +1,143 @@
+openapi: 3.0.3
+info:
+  title: TMDB API
+  description: The Movie Database (TMDB) API
+  version: 0.2.0
+servers:
+  - url: 'https://api.themoviedb.org/3'
+tags:
+  - name: Configuration
+paths:
+  /configuration:
+    get:
+      summary: Details
+      description: Query the API configuration details.
+      operationId: ConfigurationDetails
+      tags:
+        - Configuration
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  images:
+                    type: object
+                    properties:
+                      base_url:
+                        type: string
+                        example: 'http://image.tmdb.org/t/p/'
+                      secure_base_url:
+                        type: string
+                        example: 'https://image.tmdb.org/t/p/'
+                      backdrop_sizes:
+                        type: array
+                        items:
+                          type: string
+                          example: w300
+                      logo_sizes:
+                        type: array
+                        items:
+                          type: string
+                          example: w45
+                      poster_sizes:
+                        type: array
+                        items:
+                          type: string
+                          example: w92
+                      profile_sizes:
+                        type: array
+                        items:
+                          type: string
+                          example: w45
+                      still_sizes:
+                        type: array
+                        items:
+                          type: string
+                          example: w92
+                  change_keys:
+                    type: array
+                    items:
+                      type: string
+                      example: adult
+        '401':
+          description: Authorization information is missing or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                - success: false
+                  status_code: 7
+                  status_message: 'Invalid API key: You must be granted a valid key.'
+  /configuration/countries:
+    get:
+      summary: Countries
+      description: Get the list of countries (ISO 3166-1 tags) used throughout TMDB.
+      operationId: ConfigurationCountries
+      tags:
+        - Configuration
+      parameters:
+        - in: query
+          name: language
+          schema:
+            type: string
+            minLength: 2
+            maxLength: 5
+            pattern: '^([a-z]{2})-([A-Z]{2})$'
+            default: en-US
+          description: Pass a ISO 639-1 value to display translated data for the fields that support it.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Country'
+        '401':
+          $ref: '#/paths/~1configuration/get/responses/401'
+components:
+  schemas:
+    Country:
+      type: object
+      additionalProperties: false
+      properties:
+        iso_3166_1:
+          type: string
+          description: ISO 3166-1 tag
+          minLength: 2
+          maxLength: 2
+          pattern: '^[A-Z]{2}$'
+          example: AD
+        english_name:
+          type: string
+          example: Andorra
+        native_name:
+          type: string
+          example: Andorra
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+        status_code:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 47
+        status_message:
+          type: string
+      required:
+        - success
+        - status_code
+        - status_message
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+security:
+  - bearerAuth: []

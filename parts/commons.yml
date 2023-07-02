@@ -1,0 +1,41 @@
+components:
+  parameters:
+    Language:
+      in: query
+      name: language
+      schema:
+        type: string
+        minLength: 2
+        maxLength: 5
+        pattern: ^([a-z]{2})-([A-Z]{2})$
+        default: en-US
+      description: Pass a ISO 639-1 value to display translated data for the fields that support it.
+  responses:
+    Unauthorized:
+      description: Authorization information is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            - success: false
+              status_code: 7
+              status_message: 'Invalid API key: You must be granted a valid key.'
+  schemas:
+    # Schema for error response body
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+        status_code:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 47
+        status_message:
+          type: string
+      required:
+        - success
+        - status_code
+        - status_message
