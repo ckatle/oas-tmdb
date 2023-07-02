@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.2.0
+  version: 0.2.1
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -63,15 +63,7 @@ paths:
                       type: string
                       example: adult
         '401':
-          description: Authorization information is missing or invalid.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-              example:
-                - success: false
-                  status_code: 7
-                  status_message: 'Invalid API key: You must be granted a valid key.'
+          $ref: '#/components/responses/Unauthorized'
   /configuration/countries:
     get:
       summary: Countries
@@ -80,15 +72,7 @@ paths:
       tags:
         - Configuration
       parameters:
-        - in: query
-          name: language
-          schema:
-            type: string
-            minLength: 2
-            maxLength: 5
-            pattern: '^([a-z]{2})-([A-Z]{2})$'
-            default: en-US
-          description: Pass a ISO 639-1 value to display translated data for the fields that support it.
+        - $ref: '#/components/parameters/Language'
       responses:
         '200':
           description: OK
@@ -99,8 +83,30 @@ paths:
                 items:
                   $ref: '#/components/schemas/Country'
         '401':
-          $ref: '#/paths/~1configuration/get/responses/401'
+          $ref: '#/components/responses/Unauthorized'
 components:
+  parameters:
+    Language:
+      in: query
+      name: language
+      schema:
+        type: string
+        minLength: 2
+        maxLength: 5
+        pattern: '^([a-z]{2})-([A-Z]{2})$'
+        default: en-US
+      description: Pass a ISO 639-1 value to display translated data for the fields that support it.
+  responses:
+    Unauthorized:
+      description: Authorization information is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            - success: false
+              status_code: 7
+              status_message: 'Invalid API key: You must be granted a valid key.'
   schemas:
     Country:
       type: object
