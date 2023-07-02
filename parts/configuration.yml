@@ -94,3 +94,6 @@ components:
         native_name:
           type: string
           example: Andorra
+      required:
+        - iso_3166_1
+        - english_name
