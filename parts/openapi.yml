@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.3.1
+  version: 0.6.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -14,6 +14,12 @@ paths:
     $ref: 'configuration.yml#/components/paths/Countries'
   /configuration/jobs:
     $ref: 'configuration.yml#/components/paths/Jobs'
+  /configuration/languages:
+    $ref: 'configuration.yml#/components/paths/Languages'
+  /configuration/primary_translations:
+    $ref: 'configuration.yml#/components/paths/PrimaryTranslations'
+  /configuration/timezones:
+    $ref: 'configuration.yml#/components/paths/Timezones'
 components:
   parameters:
     Language:
@@ -26,6 +32,8 @@ components:
       $ref: 'configuration.yml#/components/schemas/Country'
     Department:
       $ref: 'configuration.yml#/components/schemas/Department'
+    Language:
+      $ref: 'configuration.yml#/components/schemas/Language'
     Error:
       $ref: "commons.yml#/components/schemas/Error"
   securitySchemes:
