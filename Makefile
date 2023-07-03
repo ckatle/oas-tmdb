@@ -1,5 +1,5 @@
 INPUT_PATH ?= parts/openapi.yml
-OUTPUT_PATH ?= openapi.yml
+OUTPUT_PATH ?= ./openapi.yml
 OUTPUT_FILETYPE ?= yaml
 DEREFERENCE ?= false
 

@@ -22,7 +22,7 @@ paths:
     $ref: 'configuration.yml#/components/paths/Timezones'
 components:
   parameters:
-    Language:
+    LanguageParam:
       $ref: 'commons.yml#/components/parameters/Language'
   responses:
     Unauthorized:

@@ -72,7 +72,7 @@ paths:
       tags:
         - Configuration
       parameters:
-        - $ref: '#/components/parameters/Language'
+        - $ref: '#/components/parameters/LanguageParam'
       responses:
         '200':
           description: OK
@@ -204,7 +204,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   parameters:
-    Language:
+    LanguageParam:
       in: query
       name: language
       schema:
