@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.2.3
+  version: 0.3.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -84,6 +84,35 @@ paths:
                   $ref: '#/components/schemas/Country'
         '401':
           $ref: '#/components/responses/Unauthorized'
+  /configuration/jobs:
+    get:
+      summary: Jobs
+      description: Get the list of the jobs and departments we use on TMDB.
+      operationId: ConfigurationJobs
+      tags:
+        - Configuration
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Department'
+                example:
+                  - department: Actors
+                    jobs:
+                      - Actor
+                      - Cameo
+                      - Special Guest
+                      - Voice
+                  - department: Directing
+                    jobs:
+                      - Director
+                      - Other
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 components:
   parameters:
     Language:
@@ -128,6 +157,17 @@ components:
       required:
         - iso_3166_1
         - english_name
+    Department:
+      type: object
+      additionalProperties: false
+      properties:
+        department:
+          type: string
+          description: The name of the department
+        jobs:
+          type: array
+          items:
+            type: string
     Error:
       type: object
       properties:

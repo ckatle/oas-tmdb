@@ -76,6 +76,29 @@ components:
                     $ref: '#/components/schemas/Country'
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
+    Jobs:
+      get:
+        summary: Jobs
+        description: Get the list of the jobs and departments we use on TMDB.
+        operationId: ConfigurationJobs
+        tags:
+          - Configuration
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Department'
+                  example:
+                    - department: 'Actors'
+                      jobs: ['Actor', 'Cameo', 'Special Guest', 'Voice']
+                    - department: 'Directing'
+                      jobs: ['Director', 'Other']
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'
   schemas:
     Country:
       type: object
@@ -86,7 +109,7 @@ components:
           description: ISO 3166-1 tag
           minLength: 2
           maxLength: 2
-          pattern: ^[A-Z]{2}$
+          pattern: '^[A-Z]{2}$'
           example: AD
         english_name:
           type: string
@@ -97,3 +120,14 @@ components:
       required:
         - iso_3166_1
         - english_name
+    Department:
+      type: object
+      additionalProperties: false
+      properties:
+        department:
+          type: string
+          description: The name of the department
+        jobs:
+          type: array
+          items:
+            type: string
