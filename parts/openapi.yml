@@ -2,11 +2,12 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.6.0
+  version: 0.6.1
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
   - name: Configuration
+#  - name: Search
 paths:
   /configuration:
     $ref: 'configuration.yml#/components/paths/Details'
@@ -20,10 +21,18 @@ paths:
     $ref: 'configuration.yml#/components/paths/PrimaryTranslations'
   /configuration/timezones:
     $ref: 'configuration.yml#/components/paths/Timezones'
+#  /search/collection:
+#    $ref: 'search.yml#/components/paths/SearchCollection'
 components:
   parameters:
+#    IncludeAdult:
+#      $ref: 'commons.yml#/components/parameters/IncludeAdult'
     LanguageParam:
       $ref: 'commons.yml#/components/parameters/Language'
+#    Page:
+#      $ref: 'commons.yml#/components/parameters/Page'
+#    Query:
+#      $ref: 'commons.yml#/components/parameters/Query'
   responses:
     Unauthorized:
       $ref: 'commons.yml#/components/responses/Unauthorized'
@@ -32,10 +41,12 @@ components:
       $ref: 'configuration.yml#/components/schemas/Country'
     Department:
       $ref: 'configuration.yml#/components/schemas/Department'
-    Language:
-      $ref: 'configuration.yml#/components/schemas/Language'
     Error:
       $ref: "commons.yml#/components/schemas/Error"
+    Language:
+      $ref: 'configuration.yml#/components/schemas/Language'
+#    MovieBase:
+#      $ref: 'commons.yml#/components/schemas/MovieBase'
   securitySchemes:
     bearerAuth:
       type: http

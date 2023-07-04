@@ -1,0 +1,54 @@
+components:
+  paths:
+    SearchCollection:
+      get:
+        summary: Collection
+        description: Search for collections by their original, translated and alternative names.
+        operationId: SearchCollection
+        tags:
+          - Search
+        parameters:
+          - $ref: 'commons.yml#/components/parameters/Query'
+          - $ref: 'commons.yml#/components/parameters/IncludeAdult'
+          - $ref: 'commons.yml#/components/parameters/Language'
+          - $ref: 'commons.yml#/components/parameters/Page'
+          - in: query
+            name: year
+            schema:
+              type: string
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    page:
+                      type: integer
+                      format: int32
+                      minimum: 1
+                      maximum: 500
+                      example: 1
+                      default: 0
+                    results:
+                      type: array
+                      items:
+                        $ref: 'commons.yml#/components/schemas/CollectionBase'
+                    total_pages:
+                      type: integer
+                      format: int32
+                      minimum: 1
+                      maximum: 500
+                      example: 1
+                      default: 0
+                    total_results:
+                      type: integer
+                      format: int32
+                      minimum: 0
+                      example: 1
+                      default: 0
+          '400':
+            $ref: 'commons.yml#/components/responses/InvalidPage'
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'

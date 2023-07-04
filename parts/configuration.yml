@@ -49,11 +49,22 @@ components:
                           items:
                             type: string
                             example: w92
+                      required:
+                        - base_url
+                        - secure_base_url
+                        - backdrop_sizes
+                        - logo_sizes
+                        - poster_sizes
+                        - profile_sizes
+                        - still_sizes
                     change_keys:
                       type: array
                       items:
                         type: string
                         example: adult
+                  required:
+                    - images
+                    - change_keys
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
     Countries:

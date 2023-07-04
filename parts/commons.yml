@@ -1,5 +1,11 @@
 components:
   parameters:
+    IncludeAdult:
+      in: query
+      name: include_adult
+      schema:
+        type: boolean
+        default: false
     Language:
       in: query
       name: language
@@ -10,7 +16,32 @@ components:
         pattern: '^([a-z]{2})-([A-Z]{2})$'
         default: en-US
       description: Pass a ISO 639-1 value to display translated data for the fields that support it.
+    Page:
+      in: query
+      name: page
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 500
+        default: 1
+    Query:
+      in: query
+      name: query
+      required: true
+      schema:
+        type: string
   responses:
+    InvalidPage:
+      description: Invalid page number
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            - success: false
+              status_code: 22
+              status_message: 'Invalid page: Pages start at 1 and max at 500. They are expected to be an integer.'
     Unauthorized:
       description: Authorization information is missing or invalid.
       content:
@@ -22,6 +53,42 @@ components:
               status_code: 7
               status_message: 'Invalid API key: You must be granted a valid key.'
   schemas:
+    CollectionBase:
+      type: object
+      properties:
+        adult:
+          type: boolean
+          default: false
+        backdrop_path:
+          type: string
+          example: '/zuW6fOiusv4X9nnW3paHGfXcSll.jpg'
+        id:
+          type: integer
+          example: 86311
+          default: 0
+        name:
+          type: string
+          example: 'The Avengers Collection'
+        original_language:
+          type: string
+          example: 'en'
+        original_name:
+          type: string
+          example: 'The Avengers Collection'
+        overview:
+          type: string
+          example: 'A superhero film series produced by Marvel Studios based on the Marvel Comics superhero team of the 
+          same name, and part of the Marvel Cinematic Universe (MCU).  The series features an ensemble cast from the 
+          Marvel Cinematic Universe series films, as they join forces for the peacekeeping organization S.H.I.E.L.D. 
+          led by Nick Fury.'
+        poster_path:
+          type: string
+          example: '/yFSIUVTCvgYrpalUktulvk3Gi5Y.jpg'
+      required:
+        - id
+        - name
+        - original_language
+        - original_name
     # Schema for error response body
     Error:
       type: object
@@ -39,3 +106,50 @@ components:
         - success
         - status_code
         - status_message
+    MovieBase:
+      type: object
+      properties:
+        adult:
+          type: boolean
+          default: false
+        backdrop_path:
+          type: string
+          example: '/hZkgoQYus5vegHoetLkCJzb17zJ.jpg'
+        genre_ids:
+          type: array
+          items:
+            type: integer
+            format: int32
+            example: 18
+            default: 0
+        id:
+          type: integer
+          example: 550
+          default: 0
+        name:
+          type: string
+        original_language:
+          type: string
+          example: 'en'
+        original_name:
+          type: string
+        overview:
+          type: string
+        popularity:
+          type: number
+        poster_path:
+          type: string
+        release_date:
+          type: string
+        video:
+          type: boolean
+          default: true
+        vote_average:
+          type: number
+        vote_count:
+          type: integer
+      required:
+        - id
+        - name
+        - original_language
+        - original_name

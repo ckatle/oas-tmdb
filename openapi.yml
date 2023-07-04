@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.6.0
+  version: 0.6.1
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -57,11 +57,22 @@ paths:
                         items:
                           type: string
                           example: w92
+                    required:
+                      - base_url
+                      - secure_base_url
+                      - backdrop_sizes
+                      - logo_sizes
+                      - poster_sizes
+                      - profile_sizes
+                      - still_sizes
                   change_keys:
                     type: array
                     items:
                       type: string
                       example: adult
+                required:
+                  - images
+                  - change_keys
         '401':
           $ref: '#/components/responses/Unauthorized'
   /configuration/countries:
@@ -260,6 +271,22 @@ components:
       required:
         - department
         - jobs
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+        status_code:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 47
+        status_message:
+          type: string
+      required:
+        - success
+        - status_code
+        - status_message
     Language:
       type: object
       additionalProperties: false
@@ -277,22 +304,6 @@ components:
       required:
         - iso_639_1
         - english_name
-    Error:
-      type: object
-      properties:
-        success:
-          type: boolean
-        status_code:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 47
-        status_message:
-          type: string
-      required:
-        - success
-        - status_code
-        - status_message
   securitySchemes:
     bearerAuth:
       type: http
