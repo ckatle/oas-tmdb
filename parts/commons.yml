@@ -119,30 +119,26 @@ components:
     MovieBase:
       type: object
       properties:
+        id:
+          type: integer
+          default: 0
+        title:
+          type: string
+        original_language:
+          type: string
+        original_title:
+          type: string
         adult:
           type: boolean
           default: false
         backdrop_path:
           type: string
-          example: '/hZkgoQYus5vegHoetLkCJzb17zJ.jpg'
         genre_ids:
           type: array
           items:
             type: integer
             format: int32
-            example: 18
             default: 0
-        id:
-          type: integer
-          example: 550
-          default: 0
-        name:
-          type: string
-        original_language:
-          type: string
-          example: 'en'
-        original_name:
-          type: string
         overview:
           type: string
         popularity:
@@ -160,9 +156,9 @@ components:
           type: integer
       required:
         - id
-        - name
+        - title
         - original_language
-        - original_name
+        - original_title
     Object:
       type: object
       properties:

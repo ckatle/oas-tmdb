@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.7.0
+  version: 0.10.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -268,39 +268,107 @@ paths:
       tags:
         - Keywords
       parameters:
-        - in: path
-          name: keyword_id
-          schema:
-            type: integer
-            format: int32
-          required: true
-          description: The keyword ID.
+        - $ref: '#/components/parameters/KeywordID'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Object'
-                example:
-                  - id: 1701
-                    name: hero
+                $ref: '#/components/schemas/Object'
+              example:
+                id: 1701
+                name: hero
         '401':
           $ref: '#/components/responses/Unauthorized'
         '404':
-          description: The server can not find the requested resource.
+          $ref: '#/components/responses/NotFound'
+  '/keyword/{keyword_id}/movies':
+    get:
+      summary: Movies
+      description: 'This method is deprecated, you should use `/discover/movie` instead.'
+      operationId: KeywordMovies
+      tags:
+        - Keywords
+      parameters:
+        - $ref: '#/components/parameters/KeywordID'
+        - $ref: '#/components/parameters/IncludeAdult'
+        - $ref: '#/components/parameters/LanguageParam'
+        - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-              example:
-                - success: false
-                  status_code: 34
-                  status_message: The resource you requested could not be found.
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                    example: 1701
+                    default: 0
+                  page:
+                    type: integer
+                    format: int32
+                    minimum: 1
+                    maximum: 500
+                    example: 1
+                    default: 0
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MovieBase'
+                    example:
+                      - adult: false
+                        backdrop_path: /3CxUndGhUcZdt1Zggjdb2HkLLQX.jpg
+                        genre_ids:
+                          - 28
+                        id: 640146
+                        original_language: en
+                        original_title: 'Ant-Man and the Wasp: Quantumania'
+                        overview: 'Das Superhelden-Duo Scott Lang und Hope Van Dyne erkundet zusammen mit Hopes Eltern Hank Pym und Janet Van Dyne das Quantenreich, interagiert mit seltsamen neuen Kreaturen und begibt sich auf ein Abenteuer, das sie über die Grenzen dessen hinaustreiben wird, was sie für möglich gehalten haben.'
+                        popularity: 9200.005
+                        poster_path: /nA5otwVxAfpBP4PVgeuBk3qHcLY.jpg
+                        release_date: 2023-02-15T00:00:00.000Z
+                        title: 'Ant-Man and the Wasp: Quantumania'
+                        video: false
+                        vote_average: 6.5
+                        vote_count: 2079
+                  total_pages:
+                    type: integer
+                    format: int32
+                    minimum: 1
+                    maximum: 500
+                    example: 11
+                    default: 0
+                  total_results:
+                    type: integer
+                    format: int32
+                    minimum: 0
+                    example: 211
+                    default: 0
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      deprecated: true
 components:
   parameters:
+    IncludeAdult:
+      in: query
+      name: include_adult
+      schema:
+        type: boolean
+        default: false
+    KeywordID:
+      in: path
+      name: keyword_id
+      schema:
+        type: integer
+        format: int32
+      required: true
+      description: The keyword ID.
     LanguageParam:
       in: query
       name: language
@@ -311,7 +379,26 @@ components:
         pattern: '^([a-z]{2})-([A-Z]{2})$'
         default: en-US
       description: Pass a ISO 639-1 value to display translated data for the fields that support it.
+    Page:
+      in: query
+      name: page
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 500
+        default: 1
   responses:
+    NotFound:
+      description: The server can not find the requested resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            - success: false
+              status_code: 34
+              status_message: The resource you requested could not be found.
     Unauthorized:
       description: Authorization information is missing or invalid.
       content:
@@ -373,17 +460,6 @@ components:
         - success
         - status_code
         - status_message
-    Object:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        name:
-          type: string
-      required:
-        - id
-        - name
     Language:
       type: object
       additionalProperties: false
@@ -401,6 +477,60 @@ components:
       required:
         - iso_639_1
         - english_name
+    MovieBase:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 0
+        title:
+          type: string
+        original_language:
+          type: string
+        original_title:
+          type: string
+        adult:
+          type: boolean
+          default: false
+        backdrop_path:
+          type: string
+        genre_ids:
+          type: array
+          items:
+            type: integer
+            format: int32
+            default: 0
+        overview:
+          type: string
+        popularity:
+          type: number
+        poster_path:
+          type: string
+        release_date:
+          type: string
+        video:
+          type: boolean
+          default: true
+        vote_average:
+          type: number
+        vote_count:
+          type: integer
+      required:
+        - id
+        - title
+        - original_language
+        - original_title
+    Object:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+      required:
+        - id
+        - name
   securitySchemes:
     bearerAuth:
       type: http

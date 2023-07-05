@@ -1,6 +1,6 @@
 components:
   parameters:
-    keywordID:
+    KeywordID:
       in: path
       name: keyword_id
       schema:
@@ -17,20 +17,87 @@ components:
         tags:
           - Keywords
         parameters:
-          - $ref: '#/components/parameters/keywordID'
+          - $ref: '#/components/parameters/KeywordID'
         responses:
           '200':
             description: OK
             content:
               application/json:
                 schema:
-                  type: array
-                  items:
-                    $ref: 'commons.yml#/components/schemas/Object'
-                  example:
-                    - id: 1701
-                      name: hero
+                  $ref: 'commons.yml#/components/schemas/Object'
+                example:
+                  id: 1701
+                  name: hero
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
           '404':
             $ref: 'commons.yml#/components/responses/NotFound'
+    Movies:
+      get:
+        summary: Movies
+        description: This method is deprecated, you should use `/discover/movie` instead.
+        operationId: KeywordMovies
+        tags:
+          - Keywords
+        parameters:
+          - $ref: '#/components/parameters/KeywordID'
+          - $ref: 'commons.yml#/components/parameters/IncludeAdult'
+          - $ref: 'commons.yml#/components/parameters/Language'
+          - $ref: 'commons.yml#/components/parameters/Page'
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      format: int32
+                      example: 1701
+                      default: 0
+                    page:
+                      type: integer
+                      format: int32
+                      minimum: 1
+                      maximum: 500
+                      example: 1
+                      default: 0
+                    results:
+                      type: array
+                      items:
+                        $ref: 'commons.yml#/components/schemas/MovieBase'
+                      example:
+                        - adult: false
+                          backdrop_path: '/3CxUndGhUcZdt1Zggjdb2HkLLQX.jpg'
+                          genre_ids: [28]
+                          id: 640146
+                          original_language: en
+                          original_title: 'Ant-Man and the Wasp: Quantumania'
+                          overview: Das Superhelden-Duo Scott Lang und Hope Van Dyne erkundet zusammen mit Hopes Eltern Hank Pym und Janet Van Dyne das Quantenreich, interagiert mit seltsamen neuen Kreaturen und begibt sich auf ein Abenteuer, das sie über die Grenzen dessen hinaustreiben wird, was sie für möglich gehalten haben.
+                          popularity: 9200.005
+                          poster_path: '/nA5otwVxAfpBP4PVgeuBk3qHcLY.jpg'
+                          release_date: 2023-02-15
+                          title: 'Ant-Man and the Wasp: Quantumania'
+                          video: false
+                          vote_average: 6.5
+                          vote_count: 2079
+                    total_pages:
+                      type: integer
+                      format: int32
+                      minimum: 1
+                      maximum: 500
+                      example: 11
+                      default: 0
+                    total_results:
+                      type: integer
+                      format: int32
+                      minimum: 0
+                      example: 211
+                      default: 0
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'
+          '404':
+            $ref: 'commons.yml#/components/responses/NotFound'
+        deprecated: true
