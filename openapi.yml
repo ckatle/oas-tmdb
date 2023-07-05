@@ -2,11 +2,12 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.6.1
+  version: 0.7.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
   - name: Configuration
+  - name: Genre
 paths:
   /configuration:
     get:
@@ -213,6 +214,52 @@ paths:
                       - Europe/London
         '401':
           $ref: '#/components/responses/Unauthorized'
+  /genre/movie/list:
+    get:
+      summary: Movie List
+      description: Get the list of official genres for movies.
+      operationId: GenreMovieList
+      tags:
+        - Genre
+      parameters:
+        - $ref: '#/components/parameters/LanguageParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Genre'
+                example:
+                  - id: 28
+                    name: Action
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /genre/tv/list:
+    get:
+      summary: TV List
+      description: Get the list of official genres for TV shows.
+      operationId: GenreTvList
+      tags:
+        - Genre
+      parameters:
+        - $ref: '#/components/parameters/LanguageParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Genre'
+                example:
+                  - id: 10759
+                    name: Action & Adventure
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 components:
   parameters:
     LanguageParam:
@@ -287,6 +334,19 @@ components:
         - success
         - status_code
         - status_message
+    Genre:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 18
+          default: 0
+        name:
+          type: string
+      required:
+        - id
+        - name
     Language:
       type: object
       additionalProperties: false

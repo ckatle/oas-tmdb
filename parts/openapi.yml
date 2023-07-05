@@ -2,11 +2,12 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.6.1
+  version: 0.7.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
   - name: Configuration
+  - name: Genre
 #  - name: Search
 paths:
   /configuration:
@@ -21,6 +22,10 @@ paths:
     $ref: 'configuration.yml#/components/paths/PrimaryTranslations'
   /configuration/timezones:
     $ref: 'configuration.yml#/components/paths/Timezones'
+  /genre/movie/list:
+    $ref: 'genre.yml#/components/paths/Movie'
+  /genre/tv/list:
+    $ref: 'genre.yml#/components/paths/TV'
 #  /search/collection:
 #    $ref: 'search.yml#/components/paths/SearchCollection'
 components:
@@ -43,6 +48,8 @@ components:
       $ref: 'configuration.yml#/components/schemas/Department'
     Error:
       $ref: "commons.yml#/components/schemas/Error"
+    Genre:
+      $ref: "commons.yml#/components/schemas/Genre"
     Language:
       $ref: 'configuration.yml#/components/schemas/Language'
 #    MovieBase:
