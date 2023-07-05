@@ -1,0 +1,36 @@
+components:
+  parameters:
+    keywordID:
+      in: path
+      name: keyword_id
+      schema:
+        type: integer
+        format: int32
+      required: true
+      description: The keyword ID.
+  paths:
+    Details:
+      get:
+        summary: Details
+#        description:
+        operationId: KeywordDetails
+        tags:
+          - Keywords
+        parameters:
+          - $ref: '#/components/parameters/keywordID'
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: 'commons.yml#/components/schemas/Object'
+                  example:
+                    - id: 1701
+                      name: hero
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'
+          '404':
+            $ref: 'commons.yml#/components/responses/NotFound'

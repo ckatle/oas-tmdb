@@ -8,6 +8,7 @@ servers:
 tags:
   - name: Configuration
   - name: Genre
+  - name: Keywords
 #  - name: Search
 paths:
   /configuration:
@@ -26,6 +27,8 @@ paths:
     $ref: 'genre.yml#/components/paths/Movie'
   /genre/tv/list:
     $ref: 'genre.yml#/components/paths/TV'
+  /keyword/{keyword_id}:
+    $ref: 'keyword.yml#/components/paths/Details'
 #  /search/collection:
 #    $ref: 'search.yml#/components/paths/SearchCollection'
 components:
@@ -48,8 +51,8 @@ components:
       $ref: 'configuration.yml#/components/schemas/Department'
     Error:
       $ref: "commons.yml#/components/schemas/Error"
-    Genre:
-      $ref: "commons.yml#/components/schemas/Genre"
+    Object:
+      $ref: "commons.yml#/components/schemas/Object"
     Language:
       $ref: 'configuration.yml#/components/schemas/Language'
 #    MovieBase:

@@ -42,6 +42,16 @@ components:
             - success: false
               status_code: 22
               status_message: 'Invalid page: Pages start at 1 and max at 500. They are expected to be an integer.'
+    NotFound:
+      description: The server can not find the requested resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            - success: false
+              status_code: 34
+              status_message: 'The resource you requested could not be found.'
     Unauthorized:
       description: Authorization information is missing or invalid.
       content:
@@ -106,20 +116,6 @@ components:
         - success
         - status_code
         - status_message
-    Genre:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-          example: 18
-          default: 0
-        name:
-          type: string
-      required:
-        - id
-        - name
-
     MovieBase:
       type: object
       properties:
@@ -167,3 +163,14 @@ components:
         - name
         - original_language
         - original_name
+    Object:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+      required:
+        - id
+        - name

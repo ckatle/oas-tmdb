@@ -17,7 +17,7 @@ components:
                 schema:
                   type: array
                   items:
-                    $ref: 'commons.yml#/components/schemas/Genre'
+                    $ref: 'commons.yml#/components/schemas/Object'
                   example:
                     - id: 28
                       name: Action
@@ -40,7 +40,7 @@ components:
                 schema:
                   type: array
                   items:
-                    $ref: 'commons.yml#/components/schemas/Genre'
+                    $ref: 'commons.yml#/components/schemas/Object'
                   example:
                     - id: 10759
                       name: Action & Adventure

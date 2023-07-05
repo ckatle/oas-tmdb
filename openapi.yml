@@ -8,6 +8,7 @@ servers:
 tags:
   - name: Configuration
   - name: Genre
+  - name: Keywords
 paths:
   /configuration:
     get:
@@ -231,7 +232,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Genre'
+                  $ref: '#/components/schemas/Object'
                 example:
                   - id: 28
                     name: Action
@@ -254,12 +255,50 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Genre'
+                  $ref: '#/components/schemas/Object'
                 example:
                   - id: 10759
                     name: Action & Adventure
         '401':
           $ref: '#/components/responses/Unauthorized'
+  '/keyword/{keyword_id}':
+    get:
+      summary: Details
+      operationId: KeywordDetails
+      tags:
+        - Keywords
+      parameters:
+        - in: path
+          name: keyword_id
+          schema:
+            type: integer
+            format: int32
+          required: true
+          description: The keyword ID.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Object'
+                example:
+                  - id: 1701
+                    name: hero
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: The server can not find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                - success: false
+                  status_code: 34
+                  status_message: The resource you requested could not be found.
 components:
   parameters:
     LanguageParam:
@@ -334,14 +373,12 @@ components:
         - success
         - status_code
         - status_message
-    Genre:
+    Object:
       type: object
       properties:
         id:
           type: integer
           format: int32
-          example: 18
-          default: 0
         name:
           type: string
       required:
