@@ -2,13 +2,14 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.10.0
+  version: 0.11.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
   - name: Configuration
   - name: Genre
   - name: Keywords
+  - name: Search
 paths:
   /configuration:
     get:
@@ -301,58 +302,90 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    format: int32
-                    example: 1701
-                    default: 0
-                  page:
-                    type: integer
-                    format: int32
-                    minimum: 1
-                    maximum: 500
-                    example: 1
-                    default: 0
-                  results:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/MovieBase'
-                    example:
-                      - adult: false
-                        backdrop_path: /3CxUndGhUcZdt1Zggjdb2HkLLQX.jpg
-                        genre_ids:
-                          - 28
-                        id: 640146
-                        original_language: en
-                        original_title: 'Ant-Man and the Wasp: Quantumania'
-                        overview: 'Das Superhelden-Duo Scott Lang und Hope Van Dyne erkundet zusammen mit Hopes Eltern Hank Pym und Janet Van Dyne das Quantenreich, interagiert mit seltsamen neuen Kreaturen und begibt sich auf ein Abenteuer, das sie über die Grenzen dessen hinaustreiben wird, was sie für möglich gehalten haben.'
-                        popularity: 9200.005
-                        poster_path: /nA5otwVxAfpBP4PVgeuBk3qHcLY.jpg
-                        release_date: 2023-02-15T00:00:00.000Z
-                        title: 'Ant-Man and the Wasp: Quantumania'
-                        video: false
-                        vote_average: 6.5
-                        vote_count: 2079
-                  total_pages:
-                    type: integer
-                    format: int32
-                    minimum: 1
-                    maximum: 500
-                    example: 11
-                    default: 0
-                  total_results:
-                    type: integer
-                    format: int32
-                    minimum: 0
-                    example: 211
-                    default: 0
+                $ref: '#/components/schemas/MovieListPage'
+              example:
+                id: 1701
+                page: 1
+                results:
+                  - adult: false
+                    backdrop_path: /3CxUndGhUcZdt1Zggjdb2HkLLQX.jpg
+                    genre_ids:
+                      - 28
+                    id: 640146
+                    original_language: en
+                    original_title: 'Ant-Man and the Wasp: Quantumania'
+                    overview: 'Das Superhelden-Duo Scott Lang und Hope Van Dyne erkundet zusammen mit Hopes Eltern Hank Pym und Janet Van Dyne das Quantenreich, interagiert mit seltsamen neuen Kreaturen und begibt sich auf ein Abenteuer, das sie über die Grenzen dessen hinaustreiben wird, was sie für möglich gehalten haben.'
+                    popularity: 9200.005
+                    poster_path: /nA5otwVxAfpBP4PVgeuBk3qHcLY.jpg
+                    release_date: 2023-02-15T00:00:00.000Z
+                    title: 'Ant-Man and the Wasp: Quantumania'
+                    video: false
+                    vote_average: 6.5
+                    vote_count: 2079
+                total_pages: 11
+                total_results: 211
+        '400':
+          $ref: '#/components/responses/InvalidPage'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
       deprecated: true
+  /search/movie:
+    get:
+      summary: Movie
+      description: 'Search for movies by their original, translated and alternative titles.'
+      operationId: SearchMovie
+      tags:
+        - Search
+      parameters:
+        - $ref: '#/components/parameters/Query'
+        - $ref: '#/components/parameters/IncludeAdult'
+        - $ref: '#/components/parameters/LanguageParam'
+        - in: query
+          name: primary_release_year
+          schema:
+            type: string
+        - $ref: '#/components/parameters/Page'
+        - in: query
+          name: region
+          schema:
+            type: string
+        - in: query
+          name: year
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieListPage'
+              example:
+                page: 1
+                results:
+                  - adult: false
+                    backdrop_path: /hZkgoQYus5vegHoetLkCJzb17zJ.jpg
+                    genre_ids:
+                      - 18
+                    id: 550
+                    original_language: en
+                    original_title: Fight Club
+                    overview: 'A ticking-time-bomb insomniac and a slippery soap salesman channel primal male  aggression into a shocking new form of therapy. Their concept catches on, with underground  \"fight clubs\" forming in every town, until an eccentric gets in the way and ignites an  out-of-control spiral toward oblivion.'
+                    popularity: 73.433
+                    poster_path: /pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg
+                    release_date: 1999-10-15T00:00:00.000Z
+                    title: Fight Club
+                    video: false
+                    vote_average: 8.433
+                    vote_count: 26279
+                total_pages: 2
+                total_results: 39
+        '400':
+          $ref: '#/components/responses/InvalidPage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 components:
   parameters:
     IncludeAdult:
@@ -378,7 +411,7 @@ components:
         maxLength: 5
         pattern: '^([a-z]{2})-([A-Z]{2})$'
         default: en-US
-      description: Pass a ISO 639-1 value to display translated data for the fields that support it.
+      description: '`ISO-639-1`-`ISO-3166-1` code'
     Page:
       in: query
       name: page
@@ -388,7 +421,23 @@ components:
         minimum: 1
         maximum: 500
         default: 1
+    Query:
+      in: query
+      name: query
+      required: true
+      schema:
+        type: string
   responses:
+    InvalidPage:
+      description: Invalid page number
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            - success: false
+              status_code: 22
+              status_message: 'Invalid page: Pages start at 1 and max at 500. They are expected to be an integer.'
     NotFound:
       description: The server can not find the requested resource.
       content:
@@ -477,7 +526,7 @@ components:
       required:
         - iso_639_1
         - english_name
-    MovieBase:
+    MovieListItem:
       type: object
       properties:
         id:
@@ -520,6 +569,31 @@ components:
         - title
         - original_language
         - original_title
+    MovieListPage:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 500
+          default: 1
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/MovieListItem'
+        total_pages:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 500
+          default: 1
+        total_results:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 10000
+          default: 0
     Object:
       type: object
       properties:

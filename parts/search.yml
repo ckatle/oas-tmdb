@@ -1,6 +1,6 @@
 components:
   paths:
-    SearchCollection:
+    Collection:
       get:
         summary: Collection
         description: Search for collections by their original, translated and alternative names.
@@ -48,6 +48,63 @@ components:
                       minimum: 0
                       example: 1
                       default: 0
+          '400':
+            $ref: 'commons.yml#/components/responses/InvalidPage'
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'
+    Movie:
+      get:
+        summary: Movie
+        description: Search for movies by their original, translated and alternative titles.
+        operationId: SearchMovie
+        tags:
+          - Search
+        parameters:
+          - $ref: 'commons.yml#/components/parameters/Query'
+          - $ref: 'commons.yml#/components/parameters/IncludeAdult'
+          - $ref: 'commons.yml#/components/parameters/Language'
+          - in: query
+            name: primary_release_year
+            schema:
+              type: string
+          - $ref: 'commons.yml#/components/parameters/Page'
+          - in: query
+            name: region
+            schema:
+              type: string
+          - in: query
+            name: year
+            schema:
+              type: string
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: 'commons.yml#/components/schemas/MovieListPage'
+                example:
+                  page: 1
+                  results:
+                    - adult: false
+                      backdrop_path: '/hZkgoQYus5vegHoetLkCJzb17zJ.jpg'
+                      genre_ids: [18]
+                      id: 550
+                      original_language: en
+                      original_title: 'Fight Club'
+                      overview: 'A ticking-time-bomb insomniac and a slippery soap salesman channel primal male 
+                      aggression into a shocking new form of therapy. Their concept catches on, with underground 
+                      \"fight clubs\" forming in every town, until an eccentric gets in the way and ignites an 
+                      out-of-control spiral toward oblivion.'
+                      popularity: 73.433
+                      poster_path: '/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg'
+                      release_date: 1999-10-15
+                      title: 'Fight Club'
+                      video: false
+                      vote_average: 8.433
+                      vote_count: 26279
+                  total_pages: 2
+                  total_results: 39
           '400':
             $ref: 'commons.yml#/components/responses/InvalidPage'
           '401':
