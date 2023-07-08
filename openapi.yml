@@ -9,6 +9,7 @@ tags:
   - name: Configuration
   - name: Genre
   - name: Keywords
+  - name: Movies
   - name: Search
 paths:
   /configuration:
@@ -331,6 +332,43 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
       deprecated: true
+  '/movie/{movie_id}/keywords':
+    get:
+      summary: Keywords
+      operationId: MovieKeywords
+      tags:
+        - Movies
+      parameters:
+        - in: path
+          name: movie_id
+          schema:
+            type: integer
+            format: int32
+          required: true
+          description: The movie ID.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                  keywords:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Object'
+                required:
+                  - id
+                  - keywords
+              example:
+                id: 550
+                keywords:
+                  - id: 818
+                    name: based on novel or book
   /search/keyword:
     get:
       summary: Keyword

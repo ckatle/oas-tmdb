@@ -9,6 +9,7 @@ tags:
   - name: Configuration
   - name: Genre
   - name: Keywords
+  - name: Movies
   - name: Search
 paths:
   /configuration:
@@ -31,6 +32,8 @@ paths:
     $ref: 'keyword.yml#/components/paths/Details'
   /keyword/{keyword_id}/movies:
     $ref: 'keyword.yml#/components/paths/Movies'
+  /movie/{movie_id}/keywords:
+    $ref: 'movie.yml#/components/paths/Keywords'
 #  /search/collection:
 #    $ref: 'search.yml#/components/paths/Collection'
   /search/keyword:
@@ -70,7 +73,7 @@ components:
     MovieListPage:
       $ref: 'commons.yml#/components/schemas/MovieListPage'
     Object:
-      $ref: "commons.yml#/components/schemas/Object"
+      $ref: 'commons.yml#/components/schemas/Object'
     ObjectListPage:
       $ref: 'commons.yml#/components/schemas/ObjectListPage'
   securitySchemes:

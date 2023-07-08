@@ -1,0 +1,43 @@
+components:
+  parameters:
+    MovieID:
+      in: path
+      name: movie_id
+      schema:
+        type: integer
+        format: int32
+      required: true
+      description: The movie ID.
+  paths:
+    Keywords:
+      get:
+        summary: Keywords
+#        description: Search for collections by their original, translated and alternative names.
+        operationId: MovieKeywords
+        tags:
+          - Movies
+        parameters:
+          - $ref: '#/components/parameters/MovieID'
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      format: int32
+                    keywords:
+                      type: array
+                      items:
+                        $ref: 'commons.yml#/components/schemas/Object'
+                  required:
+                    - id
+                    - keywords
+                example:
+                  id: 550
+                  keywords:
+                    - id: 818
+                      name: based on novel or book
