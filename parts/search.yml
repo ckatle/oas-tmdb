@@ -96,10 +96,7 @@ components:
             schema:
               type: string
           - $ref: 'commons.yml#/components/parameters/Page'
-          - in: query
-            name: region
-            schema:
-              type: string
+          - $ref: 'commons.yml#/components/parameters/Region'
           - in: query
             name: year
             schema:

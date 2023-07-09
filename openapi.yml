@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.14.0
+  version: 0.14.1
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -366,7 +366,13 @@ paths:
   '/movie/{movie_id}/similar':
     get:
       summary: Similar
-      description: Get the similar movies based on genres and keywords.
+      description: |
+        Get the similar movies based on genres and keywords.
+
+
+        > **Note**
+        > This method only looks for other items based on genres and plot keywords. As such, the results found here
+        > are not always going to be perfect. Use it with that in mind.
       operationId: MovieSimilar
       tags:
         - Movies
@@ -445,10 +451,7 @@ paths:
           schema:
             type: string
         - $ref: '#/components/parameters/Page'
-        - in: query
-          name: region
-          schema:
-            type: string
+        - $ref: '#/components/parameters/Region'
         - in: query
           name: year
           schema:
@@ -533,6 +536,16 @@ components:
       required: true
       schema:
         type: string
+    Region:
+      in: query
+      name: region
+      schema:
+        type: string
+        minLength: 2
+        maxLength: 2
+        pattern: '^([A-Z]{2})$'
+        default: en-US
+      description: '`ISO-3166-1` code'
   responses:
     InvalidPage:
       description: Invalid page number

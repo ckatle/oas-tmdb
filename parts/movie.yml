@@ -44,7 +44,13 @@ components:
     Similar:
       get:
         summary: Similar
-        description: Get the similar movies based on genres and keywords.
+        description: |
+          Get the similar movies based on genres and keywords.
+          
+          
+          > **Note**
+          > This method only looks for other items based on genres and plot keywords. As such, the results found here
+          > are not always going to be perfect. Use it with that in mind.
         operationId: MovieSimilar
         tags:
           - Movies
