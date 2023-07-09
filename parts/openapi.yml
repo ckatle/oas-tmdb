@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.12.0
+  version: 0.14.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -34,6 +34,8 @@ paths:
     $ref: 'keyword.yml#/components/paths/Movies'
   /movie/{movie_id}/keywords:
     $ref: 'movie.yml#/components/paths/Keywords'
+  /movie/{movie_id}/similar:
+    $ref: 'movie.yml#/components/paths/Similar'
 #  /search/collection:
 #    $ref: 'search.yml#/components/paths/Collection'
   /search/keyword:
@@ -48,6 +50,8 @@ components:
       $ref: 'keyword.yml#/components/parameters/KeywordID'
     LanguageParam:
       $ref: 'commons.yml#/components/parameters/Language'
+    MovieID:
+      $ref: 'movie.yml#/components/parameters/MovieID'
     Page:
       $ref: 'commons.yml#/components/parameters/Page'
     Query:
@@ -65,7 +69,7 @@ components:
     Department:
       $ref: 'configuration.yml#/components/schemas/Department'
     Error:
-      $ref: "commons.yml#/components/schemas/Error"
+      $ref: 'commons.yml#/components/schemas/Error'
     Language:
       $ref: 'configuration.yml#/components/schemas/Language'
     MovieListItem:

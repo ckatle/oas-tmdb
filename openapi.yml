@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.12.0
+  version: 0.14.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -339,13 +339,7 @@ paths:
       tags:
         - Movies
       parameters:
-        - in: path
-          name: movie_id
-          schema:
-            type: integer
-            format: int32
-          required: true
-          description: The movie ID.
+        - $ref: '#/components/parameters/MovieID'
       responses:
         '200':
           description: OK
@@ -369,6 +363,44 @@ paths:
                 keywords:
                   - id: 818
                     name: based on novel or book
+  '/movie/{movie_id}/similar':
+    get:
+      summary: Similar
+      description: Get the similar movies based on genres and keywords.
+      operationId: MovieSimilar
+      tags:
+        - Movies
+      parameters:
+        - $ref: '#/components/parameters/MovieID'
+        - $ref: '#/components/parameters/LanguageParam'
+        - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieListPage'
+              example:
+                page: 1
+                results:
+                  - adult: false
+                    backdrop_path: /3YAldML4EDyoC6RBpzceALigrAZ.jpg
+                    genre_ids:
+                      - 18
+                    id: 9300
+                    original_language: en
+                    original_title: Orlando
+                    overview: 'England, 1600. Queen Elizabeth I promises Orlando, a young nobleman obsessed with poetry, that she will grant him land and fortune if he agrees to satisfy a very particular request.'
+                    popularity: 7.768
+                    poster_path: /xvz0qZkXXMq3dH2Revxii8drxWc.jpg
+                    release_date: 1992-12-11T00:00:00.000Z
+                    title: Orlando
+                    video: false
+                    vote_average: 6.966
+                    vote_count: 262
+                total_pages: 364
+                total_results: 7269
   /search/keyword:
     get:
       summary: Keyword
@@ -438,7 +470,7 @@ paths:
                     id: 550
                     original_language: en
                     original_title: Fight Club
-                    overview: 'A ticking-time-bomb insomniac and a slippery soap salesman channel primal male  aggression into a shocking new form of therapy. Their concept catches on, with underground  \"fight clubs\" forming in every town, until an eccentric gets in the way and ignites an  out-of-control spiral toward oblivion.'
+                    overview: 'A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground \"fight clubs\" forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion.'
                     popularity: 73.433
                     poster_path: /pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg
                     release_date: 1999-10-15T00:00:00.000Z
@@ -478,6 +510,14 @@ components:
         pattern: '^([a-z]{2})-([A-Z]{2})$'
         default: en-US
       description: '`ISO-639-1`-`ISO-3166-1` code'
+    MovieID:
+      in: path
+      name: movie_id
+      schema:
+        type: integer
+        format: int32
+      required: true
+      description: The movie ID.
     Page:
       in: query
       name: page
