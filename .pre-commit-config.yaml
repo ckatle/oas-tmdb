@@ -1,5 +1,10 @@
 repos:
--   repo: https://github.com/APIDevTools/swagger-cli
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.32.0
+    hooks:
+      - id: yamllint
+        args: [--strict]
+  - repo: https://github.com/APIDevTools/swagger-cli
     rev: v4.0.4
     hooks:
       - id: swagger-validation

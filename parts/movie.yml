@@ -12,7 +12,7 @@ components:
     Keywords:
       get:
         summary: Keywords
-#        description: Search for collections by their original, translated and alternative names.
+        #        description: Search for collections by their original, translated and alternative names.
         operationId: MovieKeywords
         tags:
           - Movies
@@ -41,13 +41,60 @@ components:
                   keywords:
                     - id: 818
                       name: based on novel or book
+    NowPlaying:
+      get:
+        summary: Now Playing
+        description: |
+          Get a list of movies that are currently in theatres.
+
+
+          > **Note**
+          > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
+          > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
+        operationId: MovieNowPlaying
+        tags:
+          - Movie Lists
+        parameters:
+          - $ref: 'commons.yml#/components/parameters/Language'
+          - $ref: 'commons.yml#/components/parameters/Page'
+          - $ref: 'commons.yml#/components/parameters/Region'
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: 'commons.yml#/components/schemas/MovieListPageWithDates'
+                example:
+                  dates:
+                    maximum: '2023-05-03'
+                    minimum: '2023-03-16'
+                  page: 1
+                  results:
+                    - adult: false
+                      backdrop_path: '/iJQIbOPm81fPEGKt5BPuZmfnA54.jpg'
+                      genre_ids: [16]
+                      id: 502356
+                      original_language: en
+                      original_title: 'While working underground to fix a water main, Brooklyn plumbers—and
+                      brothers—Mario and Luigi are transported down a mysterious pipe and wander into a magical new
+                      world. But when the brothers are separated, Mario embarks on an epic quest to find Luigi.'
+                      popularity: 6572.614
+                      poster_path: '/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg'
+                      release_date: '2023-04-05'
+                      title: 'The Super Mario Bros. Movie'
+                      video: false
+                      vote_average: 7.5
+                      vote_count: 1456
+                  total_pages: 87
+                  total_results: 1734
     Similar:
       get:
         summary: Similar
         description: |
           Get the similar movies based on genres and keywords.
-          
-          
+
+
           > **Note**
           > This method only looks for other items based on genres and plot keywords. As such, the results found here
           > are not always going to be perfect. Use it with that in mind.
@@ -79,7 +126,7 @@ components:
                       request.'
                       popularity: 7.768
                       poster_path: '/xvz0qZkXXMq3dH2Revxii8drxWc.jpg'
-                      release_date: 1992-12-11
+                      release_date: '1992-12-11'
                       title: 'Orlando'
                       video: false
                       vote_average: 6.966

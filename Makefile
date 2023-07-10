@@ -13,6 +13,8 @@ bundle: ## Bundle OpenAPI files
 		exit 1; \
 	fi
 
+	@yamllint .
+
 	@if [ ${OUTPUT_FILETYPE} != "yaml" ] && [ "${OUTPUT_FILETYPE}" != "json" ] ; then \
 		echo "::error::FILETYPE must be either 'yaml' or 'json'!"; \
 		exit 1; \

@@ -39,7 +39,6 @@ components:
         minLength: 2
         maxLength: 2
         pattern: '^([A-Z]{2})$'
-        default: en-US
       description: '`ISO-3166-1` code'
   responses:
     InvalidPage:
@@ -97,9 +96,9 @@ components:
           example: 'The Avengers Collection'
         overview:
           type: string
-          example: 'A superhero film series produced by Marvel Studios based on the Marvel Comics superhero team of the 
-          same name, and part of the Marvel Cinematic Universe (MCU).  The series features an ensemble cast from the 
-          Marvel Cinematic Universe series films, as they join forces for the peacekeeping organization S.H.I.E.L.D. 
+          example: 'A superhero film series produced by Marvel Studios based on the Marvel Comics superhero team of the
+          same name, and part of the Marvel Cinematic Universe (MCU).  The series features an ensemble cast from the
+          Marvel Cinematic Universe series films, as they join forces for the peacekeeping organization S.H.I.E.L.D.
           led by Nick Fury.'
         poster_path:
           type: string
@@ -199,6 +198,20 @@ components:
         - results
         - total_pages
         - total_results
+    MovieListPageWithDates:
+      allOf:
+        - type: object
+          properties:
+            dates:
+              type: object
+              properties:
+                maximum:
+                  type: string
+                  format: date
+                minimum:
+                  type: string
+                  format: date
+        - $ref: '#/components/schemas/MovieListPage'
     Object:
       type: object
       properties:

@@ -12,7 +12,7 @@ components:
     Details:
       get:
         summary: Details
-#        description:
+        #        description:
         operationId: KeywordDetails
         tags:
           - Keywords
@@ -52,7 +52,7 @@ components:
                 schema:
                   $ref: 'commons.yml#/components/schemas/MovieListPage'
                 example:
-                  id: 1701 # TODO - New schema?
+                  id: 1701  # TODO - New schema?
                   page: 1
                   results:
                     - adult: false
@@ -67,7 +67,7 @@ components:
                       gehalten haben.'
                       popularity: 9200.005
                       poster_path: '/nA5otwVxAfpBP4PVgeuBk3qHcLY.jpg'
-                      release_date: 2023-02-15
+                      release_date: '2023-02-15'
                       title: 'Ant-Man and the Wasp: Quantumania'
                       video: false
                       vote_average: 6.5

@@ -2,13 +2,14 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.14.1
+  version: 0.15.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
   - name: Configuration
   - name: Genre
   - name: Keywords
+  - name: Movie Lists
   - name: Movies
   - name: Search
 paths:
@@ -318,7 +319,7 @@ paths:
                     overview: 'Das Superhelden-Duo Scott Lang und Hope Van Dyne erkundet zusammen mit Hopes Eltern Hank Pym und Janet Van Dyne das Quantenreich, interagiert mit seltsamen neuen Kreaturen und begibt sich auf ein Abenteuer, das sie über die Grenzen dessen hinaustreiben wird, was sie für möglich gehalten haben.'
                     popularity: 9200.005
                     poster_path: /nA5otwVxAfpBP4PVgeuBk3qHcLY.jpg
-                    release_date: 2023-02-15T00:00:00.000Z
+                    release_date: '2023-02-15'
                     title: 'Ant-Man and the Wasp: Quantumania'
                     video: false
                     vote_average: 6.5
@@ -332,6 +333,52 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
       deprecated: true
+  /movie/now_playing:
+    get:
+      summary: Now Playing
+      description: |
+        Get a list of movies that are currently in theatres.
+
+
+        > **Note**
+        > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
+        > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
+      operationId: MovieNowPlaying
+      tags:
+        - Movie Lists
+      parameters:
+        - $ref: '#/components/parameters/LanguageParam'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Region'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieListPageWithDates'
+              example:
+                dates:
+                  maximum: '2023-05-03'
+                  minimum: '2023-03-16'
+                page: 1
+                results:
+                  - adult: false
+                    backdrop_path: /iJQIbOPm81fPEGKt5BPuZmfnA54.jpg
+                    genre_ids:
+                      - 16
+                    id: 502356
+                    original_language: en
+                    original_title: 'While working underground to fix a water main, Brooklyn plumbers—and brothers—Mario and Luigi are transported down a mysterious pipe and wander into a magical new world. But when the brothers are separated, Mario embarks on an epic quest to find Luigi.'
+                    popularity: 6572.614
+                    poster_path: /qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg
+                    release_date: '2023-04-05'
+                    title: The Super Mario Bros. Movie
+                    video: false
+                    vote_average: 7.5
+                    vote_count: 1456
+                total_pages: 87
+                total_results: 1734
   '/movie/{movie_id}/keywords':
     get:
       summary: Keywords
@@ -400,7 +447,7 @@ paths:
                     overview: 'England, 1600. Queen Elizabeth I promises Orlando, a young nobleman obsessed with poetry, that she will grant him land and fortune if he agrees to satisfy a very particular request.'
                     popularity: 7.768
                     poster_path: /xvz0qZkXXMq3dH2Revxii8drxWc.jpg
-                    release_date: 1992-12-11T00:00:00.000Z
+                    release_date: '1992-12-11'
                     title: Orlando
                     video: false
                     vote_average: 6.966
@@ -476,7 +523,7 @@ paths:
                     overview: 'A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground \"fight clubs\" forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion.'
                     popularity: 73.433
                     poster_path: /pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg
-                    release_date: 1999-10-15T00:00:00.000Z
+                    release_date: '1999-10-15'
                     title: Fight Club
                     video: false
                     vote_average: 8.433
@@ -544,7 +591,6 @@ components:
         minLength: 2
         maxLength: 2
         pattern: '^([A-Z]{2})$'
-        default: en-US
       description: '`ISO-3166-1` code'
   responses:
     InvalidPage:
@@ -718,6 +764,20 @@ components:
         - results
         - total_pages
         - total_results
+    MovieListPageWithDates:
+      allOf:
+        - type: object
+          properties:
+            dates:
+              type: object
+              properties:
+                maximum:
+                  type: string
+                  format: date
+                minimum:
+                  type: string
+                  format: date
+        - $ref: '#/components/schemas/MovieListPage'
     Object:
       type: object
       properties:
