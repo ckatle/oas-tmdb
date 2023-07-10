@@ -29,3 +29,7 @@ bundle: ## Bundle OpenAPI files
 .PHONY: validate
 validate: ## Validate the bundled OpenAPI file
 	@npx --package @apidevtools/swagger-cli swagger-cli validate ${OUTPUT_PATH}
+
+.PHONY: test
+test: ## run all tests
+	@pre-commit run --all-files

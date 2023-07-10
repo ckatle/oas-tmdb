@@ -211,6 +211,11 @@ components:
                 minimum:
                   type: string
                   format: date
+              required:
+                - maximum
+                - minimum
+          required:
+            - dates
         - $ref: '#/components/schemas/MovieListPage'
     Object:
       type: object

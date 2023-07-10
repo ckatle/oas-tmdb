@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.15.0
+  version: 0.16.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -343,7 +343,7 @@ paths:
         > **Note**
         > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
         > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
-      operationId: MovieNowPlaying
+      operationId: MovieNowPlayingList
       tags:
         - Movie Lists
       parameters:
@@ -369,7 +369,8 @@ paths:
                       - 16
                     id: 502356
                     original_language: en
-                    original_title: 'While working underground to fix a water main, Brooklyn plumbers—and brothers—Mario and Luigi are transported down a mysterious pipe and wander into a magical new world. But when the brothers are separated, Mario embarks on an epic quest to find Luigi.'
+                    original_title: The Super Mario Bros. Movie
+                    overview: 'While working underground to fix a water main, Brooklyn plumbers—and brothers—Mario and Luigi are transported down a mysterious pipe and wander into a magical new world. But when the brothers are separated, Mario embarks on an epic quest to find Luigi.'
                     popularity: 6572.614
                     poster_path: /qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg
                     release_date: '2023-04-05'
@@ -379,6 +380,61 @@ paths:
                     vote_count: 1456
                 total_pages: 87
                 total_results: 1734
+        '400':
+          $ref: '#/components/responses/InvalidPage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /movie/upcoming:
+    get:
+      summary: Upcoming
+      description: |
+        Get a list of movies that are being released soon.
+
+
+        > **Note**
+        > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
+        > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
+      operationId: MovieUpcomingList
+      tags:
+        - Movie Lists
+      parameters:
+        - $ref: '#/components/parameters/LanguageParam'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Region'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieListPageWithDates'
+              example:
+                dates:
+                  maximum: '2023-05-23'
+                  minimum: '2023-05-04'
+                page: 1
+                results:
+                  - adult: false
+                    backdrop_path: /7bWxAsNPv9CXHOhZbJVlj2KxgfP.jpg
+                    genre_ids:
+                      - 27
+                    id: 713704
+                    original_language: en
+                    original_title: Evil Dead Rise
+                    overview: Two sisters find an ancient vinyl that gives birth to bloodthirsty demons that run amok in a Los Angeles apartment building and thrusts them into a primal battle for survival as they face the most nightmarish version of family imaginable.
+                    popularity: 1696.367
+                    poster_path: /mIBCtPvKZQlxubxKMeViO2UrP3q.jpg
+                    release_date: '2023-04-12'
+                    title: Evil Dead Rise
+                    video: false
+                    vote_average: 7
+                    vote_count: 207
+                total_pages: 19
+                total_results: 369
+        '400':
+          $ref: '#/components/responses/InvalidPage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
   '/movie/{movie_id}/keywords':
     get:
       summary: Keywords
@@ -410,6 +466,10 @@ paths:
                 keywords:
                   - id: 818
                     name: based on novel or book
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
   '/movie/{movie_id}/similar':
     get:
       summary: Similar
@@ -454,6 +514,12 @@ paths:
                     vote_count: 262
                 total_pages: 364
                 total_results: 7269
+        '400':
+          $ref: '#/components/responses/InvalidPage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
   /search/keyword:
     get:
       summary: Keyword
@@ -777,6 +843,11 @@ components:
                 minimum:
                   type: string
                   format: date
+              required:
+                - maximum
+                - minimum
+          required:
+            - dates
         - $ref: '#/components/schemas/MovieListPage'
     Object:
       type: object

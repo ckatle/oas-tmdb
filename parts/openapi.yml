@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.15.0
+  version: 0.16.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -35,6 +35,8 @@ paths:
     $ref: 'keyword.yml#/components/paths/Movies'
   /movie/now_playing:
     $ref: 'movie.yml#/components/paths/NowPlaying'
+  /movie/upcoming:
+    $ref: 'movie.yml#/components/paths/Upcoming'
   /movie/{movie_id}/keywords:
     $ref: 'movie.yml#/components/paths/Keywords'
   /movie/{movie_id}/similar:
