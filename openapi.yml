@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.16.0
+  version: 0.18.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -380,6 +380,102 @@ paths:
                     vote_count: 1456
                 total_pages: 87
                 total_results: 1734
+        '400':
+          $ref: '#/components/responses/InvalidPage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /movie/popular:
+    get:
+      summary: Popular
+      description: |
+        Get a list of movies ordered by popularity.
+
+
+        > **Note**
+        > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
+        > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
+      operationId: MoviePopularList
+      tags:
+        - Movie Lists
+      parameters:
+        - $ref: '#/components/parameters/LanguageParam'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Region'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieListPage'
+              example:
+                page: 1
+                results:
+                  - adult: false
+                    backdrop_path: /gMJngTNfaqCSCqGD4y8lVMZXKDn.jpg
+                    genre_ids:
+                      - 28
+                    id: 640146
+                    original_language: en
+                    original_title: 'Ant-Man and the Wasp: Quantumania'
+                    overview: 'Super-Hero partners Scott Lang and Hope van Dyne, along with with Hope''s parents Janet van Dyne and Hank Pym, and Scott''s daughter Cassie Lang, find themselves exploring the Quantum Realm, interacting with strange new creatures and embarking on an adventure that will push them beyond the limits of what they thought possible.'
+                    popularity: 8567.865
+                    poster_path: /ngl2FKBlU4fhbdsrtdom9LVLBXw.jpg
+                    release_date: '2023-02-15'
+                    title: 'Ant-Man and the Wasp: Quantumania'
+                    video: false
+                    vote_average: 6.5
+                    vote_count: 1886
+                total_pages: 38029
+                total_results: 760569
+        '400':
+          $ref: '#/components/responses/InvalidPage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /movie/top_rated:
+    get:
+      summary: Top Rated
+      description: |
+        Get a list of movies ordered by rating.
+
+
+        > **Note**
+        > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
+        > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
+      operationId: MovieTopRatedList
+      tags:
+        - Movie Lists
+      parameters:
+        - $ref: '#/components/parameters/LanguageParam'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Region'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieListPage'
+              example:
+                page: 1
+                results:
+                  - adult: false
+                    backdrop_path: /tmU7GeKVybMWFButWEGl2M4GeiP.jpg
+                    genre_ids:
+                      - 18
+                    id: 238
+                    original_language: en
+                    original_title: The Godfather
+                    overview: 'Spanning the years 1945 to 1955, a chronicle of the fictional Italian-American Corleone crime family. When organized crime family patriarch, Vito Corleone barely survives an attempt on his life, his youngest son, Michael steps in to take care of the would-be killers, launching a campaign of bloody revenge.'
+                    popularity: 8567.865
+                    poster_path: /3bhkrj58Vtu7enYsRolD1fZdja1.jpg
+                    release_date: '1972-03-14'
+                    title: The Godfather
+                    video: false
+                    vote_average: 8.7
+                    vote_count: 17806
+                total_pages: 552
+                total_results: 11032
         '400':
           $ref: '#/components/responses/InvalidPage'
         '401':
