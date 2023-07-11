@@ -40,6 +40,14 @@ components:
         maxLength: 2
         pattern: '^([A-Z]{2})$'
       description: '`ISO-3166-1` code'
+    Year:
+      in: query
+      name: year
+      schema:
+        type: string
+        minLength: 4
+        maxLength: 4
+        pattern: '^([1-9][0-9]{3})$'
   responses:
     InvalidPage:
       description: Invalid page number
@@ -241,6 +249,83 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Object'
+        total_pages:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 500
+          default: 1
+        total_results:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 10000
+          default: 0
+      required:
+        - page
+        - results
+        - total_pages
+        - total_results
+    TvListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 0
+        name:
+          type: string
+        original_language:
+          type: string
+        original_name:
+          type: string
+        adult:
+          type: boolean
+          default: false
+        backdrop_path:
+          type: string
+        genre_ids:
+          type: array
+          items:
+            type: integer
+            format: int32
+            default: 0
+        origin_country:
+          type: array
+          items:
+            type: string
+            minLength: 2
+            maxLength: 2
+            pattern: '^([A-Z]{2})$'
+        overview:
+          type: string
+        popularity:
+          type: number
+        poster_path:
+          type: string
+        first_air_date:
+          type: string
+        vote_average:
+          type: number
+        vote_count:
+          type: integer
+      required:
+        - id
+        - name
+        - original_language
+        - original_name
+    TvListPage:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 500
+          default: 1
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TvListItem'
         total_pages:
           type: integer
           format: int32

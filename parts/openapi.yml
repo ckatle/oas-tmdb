@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.18.0
+  version: 0.19.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -51,6 +51,8 @@ paths:
     $ref: 'search.yml#/components/paths/Keyword'
   /search/movie:
     $ref: 'search.yml#/components/paths/Movie'
+  /search/tv:
+    $ref: 'search.yml#/components/paths/TV'
 components:
   parameters:
     IncludeAdult:
@@ -67,6 +69,8 @@ components:
       $ref: 'commons.yml#/components/parameters/Query'
     Region:
       $ref: 'commons.yml#/components/parameters/Region'
+    Year:
+      $ref: 'commons.yml#/components/parameters/Year'
   responses:
     InvalidPage:
       $ref: 'commons.yml#/components/responses/InvalidPage'
@@ -77,6 +81,8 @@ components:
   schemas:
     Country:
       $ref: 'configuration.yml#/components/schemas/Country'
+    CountryWithTimezones:
+      $ref: 'configuration.yml#/components/schemas/CountryWithTimezones'
     Department:
       $ref: 'configuration.yml#/components/schemas/Department'
     Error:
@@ -93,6 +99,10 @@ components:
       $ref: 'commons.yml#/components/schemas/Object'
     ObjectListPage:
       $ref: 'commons.yml#/components/schemas/ObjectListPage'
+    TvListItem:
+      $ref: 'commons.yml#/components/schemas/TvListItem'
+    TvListPage:
+      $ref: 'commons.yml#/components/schemas/TvListPage'
   securitySchemes:
     bearerAuth:
       type: http
