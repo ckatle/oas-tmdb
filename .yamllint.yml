@@ -3,10 +3,7 @@
 
 extends: default
 
-ignore:
-  - .pre-commit-config.yaml
-  - .yamllint.yml
-  - openapi.yml
+ignore: openapi.yml
 
 rules:
   document-start:
@@ -14,5 +11,7 @@ rules:
   # 80 chars should be enough, but don't fail if a line is longer
   line-length:
     max: 120
-    #allow-non-breakable-words: true
-    #allow-non-breakable-inline-mappings: true
+    # allow-non-breakable-words: true
+    # allow-non-breakable-inline-mappings: true
+  truthy:
+    ignore: .github/workflows/*.yml

@@ -1,0 +1,7 @@
+name: CI
+
+on: push
+
+jobs:
+  lint:
+    uses: ckatle/actions/.github/workflows/yoas-ci.yml@master
