@@ -26,6 +26,14 @@ bundle: ## Bundle OpenAPI files
 		npx --package @apidevtools/swagger-cli swagger-cli bundle ${INPUT_PATH} -o ${OUTPUT_PATH} -t ${OUTPUT_FILETYPE}; \
 	fi
 
+pc: pca pcr
+
+pca: ## Updating hooks automatically
+	@pre-commit autoupdate
+
+pcr: ## Run against all the files
+	@pre-commit run -a
+
 .PHONY: validate
 validate: ## Validate the bundled OpenAPI file
 	@npx --package @apidevtools/swagger-cli swagger-cli validate ${OUTPUT_PATH}

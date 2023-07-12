@@ -2,10 +2,11 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.19.0
+  version: 0.20.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
+  - name: Companies
   - name: Configuration
   - name: Genre
   - name: Keywords
@@ -13,6 +14,26 @@ tags:
   - name: Movies
   - name: Search
 paths:
+  '/company/{company_id}':
+    get:
+      summary: Details
+      description: Get the company details by ID.
+      operationId: CompanyDetails
+      tags:
+        - Companies
+      parameters:
+        - $ref: '#/components/parameters/CompanyID'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
   /configuration:
     get:
       summary: Details
@@ -732,6 +753,14 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   parameters:
+    CompanyID:
+      in: path
+      name: company_id
+      schema:
+        type: integer
+        format: int32
+      required: true
+      description: The company ID.
     IncludeAdult:
       in: query
       name: include_adult
@@ -828,6 +857,35 @@ components:
               status_code: 7
               status_message: 'Invalid API key: You must be granted a valid key.'
   schemas:
+    Company:
+      type: object
+      additionalProperties: false
+      properties:
+        description:
+          type: string
+          example: ''
+        headquarters:
+          type: string
+          example: 'San Francisco, California'
+        homepage:
+          type: string
+          example: 'https://www.lucasfilm.com'
+        id:
+          type: integer
+          format: int32
+          example: 1
+        logo_path:
+          type: string
+          example: /o86DbpburjxrqAzEDhXZcyE8pDb.png
+        name:
+          type: string
+          example: Lucasfilm Ltd.
+        origin_country:
+          type: string
+          example: US
+      required:
+        - id
+        - name
     Country:
       type: object
       additionalProperties: false

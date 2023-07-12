@@ -1,0 +1,61 @@
+components:
+  parameters:
+    CompanyID:
+      in: path
+      name: company_id
+      schema:
+        type: integer
+        format: int32
+      required: true
+      description: The company ID.
+  paths:
+    Details:
+      get:
+        summary: Details
+        description: Get the company details by ID.
+        operationId: CompanyDetails
+        tags:
+          - Companies
+        parameters:
+          - $ref: '#/components/parameters/CompanyID'
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Company'
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'
+          '404':
+            $ref: 'commons.yml#/components/responses/NotFound'
+  schemas:
+    Company:
+      type: object
+      additionalProperties: false
+      properties:
+        description:
+          type: string
+          example: ''
+        headquarters:
+          type: string
+          example: San Francisco, California
+        homepage:
+          type: string
+          example: 'https://www.lucasfilm.com'
+        id:
+          type: integer
+          format: int32
+          example: 1
+        logo_path:
+          type: string
+          example: '/o86DbpburjxrqAzEDhXZcyE8pDb.png'
+        name:
+          type: string
+          example: Lucasfilm Ltd.
+        origin_country:
+          type: string
+          example: US
+      required:
+        - id
+        - name

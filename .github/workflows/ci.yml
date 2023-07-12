@@ -3,5 +3,5 @@ name: CI
 on: push
 
 jobs:
-  lint:
+  ci:
     uses: ckatle/actions/.github/workflows/oas-ci.yml@master
