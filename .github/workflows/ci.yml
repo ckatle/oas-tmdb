@@ -4,4 +4,4 @@ on: push
 
 jobs:
   lint:
-    uses: ckatle/actions/.github/workflows/yoas-ci.yml@master
+    uses: ckatle/actions/.github/workflows/oas-ci.yml@master
