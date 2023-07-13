@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.20.0
+  version: 0.21.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -16,6 +16,8 @@ tags:
 paths:
   /company/{company_id}:
     $ref: 'company.yml#/components/paths/Details'
+  /company/{company_id}/images:
+    $ref: 'company.yml#/components/paths/Images'
   /configuration:
     $ref: 'configuration.yml#/components/paths/Details'
   /configuration/countries:
@@ -86,6 +88,8 @@ components:
   schemas:
     Company:
       $ref: 'company.yml#/components/schemas/Company'
+    CompanyLogo:
+      $ref: 'company.yml#/components/schemas/CompanyLogo'
     Country:
       $ref: 'configuration.yml#/components/schemas/Country'
     CountryWithTimezones:

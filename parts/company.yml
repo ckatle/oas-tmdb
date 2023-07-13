@@ -29,6 +29,35 @@ components:
             $ref: 'commons.yml#/components/responses/Unauthorized'
           '404':
             $ref: 'commons.yml#/components/responses/NotFound'
+    Images:
+      get:
+        summary: Images
+        description: Get the company logos by id.
+        operationId: CompanyImages
+        tags:
+          - Companies
+        parameters:
+          - $ref: '#/components/parameters/CompanyID'
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      format: int32
+                      example: 1
+                    logos:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/CompanyLogo'
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'
+          '404':
+            $ref: 'commons.yml#/components/responses/NotFound'
   schemas:
     Company:
       type: object
@@ -59,3 +88,31 @@ components:
       required:
         - id
         - name
+    CompanyLogo:
+      type: object
+      additionalProperties: false
+      properties:
+        aspect_ratio:
+          type: number
+          example: 2.97979797979798
+        file_path:
+          type: string
+          example: /o86DbpburjxrqAzEDhXZcyE8pDb.png
+        height:
+          type: integer
+          example: 99
+        id:
+          type: string
+          example: 5aa080d6c3a3683fea00011e
+        file_type:
+          type: string
+          example: .svg
+        vote_average:
+          type: number
+          example: 5.384
+        vote_count:
+          type: integer
+          example: 2
+        width:
+          type: integer
+          example: 295
