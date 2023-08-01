@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.23.0
+  version: 0.22.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -840,23 +840,6 @@ components:
         format: int32
       required: true
       description: The company ID.
-    DiscoverSortBy:
-      in: query
-      name: sort_by
-      schema:
-        type: string
-        enum:
-          - popularity.asc
-          - popularity.desc
-          - revenue.asc
-          - revenue.desc
-          - primary_release_date.asc
-          - primary_release_date.desc
-          - vote_average.asc
-          - vote_average.desc
-          - vote_count.asc
-          - vote_count.desc
-        default: popularity.desc
     IncludeAdult:
       in: query
       name: include_adult
