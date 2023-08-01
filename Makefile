@@ -3,10 +3,10 @@ OUTPUT_PATH ?= ./openapi.yml
 OUTPUT_FILETYPE ?= yaml
 DEREFERENCE ?= false
 
-.PHONY: build
+.PHONY: *
+
 build: bundle validate ## Bundle and validate OpenAPI files
 
-.PHONY: bundle
 bundle: ## Bundle OpenAPI files
 	@if [ ! -f ${INPUT_PATH} ]; then \
 		echo "::error::$INPUT_PATH does not exist!"; \
@@ -34,10 +34,5 @@ pca: ## Updating hooks automatically
 pcr: ## Run against all the files
 	@pre-commit run -a
 
-.PHONY: validate
 validate: ## Validate the bundled OpenAPI file
 	@npx --package @apidevtools/swagger-cli swagger-cli validate ${OUTPUT_PATH}
-
-.PHONY: test
-test: ## run all tests
-	@pre-commit run --all-files

@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.21.0
+  version: 0.23.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -375,7 +375,7 @@ paths:
         Get a list of movies that are currently in theatres.
 
 
-        > **Note**
+        > ## **Note**
         > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
         > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
       operationId: MovieNowPlayingList
@@ -426,7 +426,7 @@ paths:
         Get a list of movies ordered by popularity.
 
 
-        > **Note**
+        > ## **Note**
         > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
         > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
       operationId: MoviePopularList
@@ -474,9 +474,9 @@ paths:
         Get a list of movies ordered by rating.
 
 
-        > **Note**
+        > ## **Note**
         > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
-        > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
+        > filters head over and read about [discover](#/Discover/DiscoverMovie).
       operationId: MovieTopRatedList
       tags:
         - Movie Lists
@@ -522,7 +522,7 @@ paths:
         Get a list of movies that are being released soon.
 
 
-        > **Note**
+        > ## **Note**
         > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
         > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
       operationId: MovieUpcomingList
@@ -690,10 +690,7 @@ paths:
         - $ref: '#/components/parameters/Query'
         - $ref: '#/components/parameters/IncludeAdult'
         - $ref: '#/components/parameters/LanguageParam'
-        - in: query
-          name: primary_release_year
-          schema:
-            type: string
+        - $ref: '#/components/parameters/PrimaryReleaseYear'
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Region'
         - $ref: '#/components/parameters/Year'
@@ -724,6 +721,59 @@ paths:
                     vote_count: 26279
                 total_pages: 2
                 total_results: 39
+        '400':
+          $ref: '#/components/responses/InvalidPage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /search/person:
+    get:
+      summary: Person
+      description: Search for people by their name and also known as names.
+      operationId: SearchPerson
+      tags:
+        - Search
+      parameters:
+        - $ref: '#/components/parameters/Query'
+        - $ref: '#/components/parameters/IncludeAdult'
+        - $ref: '#/components/parameters/LanguageParam'
+        - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonListPage'
+              example:
+                page: 1
+                results:
+                  - adult: false
+                    gender: 2
+                    id: 31
+                    known_for_department: Acting
+                    name: Tom Hanks
+                    original_name: Tom Hanks
+                    popularity: 84.631
+                    profile_path: /xndWFsBlClOJFRdhSt4NBwiPq2o.jpg
+                    known_for:
+                      - adult: false
+                        backdrop_path: /3h1JZGDhZ8nzxdgvkxha0qBqi05.jpg
+                        id: 13
+                        title: Forrest Gump
+                        original_language: en
+                        original_title: Forrest Gump
+                        overview: 'A man with a low IQ has accomplished great things in his life and been present during significant historic events—in each case, far exceeding what anyone imagined he could do. But despite all he has achieved, his one true love eludes him.'
+                        poster_path: /arw2vcBveWOVZr6pxd9XTd1TdQa.jpg
+                        media_type: movie
+                        genre_ids:
+                          - 35
+                        popularity: 67.209
+                        release_date: '1994-06-23'
+                        video: false
+                        vote_average: 8.481
+                        vote_count: 24525
+                total_pages: 1
+                total_results: 1
         '400':
           $ref: '#/components/responses/InvalidPage'
         '401':
@@ -790,6 +840,23 @@ components:
         format: int32
       required: true
       description: The company ID.
+    DiscoverSortBy:
+      in: query
+      name: sort_by
+      schema:
+        type: string
+        enum:
+          - popularity.asc
+          - popularity.desc
+          - revenue.asc
+          - revenue.desc
+          - primary_release_date.asc
+          - primary_release_date.desc
+          - vote_average.asc
+          - vote_average.desc
+          - vote_count.asc
+          - vote_count.desc
+        default: popularity.desc
     IncludeAdult:
       in: query
       name: include_adult
@@ -831,6 +898,12 @@ components:
         minimum: 1
         maximum: 500
         default: 1
+    PrimaryReleaseYear:
+      in: query
+      name: primary_release_year
+      schema:
+        type: integer
+        format: int32
     Query:
       in: query
       name: query
@@ -1070,6 +1143,13 @@ components:
         - title
         - original_language
         - original_title
+    MovieListItemWithMediaType:
+      allOf:
+        - $ref: '#/components/schemas/MovieListItem'
+        - type: object
+          properties:
+            media_type:
+              type: string
     MovieListPage:
       type: object
       properties:
@@ -1160,6 +1240,73 @@ components:
         - results
         - total_pages
         - total_results
+    PersonListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 0
+        name:
+          type: string
+        original_name:
+          type: string
+        adult:
+          type: boolean
+          default: false
+        gender:
+          type: integer
+          format: int32
+        known_for_department:
+          type: string
+        popularity:
+          type: number
+        profile_path:
+          type: string
+        known_for:
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/MovieListItemWithMediaType'
+              - $ref: '#/components/schemas/TvListItemWithMediaType'
+            discriminator:
+              propertyName: media_type
+              mapping:
+                movie: '#/components/schemas/MovieListItemWithMediaType'
+                tv: '#/components/schemas/TvListItemWithMediaType'
+      required:
+        - id
+        - name
+        - original_name
+    PersonListPage:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 500
+          default: 1
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonListItem'
+        total_pages:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 500
+          default: 1
+        total_results:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 10000
+          default: 0
+      required:
+        - page
+        - results
+        - total_pages
+        - total_results
     TvListItem:
       type: object
       properties:
@@ -1207,6 +1354,13 @@ components:
         - name
         - original_language
         - original_name
+    TvListItemWithMediaType:
+      allOf:
+        - $ref: '#/components/schemas/TvListItem'
+        - type: object
+          properties:
+            media_type:
+              type: string
     TvListPage:
       type: object
       properties:

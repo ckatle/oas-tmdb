@@ -2,12 +2,13 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.21.0
+  version: 0.22.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
   - name: Companies
   - name: Configuration
+#  - name: Discover
   - name: Genre
   - name: Keywords
   - name: Movie Lists
@@ -30,6 +31,8 @@ paths:
     $ref: 'configuration.yml#/components/paths/PrimaryTranslations'
   /configuration/timezones:
     $ref: 'configuration.yml#/components/paths/Timezones'
+#  /discover/movie:
+#    $ref: 'discover.yml#/components/paths/Movie'
   /genre/movie/list:
     $ref: 'genre.yml#/components/paths/Movie'
   /genre/tv/list:
@@ -56,12 +59,16 @@ paths:
     $ref: 'search.yml#/components/paths/Keyword'
   /search/movie:
     $ref: 'search.yml#/components/paths/Movie'
+  /search/person:
+    $ref: 'search.yml#/components/paths/Person'
   /search/tv:
     $ref: 'search.yml#/components/paths/TV'
 components:
   parameters:
     CompanyID:
       $ref: 'company.yml#/components/parameters/CompanyID'
+#    DiscoverSortBy:
+#      $ref: 'discover.yml#/components/parameters/SortBy'
     IncludeAdult:
       $ref: 'commons.yml#/components/parameters/IncludeAdult'
     KeywordID:
@@ -72,6 +79,8 @@ components:
       $ref: 'movie.yml#/components/parameters/MovieID'
     Page:
       $ref: 'commons.yml#/components/parameters/Page'
+    PrimaryReleaseYear:
+      $ref: 'commons.yml#/components/parameters/PrimaryReleaseYear'
     Query:
       $ref: 'commons.yml#/components/parameters/Query'
     Region:
@@ -102,6 +111,8 @@ components:
       $ref: 'configuration.yml#/components/schemas/Language'
     MovieListItem:
       $ref: 'commons.yml#/components/schemas/MovieListItem'
+    MovieListItemWithMediaType:
+      $ref: 'commons.yml#/components/schemas/MovieListItemWithMediaType'
     MovieListPage:
       $ref: 'commons.yml#/components/schemas/MovieListPage'
     MovieListPageWithDates:
@@ -110,8 +121,14 @@ components:
       $ref: 'commons.yml#/components/schemas/Object'
     ObjectListPage:
       $ref: 'commons.yml#/components/schemas/ObjectListPage'
+    PersonListItem:
+      $ref: 'commons.yml#/components/schemas/PersonListItem'
+    PersonListPage:
+      $ref: 'commons.yml#/components/schemas/PersonListPage'
     TvListItem:
       $ref: 'commons.yml#/components/schemas/TvListItem'
+    TvListItemWithMediaType:
+      $ref: 'commons.yml#/components/schemas/TvListItemWithMediaType'
     TvListPage:
       $ref: 'commons.yml#/components/schemas/TvListPage'
   securitySchemes:

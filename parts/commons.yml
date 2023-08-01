@@ -25,6 +25,12 @@ components:
         minimum: 1
         maximum: 500
         default: 1
+    PrimaryReleaseYear:
+      in: query
+      name: primary_release_year
+      schema:
+        type: integer
+        format: int32
     Query:
       in: query
       name: query
@@ -176,6 +182,13 @@ components:
         - title
         - original_language
         - original_title
+    MovieListItemWithMediaType:
+      allOf:
+        - $ref: '#/components/schemas/MovieListItem'
+        - type: object
+          properties:
+            media_type:
+              type: string
     MovieListPage:
       type: object
       properties:
@@ -266,6 +279,73 @@ components:
         - results
         - total_pages
         - total_results
+    PersonListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 0
+        name:
+          type: string
+        original_name:
+          type: string
+        adult:
+          type: boolean
+          default: false
+        gender:
+          type: integer
+          format: int32
+        known_for_department:
+          type: string
+        popularity:
+          type: number
+        profile_path:
+          type: string
+        known_for:
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/MovieListItemWithMediaType'
+              - $ref: '#/components/schemas/TvListItemWithMediaType'
+            discriminator:
+              propertyName: media_type
+              mapping:
+                movie: '#/components/schemas/MovieListItemWithMediaType'
+                tv: '#/components/schemas/TvListItemWithMediaType'
+      required:
+        - id
+        - name
+        - original_name
+    PersonListPage:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 500
+          default: 1
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonListItem'
+        total_pages:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 500
+          default: 1
+        total_results:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 10000
+          default: 0
+      required:
+        - page
+        - results
+        - total_pages
+        - total_results
     TvListItem:
       type: object
       properties:
@@ -313,6 +393,13 @@ components:
         - name
         - original_language
         - original_name
+    TvListItemWithMediaType:
+      allOf:
+        - $ref: '#/components/schemas/TvListItem'
+        - type: object
+          properties:
+            media_type:
+              type: string
     TvListPage:
       type: object
       properties:

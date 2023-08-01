@@ -52,7 +52,7 @@ components:
           Get a list of movies that are currently in theatres.
 
 
-          > **Note**
+          > ## **Note**
           > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
           > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
         operationId: MovieNowPlayingList
@@ -104,7 +104,7 @@ components:
           Get a list of movies ordered by popularity.
 
 
-          > **Note**
+          > ## **Note**
           > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
           > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
         operationId: MoviePopularList
@@ -205,9 +205,9 @@ components:
           Get a list of movies ordered by rating.
 
 
-          > **Note**
+          > ## **Note**
           > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
-          > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
+          > filters head over and read about [discover](#/Discover/DiscoverMovie).
         operationId: MovieTopRatedList
         tags:
           - Movie Lists
@@ -255,7 +255,7 @@ components:
           Get a list of movies that are being released soon.
 
 
-          > **Note**
+          > ## **Note**
           > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
           > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
         operationId: MovieUpcomingList
