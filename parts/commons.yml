@@ -139,6 +139,16 @@ components:
         - success
         - status_code
         - status_message
+    Media:
+      type: object
+      properties:
+        media_type:
+          type: string
+          enum: [movie, tv]
+      required:
+        - media_type
+      discriminator:
+        propertyName: media_type
     MovieListItem:
       type: object
       properties:
@@ -184,11 +194,8 @@ components:
         - original_title
     MovieListItemWithMediaType:
       allOf:
+        - $ref: '#/components/schemas/Media'
         - $ref: '#/components/schemas/MovieListItem'
-        - type: object
-          properties:
-            media_type:
-              type: string
     MovieListPage:
       type: object
       properties:
@@ -395,11 +402,8 @@ components:
         - original_name
     TvListItemWithMediaType:
       allOf:
+        - $ref: '#/components/schemas/Media'
         - $ref: '#/components/schemas/TvListItem'
-        - type: object
-          properties:
-            media_type:
-              type: string
     TvListPage:
       type: object
       properties:

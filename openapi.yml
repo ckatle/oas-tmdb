@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.22.0
+  version: 0.22.1
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -1083,6 +1083,18 @@ components:
       required:
         - iso_639_1
         - english_name
+    Media:
+      type: object
+      properties:
+        media_type:
+          type: string
+          enum:
+            - movie
+            - tv
+      required:
+        - media_type
+      discriminator:
+        propertyName: media_type
     MovieListItem:
       type: object
       properties:
@@ -1128,11 +1140,8 @@ components:
         - original_title
     MovieListItemWithMediaType:
       allOf:
+        - $ref: '#/components/schemas/Media'
         - $ref: '#/components/schemas/MovieListItem'
-        - type: object
-          properties:
-            media_type:
-              type: string
     MovieListPage:
       type: object
       properties:
@@ -1339,11 +1348,8 @@ components:
         - original_name
     TvListItemWithMediaType:
       allOf:
+        - $ref: '#/components/schemas/Media'
         - $ref: '#/components/schemas/TvListItem'
-        - type: object
-          properties:
-            media_type:
-              type: string
     TvListPage:
       type: object
       properties:
