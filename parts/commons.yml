@@ -145,7 +145,7 @@ components:
         media_type:
           type: string
           enum: [movie, person, tv]
-          x-go-name: MediaType
+          x-go-type: MediaType
       required:
         - media_type
       discriminator:
