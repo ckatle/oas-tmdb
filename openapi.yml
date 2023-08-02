@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.23.0
+  version: 0.23.1
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -332,7 +332,7 @@ paths:
         - $ref: '#/components/parameters/KeywordID'
         - $ref: '#/components/parameters/IncludeAdult'
         - $ref: '#/components/parameters/LanguageParam'
-        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageParam'
       responses:
         '200':
           description: OK
@@ -383,7 +383,7 @@ paths:
         - Movie Lists
       parameters:
         - $ref: '#/components/parameters/LanguageParam'
-        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageParam'
         - $ref: '#/components/parameters/Region'
       responses:
         '200':
@@ -434,7 +434,7 @@ paths:
         - Movie Lists
       parameters:
         - $ref: '#/components/parameters/LanguageParam'
-        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageParam'
         - $ref: '#/components/parameters/Region'
       responses:
         '200':
@@ -482,7 +482,7 @@ paths:
         - Movie Lists
       parameters:
         - $ref: '#/components/parameters/LanguageParam'
-        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageParam'
         - $ref: '#/components/parameters/Region'
       responses:
         '200':
@@ -530,7 +530,7 @@ paths:
         - Movie Lists
       parameters:
         - $ref: '#/components/parameters/LanguageParam'
-        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageParam'
         - $ref: '#/components/parameters/Region'
       responses:
         '200':
@@ -617,7 +617,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/MovieID'
         - $ref: '#/components/parameters/LanguageParam'
-        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageParam'
       responses:
         '200':
           description: OK
@@ -660,7 +660,7 @@ paths:
         - Search
       parameters:
         - $ref: '#/components/parameters/Query'
-        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageParam'
       responses:
         '200':
           description: OK
@@ -691,7 +691,7 @@ paths:
         - $ref: '#/components/parameters/IncludeAdult'
         - $ref: '#/components/parameters/LanguageParam'
         - $ref: '#/components/parameters/PrimaryReleaseYear'
-        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageParam'
         - $ref: '#/components/parameters/Region'
         - $ref: '#/components/parameters/Year'
       responses:
@@ -736,7 +736,7 @@ paths:
         - $ref: '#/components/parameters/Query'
         - $ref: '#/components/parameters/IncludeAdult'
         - $ref: '#/components/parameters/LanguageParam'
-        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageParam'
       responses:
         '200':
           description: OK
@@ -780,7 +780,7 @@ paths:
         - $ref: '#/components/parameters/Query'
         - $ref: '#/components/parameters/IncludeAdult'
         - $ref: '#/components/parameters/LanguageParam'
-        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageParam'
       responses:
         '200':
           description: OK
@@ -840,7 +840,7 @@ paths:
             pattern: '^([1-9][0-9]{3})$'
         - $ref: '#/components/parameters/IncludeAdult'
         - $ref: '#/components/parameters/LanguageParam'
-        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageParam'
         - $ref: '#/components/parameters/Year'
       responses:
         '200':
@@ -916,7 +916,7 @@ components:
         format: int32
       required: true
       description: The movie ID.
-    Page:
+    PageParam:
       in: query
       name: page
       schema:
