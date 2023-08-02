@@ -144,7 +144,7 @@ components:
       properties:
         media_type:
           type: string
-          enum: [movie, tv]
+          enum: [movie, person, tv]
       required:
         - media_type
       discriminator:
@@ -245,6 +245,26 @@ components:
           required:
             - dates
         - $ref: '#/components/schemas/MovieListPage'
+    MultiListPage:
+      allOf:
+        - $ref: '#/components/schemas/Page'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                oneOf:
+                  - $ref: '#/components/schemas/MovieListItemWithMediaType'
+                  - $ref: '#/components/schemas/PersonListItemWithMediaType'
+                  - $ref: '#/components/schemas/TvListItemWithMediaType'
+                discriminator:
+                  propertyName: media_type
+                  mapping:
+                    movie: '#/components/schemas/MovieListItemWithMediaType'
+                    person: '#/components/schemas/PersonListItemWithMediaType'
+                    tv: '#/components/schemas/TvListItemWithMediaType'
+          required:
+            - results
     Object:
       type: object
       properties:
@@ -286,6 +306,29 @@ components:
         - results
         - total_pages
         - total_results
+    Page:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 500
+          default: 1
+        total_pages:
+          type: integer
+          format: int32
+          minimum: 1
+          default: 1
+        total_results:
+          type: integer
+          format: int32
+          minimum: 0
+          default: 0
+      required:
+        - page
+        - total_pages
+        - total_results
     PersonListItem:
       type: object
       properties:
@@ -323,6 +366,10 @@ components:
         - id
         - name
         - original_name
+    PersonListItemWithMediaType:
+      allOf:
+        - $ref: '#/components/schemas/Media'
+        - $ref: '#/components/schemas/PersonListItem'
     PersonListPage:
       type: object
       properties:

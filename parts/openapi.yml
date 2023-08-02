@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.22.1
+  version: 0.23.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -59,6 +59,8 @@ paths:
     $ref: 'search.yml#/components/paths/Keyword'
   /search/movie:
     $ref: 'search.yml#/components/paths/Movie'
+  /search/multi:
+    $ref: 'search.yml#/components/paths/Multi'
   /search/person:
     $ref: 'search.yml#/components/paths/Person'
   /search/tv:
@@ -119,12 +121,18 @@ components:
       $ref: 'commons.yml#/components/schemas/MovieListPage'
     MovieListPageWithDates:
       $ref: 'commons.yml#/components/schemas/MovieListPageWithDates'
+    MultiListPage:
+      $ref: 'commons.yml#/components/schemas/MultiListPage'
     Object:
       $ref: 'commons.yml#/components/schemas/Object'
     ObjectListPage:
       $ref: 'commons.yml#/components/schemas/ObjectListPage'
+    Page:
+      $ref: 'commons.yml#/components/schemas/Page'
     PersonListItem:
       $ref: 'commons.yml#/components/schemas/PersonListItem'
+    PersonListItemWithMediaType:
+      $ref: 'commons.yml#/components/schemas/PersonListItemWithMediaType'
     PersonListPage:
       $ref: 'commons.yml#/components/schemas/PersonListPage'
     TvListItem:
