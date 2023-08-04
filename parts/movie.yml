@@ -51,7 +51,6 @@ components:
         description: |
           Get a list of movies that are currently in theatres.
 
-
           > ## **Note**
           > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
           > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
@@ -103,7 +102,6 @@ components:
         description: |
           Get a list of movies ordered by popularity.
 
-
           > ## **Note**
           > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
           > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
@@ -152,7 +150,6 @@ components:
         summary: Similar
         description: |
           Get the similar movies based on genres and keywords.
-
 
           > **Note**
           > This method only looks for other items based on genres and plot keywords. As such, the results found here
@@ -204,10 +201,9 @@ components:
         description: |
           Get a list of movies ordered by rating.
 
-
           > ## **Note**
           > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
-          > filters head over and read about [discover](#/Discover/DiscoverMovie).
+          > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
         operationId: MovieTopRatedList
         tags:
           - Movie Lists
@@ -253,7 +249,6 @@ components:
         summary: Upcoming
         description: |
           Get a list of movies that are being released soon.
-
 
           > ## **Note**
           > This call is really just a discover call behind the scenes. If you would like to tweak any of the default

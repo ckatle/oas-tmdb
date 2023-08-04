@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.23.3
+  version: 0.23.4
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -37,7 +37,18 @@ paths:
   '/company/{company_id}/images':
     get:
       summary: Images
-      description: Get the company logos by id.
+      description: |
+        Get the company logos by id.
+
+        > ## **Note**
+        > There are two image formats that are supported for companies, PNG's and SVG's.
+        > You can see which type the original file is by looking at the `file_type` field.
+        > We prefer SVG's as they are resolution independent and as such,
+        > the width and height are only there to reflect the original asset that was uploaded.
+        > An SVG can be scaled properly beyond those dimensions if you call them as a PNG.
+        >
+        > For more information about how SVG's and PNG's can be used, take a read through
+        > [this document](https://developer.themoviedb.org/docs/images).
       operationId: CompanyImages
       tags:
         - Companies
@@ -374,7 +385,6 @@ paths:
       description: |
         Get a list of movies that are currently in theatres.
 
-
         > ## **Note**
         > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
         > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
@@ -425,7 +435,6 @@ paths:
       description: |
         Get a list of movies ordered by popularity.
 
-
         > ## **Note**
         > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
         > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
@@ -473,10 +482,9 @@ paths:
       description: |
         Get a list of movies ordered by rating.
 
-
         > ## **Note**
         > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
-        > filters head over and read about [discover](#/Discover/DiscoverMovie).
+        > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
       operationId: MovieTopRatedList
       tags:
         - Movie Lists
@@ -520,7 +528,6 @@ paths:
       summary: Upcoming
       description: |
         Get a list of movies that are being released soon.
-
 
         > ## **Note**
         > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
@@ -606,7 +613,6 @@ paths:
       summary: Similar
       description: |
         Get the similar movies based on genres and keywords.
-
 
         > **Note**
         > This method only looks for other items based on genres and plot keywords. As such, the results found here
@@ -1136,7 +1142,11 @@ components:
             - movie
             - person
             - tv
-          x-go-type: MediaType
+          x-enum-varnames:
+            - MediaTypeMovie
+            - MediaTypePerson
+            - MediaTypeTv
+          x-go-type-name: MediaType
       required:
         - media_type
       discriminator:
