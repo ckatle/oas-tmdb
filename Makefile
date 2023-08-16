@@ -1,17 +1,19 @@
 INPUT_PATH ?= parts/openapi.yml
-OUTPUT_PATH ?= openapi.yml
+OUTPUT_PATH ?= ./openapi.yml
 OUTPUT_FILETYPE ?= yaml
 DEREFERENCE ?= false
 
-.PHONY: build
+.PHONY: *
+
 build: bundle validate ## Bundle and validate OpenAPI files
 
-.PHONY: bundle
 bundle: ## Bundle OpenAPI files
 	@if [ ! -f ${INPUT_PATH} ]; then \
 		echo "::error::$INPUT_PATH does not exist!"; \
 		exit 1; \
 	fi
+
+	@yamllint .
 
 	@if [ ${OUTPUT_FILETYPE} != "yaml" ] && [ "${OUTPUT_FILETYPE}" != "json" ] ; then \
 		echo "::error::FILETYPE must be either 'yaml' or 'json'!"; \
@@ -24,6 +26,13 @@ bundle: ## Bundle OpenAPI files
 		npx --package @apidevtools/swagger-cli swagger-cli bundle ${INPUT_PATH} -o ${OUTPUT_PATH} -t ${OUTPUT_FILETYPE}; \
 	fi
 
-.PHONY: validate
+pc: pca pcr
+
+pca: ## Updating hooks automatically
+	@pre-commit autoupdate
+
+pcr: ## Run against all the files
+	@pre-commit run -a
+
 validate: ## Validate the bundled OpenAPI file
 	@npx --package @apidevtools/swagger-cli swagger-cli validate ${OUTPUT_PATH}

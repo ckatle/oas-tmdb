@@ -1,0 +1,8 @@
+---
+name: CI
+
+on: push
+
+jobs:
+  ci:
+    uses: ckatle/actions/.github/workflows/oas-ci.yml@master

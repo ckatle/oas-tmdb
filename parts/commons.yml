@@ -1,5 +1,12 @@
+---
 components:
   parameters:
+    IncludeAdult:
+      in: query
+      name: include_adult
+      schema:
+        type: boolean
+        default: false
     Language:
       in: query
       name: language
@@ -9,8 +16,66 @@ components:
         maxLength: 5
         pattern: '^([a-z]{2})-([A-Z]{2})$'
         default: en-US
-      description: Pass a ISO 639-1 value to display translated data for the fields that support it.
+      description: '`ISO-639-1`-`ISO-3166-1` code'
+    Page:
+      in: query
+      name: page
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 500
+        default: 1
+    PrimaryReleaseYear:
+      in: query
+      name: primary_release_year
+      schema:
+        type: integer
+        format: int32
+    Query:
+      in: query
+      name: query
+      required: true
+      schema:
+        type: string
+    Region:
+      in: query
+      name: region
+      schema:
+        type: string
+        minLength: 2
+        maxLength: 2
+        pattern: '^([A-Z]{2})$'
+      description: '`ISO-3166-1` code'
+    Year:
+      in: query
+      name: year
+      schema:
+        type: string
+        minLength: 4
+        maxLength: 4
+        pattern: '^([1-9][0-9]{3})$'
   responses:
+    InvalidPage:
+      description: Invalid page number
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            - success: false
+              status_code: 22
+              status_message: 'Invalid page: Pages start at 1 and max at 500. They are expected to be an integer.'
+    NotFound:
+      description: The server can not find the requested resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            - success: false
+              status_code: 34
+              status_message: 'The resource you requested could not be found.'
     Unauthorized:
       description: Authorization information is missing or invalid.
       content:
@@ -22,6 +87,42 @@ components:
               status_code: 7
               status_message: 'Invalid API key: You must be granted a valid key.'
   schemas:
+    CollectionBase:
+      type: object
+      properties:
+        adult:
+          type: boolean
+          default: false
+        backdrop_path:
+          type: string
+          example: '/zuW6fOiusv4X9nnW3paHGfXcSll.jpg'
+        id:
+          type: integer
+          example: 86311
+          default: 0
+        name:
+          type: string
+          example: 'The Avengers Collection'
+        original_language:
+          type: string
+          example: 'en'
+        original_name:
+          type: string
+          example: 'The Avengers Collection'
+        overview:
+          type: string
+          example: 'A superhero film series produced by Marvel Studios based on the Marvel Comics superhero team of the
+          same name, and part of the Marvel Cinematic Universe (MCU).  The series features an ensemble cast from the
+          Marvel Cinematic Universe series films, as they join forces for the peacekeeping organization S.H.I.E.L.D.
+          led by Nick Fury.'
+        poster_path:
+          type: string
+          example: '/yFSIUVTCvgYrpalUktulvk3Gi5Y.jpg'
+      required:
+        - id
+        - name
+        - original_language
+        - original_name
     # Schema for error response body
     Error:
       type: object
@@ -39,3 +140,350 @@ components:
         - success
         - status_code
         - status_message
+    Media:
+      type: object
+      properties:
+        media_type:
+          type: string
+          enum: [movie, person, tv]
+          x-enum-varnames:
+            - MediaTypeMovie
+            - MediaTypePerson
+            - MediaTypeTv
+          x-go-type-name: MediaType
+      required:
+        - media_type
+      discriminator:
+        propertyName: media_type
+    MovieListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 0
+        title:
+          type: string
+        original_language:
+          type: string
+        original_title:
+          type: string
+        adult:
+          type: boolean
+          default: false
+        backdrop_path:
+          type: string
+        genre_ids:
+          type: array
+          items:
+            type: integer
+            format: int32
+            default: 0
+        overview:
+          type: string
+        popularity:
+          type: number
+        poster_path:
+          type: string
+        release_date:
+          type: string
+        video:
+          type: boolean
+          default: true
+        vote_average:
+          type: number
+        vote_count:
+          type: integer
+      required:
+        - id
+        - title
+        - original_language
+        - original_title
+    MovieListItemWithMediaType:
+      allOf:
+        - $ref: '#/components/schemas/Media'
+        - $ref: '#/components/schemas/MovieListItem'
+    MovieListPage:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 500
+          default: 1
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/MovieListItem'
+        total_pages:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 500
+          default: 1
+        total_results:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 10000
+          default: 0
+      required:
+        - page
+        - results
+        - total_pages
+        - total_results
+    MovieListPageWithDates:
+      allOf:
+        - type: object
+          properties:
+            dates:
+              type: object
+              properties:
+                maximum:
+                  type: string
+                  format: date
+                minimum:
+                  type: string
+                  format: date
+              required:
+                - maximum
+                - minimum
+          required:
+            - dates
+        - $ref: '#/components/schemas/MovieListPage'
+    MultiListPage:
+      allOf:
+        - $ref: '#/components/schemas/Page'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                oneOf:
+                  - $ref: '#/components/schemas/MovieListItemWithMediaType'
+                  - $ref: '#/components/schemas/PersonListItemWithMediaType'
+                  - $ref: '#/components/schemas/TvListItemWithMediaType'
+                discriminator:
+                  propertyName: media_type
+                  mapping:
+                    movie: '#/components/schemas/MovieListItemWithMediaType'
+                    person: '#/components/schemas/PersonListItemWithMediaType'
+                    tv: '#/components/schemas/TvListItemWithMediaType'
+          required:
+            - results
+    Object:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+      required:
+        - id
+        - name
+    ObjectListPage:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 500
+          default: 1
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Object'
+        total_pages:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 500
+          default: 1
+        total_results:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 10000
+          default: 0
+      required:
+        - page
+        - results
+        - total_pages
+        - total_results
+    Page:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 500
+          default: 1
+        total_pages:
+          type: integer
+          format: int32
+          minimum: 1
+          default: 1
+        total_results:
+          type: integer
+          format: int32
+          minimum: 0
+          default: 0
+      required:
+        - page
+        - total_pages
+        - total_results
+    PersonListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 0
+        name:
+          type: string
+        original_name:
+          type: string
+        adult:
+          type: boolean
+          default: false
+        gender:
+          type: integer
+          format: int32
+        known_for_department:
+          type: string
+        popularity:
+          type: number
+        profile_path:
+          type: string
+        known_for:
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/MovieListItemWithMediaType'
+              - $ref: '#/components/schemas/TvListItemWithMediaType'
+            discriminator:
+              propertyName: media_type
+              mapping:
+                movie: '#/components/schemas/MovieListItemWithMediaType'
+                tv: '#/components/schemas/TvListItemWithMediaType'
+      required:
+        - id
+        - name
+        - original_name
+    PersonListItemWithMediaType:
+      allOf:
+        - $ref: '#/components/schemas/Media'
+        - $ref: '#/components/schemas/PersonListItem'
+    PersonListPage:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 500
+          default: 1
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonListItem'
+        total_pages:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 500
+          default: 1
+        total_results:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 10000
+          default: 0
+      required:
+        - page
+        - results
+        - total_pages
+        - total_results
+    TvListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 0
+        name:
+          type: string
+        original_language:
+          type: string
+        original_name:
+          type: string
+        adult:
+          type: boolean
+          default: false
+        backdrop_path:
+          type: string
+        genre_ids:
+          type: array
+          items:
+            type: integer
+            format: int32
+            default: 0
+        origin_country:
+          type: array
+          items:
+            type: string
+            minLength: 2
+            maxLength: 2
+            pattern: '^([A-Z]{2})$'
+        overview:
+          type: string
+        popularity:
+          type: number
+        poster_path:
+          type: string
+        first_air_date:
+          type: string
+        vote_average:
+          type: number
+        vote_count:
+          type: integer
+      required:
+        - id
+        - name
+        - original_language
+        - original_name
+    TvListItemWithMediaType:
+      allOf:
+        - $ref: '#/components/schemas/Media'
+        - $ref: '#/components/schemas/TvListItem'
+    TvListPage:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 500
+          default: 1
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TvListItem'
+        total_pages:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 500
+          default: 1
+        total_results:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 10000
+          default: 0
+      required:
+        - page
+        - results
+        - total_pages
+        - total_results

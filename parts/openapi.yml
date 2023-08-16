@@ -1,33 +1,147 @@
+---
 openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.3.1
+  version: 0.23.4
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
+  - name: Companies
   - name: Configuration
+  # - name: Discover
+  - name: Genre
+  - name: Keywords
+  - name: Movie Lists
+  - name: Movies
+  - name: Search
 paths:
+  /company/{company_id}:
+    $ref: 'company.yml#/components/paths/Details'
+  /company/{company_id}/images:
+    $ref: 'company.yml#/components/paths/Images'
   /configuration:
     $ref: 'configuration.yml#/components/paths/Details'
   /configuration/countries:
     $ref: 'configuration.yml#/components/paths/Countries'
   /configuration/jobs:
     $ref: 'configuration.yml#/components/paths/Jobs'
+  /configuration/languages:
+    $ref: 'configuration.yml#/components/paths/Languages'
+  /configuration/primary_translations:
+    $ref: 'configuration.yml#/components/paths/PrimaryTranslations'
+  /configuration/timezones:
+    $ref: 'configuration.yml#/components/paths/Timezones'
+  #  /discover/movie:
+  #    $ref: 'discover.yml#/components/paths/Movie'
+  /genre/movie/list:
+    $ref: 'genre.yml#/components/paths/Movie'
+  /genre/tv/list:
+    $ref: 'genre.yml#/components/paths/TV'
+  /keyword/{keyword_id}:
+    $ref: 'keyword.yml#/components/paths/Details'
+  /keyword/{keyword_id}/movies:
+    $ref: 'keyword.yml#/components/paths/Movies'
+  /movie/now_playing:
+    $ref: 'movie.yml#/components/paths/NowPlaying'
+  /movie/popular:
+    $ref: 'movie.yml#/components/paths/Popular'
+  /movie/top_rated:
+    $ref: 'movie.yml#/components/paths/TopRated'
+  /movie/upcoming:
+    $ref: 'movie.yml#/components/paths/Upcoming'
+  /movie/{movie_id}/keywords:
+    $ref: 'movie.yml#/components/paths/Keywords'
+  /movie/{movie_id}/similar:
+    $ref: 'movie.yml#/components/paths/Similar'
+  #  /search/collection:
+  #    $ref: 'search.yml#/components/paths/Collection'
+  /search/keyword:
+    $ref: 'search.yml#/components/paths/Keyword'
+  /search/movie:
+    $ref: 'search.yml#/components/paths/Movie'
+  /search/multi:
+    $ref: 'search.yml#/components/paths/Multi'
+  /search/person:
+    $ref: 'search.yml#/components/paths/Person'
+  /search/tv:
+    $ref: 'search.yml#/components/paths/TV'
 components:
   parameters:
-    Language:
+    CompanyID:
+      $ref: 'company.yml#/components/parameters/CompanyID'
+    #    DiscoverSortBy:
+    #      $ref: 'discover.yml#/components/parameters/SortBy'
+    IncludeAdult:
+      $ref: 'commons.yml#/components/parameters/IncludeAdult'
+    KeywordID:
+      $ref: 'keyword.yml#/components/parameters/KeywordID'
+    LanguageParam:
       $ref: 'commons.yml#/components/parameters/Language'
+    MovieID:
+      $ref: 'movie.yml#/components/parameters/MovieID'
+    PageParam:
+      $ref: 'commons.yml#/components/parameters/Page'
+    PrimaryReleaseYear:
+      $ref: 'commons.yml#/components/parameters/PrimaryReleaseYear'
+    Query:
+      $ref: 'commons.yml#/components/parameters/Query'
+    Region:
+      $ref: 'commons.yml#/components/parameters/Region'
+    Year:
+      $ref: 'commons.yml#/components/parameters/Year'
   responses:
+    InvalidPage:
+      $ref: 'commons.yml#/components/responses/InvalidPage'
+    NotFound:
+      $ref: 'commons.yml#/components/responses/NotFound'
     Unauthorized:
       $ref: 'commons.yml#/components/responses/Unauthorized'
   schemas:
+    Company:
+      $ref: 'company.yml#/components/schemas/Company'
+    CompanyLogo:
+      $ref: 'company.yml#/components/schemas/CompanyLogo'
     Country:
       $ref: 'configuration.yml#/components/schemas/Country'
+    CountryWithTimezones:
+      $ref: 'configuration.yml#/components/schemas/CountryWithTimezones'
     Department:
       $ref: 'configuration.yml#/components/schemas/Department'
     Error:
-      $ref: "commons.yml#/components/schemas/Error"
+      $ref: 'commons.yml#/components/schemas/Error'
+    Language:
+      $ref: 'configuration.yml#/components/schemas/Language'
+    Media:
+      $ref: 'commons.yml#/components/schemas/Media'
+    MovieListItem:
+      $ref: 'commons.yml#/components/schemas/MovieListItem'
+    MovieListItemWithMediaType:
+      $ref: 'commons.yml#/components/schemas/MovieListItemWithMediaType'
+    MovieListPage:
+      $ref: 'commons.yml#/components/schemas/MovieListPage'
+    MovieListPageWithDates:
+      $ref: 'commons.yml#/components/schemas/MovieListPageWithDates'
+    MultiListPage:
+      $ref: 'commons.yml#/components/schemas/MultiListPage'
+    Object:
+      $ref: 'commons.yml#/components/schemas/Object'
+    ObjectListPage:
+      $ref: 'commons.yml#/components/schemas/ObjectListPage'
+    Page:
+      $ref: 'commons.yml#/components/schemas/Page'
+    PersonListItem:
+      $ref: 'commons.yml#/components/schemas/PersonListItem'
+    PersonListItemWithMediaType:
+      $ref: 'commons.yml#/components/schemas/PersonListItemWithMediaType'
+    PersonListPage:
+      $ref: 'commons.yml#/components/schemas/PersonListPage'
+    TvListItem:
+      $ref: 'commons.yml#/components/schemas/TvListItem'
+    TvListItemWithMediaType:
+      $ref: 'commons.yml#/components/schemas/TvListItemWithMediaType'
+    TvListPage:
+      $ref: 'commons.yml#/components/schemas/TvListPage'
   securitySchemes:
     bearerAuth:
       type: http

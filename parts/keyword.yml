@@ -1,0 +1,84 @@
+---
+components:
+  parameters:
+    KeywordID:
+      in: path
+      name: keyword_id
+      schema:
+        type: integer
+        format: int32
+      required: true
+      description: The keyword ID.
+  paths:
+    Details:
+      get:
+        summary: Details
+        #        description:
+        operationId: KeywordDetails
+        tags:
+          - Keywords
+        parameters:
+          - $ref: '#/components/parameters/KeywordID'
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: 'commons.yml#/components/schemas/Object'
+                example:
+                  id: 1701
+                  name: hero
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'
+          '404':
+            $ref: 'commons.yml#/components/responses/NotFound'
+    Movies:
+      get:
+        summary: Movies
+        description: This method is deprecated, you should use `/discover/movie` instead.
+        operationId: KeywordMovies
+        tags:
+          - Keywords
+        parameters:
+          - $ref: '#/components/parameters/KeywordID'
+          - $ref: 'commons.yml#/components/parameters/IncludeAdult'
+          - $ref: 'commons.yml#/components/parameters/Language'
+          - $ref: 'commons.yml#/components/parameters/Page'
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: 'commons.yml#/components/schemas/MovieListPage'
+                example:
+                  id: 1701  # TODO - New schema?
+                  page: 1
+                  results:
+                    - adult: false
+                      backdrop_path: '/3CxUndGhUcZdt1Zggjdb2HkLLQX.jpg'
+                      genre_ids: [28]
+                      id: 640146
+                      original_language: en
+                      original_title: 'Ant-Man and the Wasp: Quantumania'
+                      overview: 'Das Superhelden-Duo Scott Lang und Hope Van Dyne erkundet zusammen mit Hopes Eltern
+                      Hank Pym und Janet Van Dyne das Quantenreich, interagiert mit seltsamen neuen Kreaturen und begibt
+                      sich auf ein Abenteuer, das sie über die Grenzen dessen hinaustreiben wird, was sie für möglich
+                      gehalten haben.'
+                      popularity: 9200.005
+                      poster_path: '/nA5otwVxAfpBP4PVgeuBk3qHcLY.jpg'
+                      release_date: '2023-02-15'
+                      title: 'Ant-Man and the Wasp: Quantumania'
+                      video: false
+                      vote_average: 6.5
+                      vote_count: 2079
+                  total_pages: 11
+                  total_results: 211
+          '400':
+            $ref: 'commons.yml#/components/responses/InvalidPage'
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'
+          '404':
+            $ref: 'commons.yml#/components/responses/NotFound'
+        deprecated: true

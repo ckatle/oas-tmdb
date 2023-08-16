@@ -1,0 +1,298 @@
+---
+components:
+  parameters:
+    MovieID:
+      in: path
+      name: movie_id
+      schema:
+        type: integer
+        format: int32
+      required: true
+      description: The movie ID.
+  paths:
+    Keywords:
+      get:
+        summary: Keywords
+        #        description: Search for collections by their original, translated and alternative names.
+        operationId: MovieKeywords
+        tags:
+          - Movies
+        parameters:
+          - $ref: '#/components/parameters/MovieID'
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      format: int32
+                    keywords:
+                      type: array
+                      items:
+                        $ref: 'commons.yml#/components/schemas/Object'
+                  required:
+                    - id
+                    - keywords
+                example:
+                  id: 550
+                  keywords:
+                    - id: 818
+                      name: based on novel or book
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'
+          '404':
+            $ref: 'commons.yml#/components/responses/NotFound'
+    NowPlaying:
+      get:
+        summary: Now Playing
+        description: |
+          Get a list of movies that are currently in theatres.
+
+          > ## **Note**
+          > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
+          > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
+        operationId: MovieNowPlayingList
+        tags:
+          - Movie Lists
+        parameters:
+          - $ref: 'commons.yml#/components/parameters/Language'
+          - $ref: 'commons.yml#/components/parameters/Page'
+          - $ref: 'commons.yml#/components/parameters/Region'
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: 'commons.yml#/components/schemas/MovieListPageWithDates'
+                example:
+                  dates:
+                    maximum: '2023-05-03'
+                    minimum: '2023-03-16'
+                  page: 1
+                  results:
+                    - adult: false
+                      backdrop_path: '/iJQIbOPm81fPEGKt5BPuZmfnA54.jpg'
+                      genre_ids: [16]
+                      id: 502356
+                      original_language: en
+                      original_title: The Super Mario Bros. Movie
+                      overview: 'While working underground to fix a water main, Brooklyn plumbers—and
+                      brothers—Mario and Luigi are transported down a mysterious pipe and wander into a magical new
+                      world. But when the brothers are separated, Mario embarks on an epic quest to find Luigi.'
+                      popularity: 6572.614
+                      poster_path: '/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg'
+                      release_date: '2023-04-05'
+                      title: The Super Mario Bros. Movie
+                      video: false
+                      vote_average: 7.5
+                      vote_count: 1456
+                  total_pages: 87
+                  total_results: 1734
+          '400':
+            $ref: 'commons.yml#/components/responses/InvalidPage'
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'
+    Popular:
+      get:
+        summary: Popular
+        description: |
+          Get a list of movies ordered by popularity.
+
+          > ## **Note**
+          > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
+          > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
+        operationId: MoviePopularList
+        tags:
+          - Movie Lists
+        parameters:
+          - $ref: 'commons.yml#/components/parameters/Language'
+          - $ref: 'commons.yml#/components/parameters/Page'
+          - $ref: 'commons.yml#/components/parameters/Region'
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: 'commons.yml#/components/schemas/MovieListPage'
+                example:
+                  page: 1
+                  results:
+                    - adult: false
+                      backdrop_path: '/gMJngTNfaqCSCqGD4y8lVMZXKDn.jpg'
+                      genre_ids: [28]
+                      id: 640146
+                      original_language: en
+                      original_title: 'Ant-Man and the Wasp: Quantumania'
+                      overview: "Super-Hero partners Scott Lang and Hope van Dyne, along with with Hope's parents Janet
+                      van Dyne and Hank Pym, and Scott's daughter Cassie Lang, find themselves exploring the Quantum
+                      Realm, interacting with strange new creatures and embarking on an adventure that will push them
+                      beyond the limits of what they thought possible."
+                      popularity: 8567.865
+                      poster_path: '/ngl2FKBlU4fhbdsrtdom9LVLBXw.jpg'
+                      release_date: '2023-02-15'
+                      title: 'Ant-Man and the Wasp: Quantumania'
+                      video: false
+                      vote_average: 6.5
+                      vote_count: 1886
+                  total_pages: 38029
+                  total_results: 760569
+          '400':
+            $ref: 'commons.yml#/components/responses/InvalidPage'
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'
+    Similar:
+      get:
+        summary: Similar
+        description: |
+          Get the similar movies based on genres and keywords.
+
+          > **Note**
+          > This method only looks for other items based on genres and plot keywords. As such, the results found here
+          > are not always going to be perfect. Use it with that in mind.
+        operationId: MovieSimilar
+        tags:
+          - Movies
+        parameters:
+          - $ref: '#/components/parameters/MovieID'
+          - $ref: 'commons.yml#/components/parameters/Language'
+          - $ref: 'commons.yml#/components/parameters/Page'
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: 'commons.yml#/components/schemas/MovieListPage'
+                example:
+                  page: 1
+                  results:
+                    - adult: false
+                      backdrop_path: '/3YAldML4EDyoC6RBpzceALigrAZ.jpg'
+                      genre_ids: [18]
+                      id: 9300
+                      original_language: en
+                      original_title: Orlando
+                      overview: 'England, 1600. Queen Elizabeth I promises Orlando, a young nobleman obsessed with
+                      poetry, that she will grant him land and fortune if he agrees to satisfy a very particular
+                      request.'
+                      popularity: 7.768
+                      poster_path: '/xvz0qZkXXMq3dH2Revxii8drxWc.jpg'
+                      release_date: '1992-12-11'
+                      title: Orlando
+                      video: false
+                      vote_average: 6.966
+                      vote_count: 262
+                  total_pages: 364
+                  total_results: 7269
+          '400':
+            $ref: 'commons.yml#/components/responses/InvalidPage'
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'
+          '404':
+            $ref: 'commons.yml#/components/responses/NotFound'
+    TopRated:
+      get:
+        summary: Top Rated
+        description: |
+          Get a list of movies ordered by rating.
+
+          > ## **Note**
+          > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
+          > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
+        operationId: MovieTopRatedList
+        tags:
+          - Movie Lists
+        parameters:
+          - $ref: 'commons.yml#/components/parameters/Language'
+          - $ref: 'commons.yml#/components/parameters/Page'
+          - $ref: 'commons.yml#/components/parameters/Region'
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: 'commons.yml#/components/schemas/MovieListPage'
+                example:
+                  page: 1
+                  results:
+                    - adult: false
+                      backdrop_path: '/tmU7GeKVybMWFButWEGl2M4GeiP.jpg'
+                      genre_ids: [18]
+                      id: 238
+                      original_language: en
+                      original_title: The Godfather
+                      overview: 'Spanning the years 1945 to 1955, a chronicle of the fictional Italian-American Corleone
+                      crime family. When organized crime family patriarch, Vito Corleone barely survives an attempt on
+                      his life, his youngest son, Michael steps in to take care of the would-be killers, launching a
+                      campaign of bloody revenge.'
+                      popularity: 8567.865
+                      poster_path: '/3bhkrj58Vtu7enYsRolD1fZdja1.jpg'
+                      release_date: '1972-03-14'
+                      title: The Godfather
+                      video: false
+                      vote_average: 8.7
+                      vote_count: 17806
+                  total_pages: 552
+                  total_results: 11032
+          '400':
+            $ref: 'commons.yml#/components/responses/InvalidPage'
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'
+    Upcoming:
+      get:
+        summary: Upcoming
+        description: |
+          Get a list of movies that are being released soon.
+
+          > ## **Note**
+          > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
+          > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
+        operationId: MovieUpcomingList
+        tags:
+          - Movie Lists
+        parameters:
+          - $ref: 'commons.yml#/components/parameters/Language'
+          - $ref: 'commons.yml#/components/parameters/Page'
+          - $ref: 'commons.yml#/components/parameters/Region'
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: 'commons.yml#/components/schemas/MovieListPageWithDates'
+                example:
+                  dates:
+                    maximum: '2023-05-23'
+                    minimum: '2023-05-04'
+                  page: 1
+                  results:
+                    - adult: false
+                      backdrop_path: '/7bWxAsNPv9CXHOhZbJVlj2KxgfP.jpg'
+                      genre_ids: [27]
+                      id: 713704
+                      original_language: en
+                      original_title: Evil Dead Rise
+                      overview: 'Two sisters find an ancient vinyl that gives birth to bloodthirsty demons that run
+                      amok in a Los Angeles apartment building and thrusts them into a primal battle for survival as
+                      they face the most nightmarish version of family imaginable.'
+                      popularity: 1696.367
+                      poster_path: '/mIBCtPvKZQlxubxKMeViO2UrP3q.jpg'
+                      release_date: '2023-04-12'
+                      title: Evil Dead Rise
+                      video: false
+                      vote_average: 7
+                      vote_count: 207
+                  total_pages: 19
+                  total_results: 369
+          '400':
+            $ref: 'commons.yml#/components/responses/InvalidPage'
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'

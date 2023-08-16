@@ -1,0 +1,130 @@
+---
+components:
+  parameters:
+    CompanyID:
+      in: path
+      name: company_id
+      schema:
+        type: integer
+        format: int32
+      required: true
+      description: The company ID.
+  paths:
+    Details:
+      get:
+        summary: Details
+        description: Get the company details by ID.
+        operationId: CompanyDetails
+        tags:
+          - Companies
+        parameters:
+          - $ref: '#/components/parameters/CompanyID'
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Company'
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'
+          '404':
+            $ref: 'commons.yml#/components/responses/NotFound'
+    Images:
+      get:
+        summary: Images
+        description: |
+          Get the company logos by id.
+
+          > ## **Note**
+          > There are two image formats that are supported for companies, PNG's and SVG's.
+          > You can see which type the original file is by looking at the `file_type` field.
+          > We prefer SVG's as they are resolution independent and as such,
+          > the width and height are only there to reflect the original asset that was uploaded.
+          > An SVG can be scaled properly beyond those dimensions if you call them as a PNG.
+          >
+          > For more information about how SVG's and PNG's can be used, take a read through
+          > [this document](https://developer.themoviedb.org/docs/images).
+        operationId: CompanyImages
+        tags:
+          - Companies
+        parameters:
+          - $ref: '#/components/parameters/CompanyID'
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      format: int32
+                      example: 1
+                    logos:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/CompanyLogo'
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'
+          '404':
+            $ref: 'commons.yml#/components/responses/NotFound'
+  schemas:
+    Company:
+      type: object
+      additionalProperties: false
+      properties:
+        description:
+          type: string
+          example: ''
+        headquarters:
+          type: string
+          example: San Francisco, California
+        homepage:
+          type: string
+          example: 'https://www.lucasfilm.com'
+        id:
+          type: integer
+          format: int32
+          example: 1
+        logo_path:
+          type: string
+          example: '/o86DbpburjxrqAzEDhXZcyE8pDb.png'
+        name:
+          type: string
+          example: Lucasfilm Ltd.
+        origin_country:
+          type: string
+          example: US
+      required:
+        - id
+        - name
+    CompanyLogo:
+      type: object
+      additionalProperties: false
+      properties:
+        aspect_ratio:
+          type: number
+          example: 2.97979797979798
+        file_path:
+          type: string
+          example: /o86DbpburjxrqAzEDhXZcyE8pDb.png
+        height:
+          type: integer
+          example: 99
+        id:
+          type: string
+          example: 5aa080d6c3a3683fea00011e
+        file_type:
+          type: string
+          example: .svg
+        vote_average:
+          type: number
+          example: 5.384
+        vote_count:
+          type: integer
+          example: 2
+        width:
+          type: integer
+          example: 295

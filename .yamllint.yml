@@ -1,0 +1,13 @@
+---
+extends: default
+
+ignore: /openapi.yml
+
+rules:
+  # 80 chars should be enough, but don't fail if a line is longer
+  line-length:
+    max: 120
+    # allow-non-breakable-words: true
+    # allow-non-breakable-inline-mappings: true
+  truthy:
+    ignore: .github/workflows/*.yml
