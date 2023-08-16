@@ -1,3 +1,4 @@
+---
 openapi: 3.0.3
 info:
   title: TMDB API
@@ -8,7 +9,7 @@ servers:
 tags:
   - name: Companies
   - name: Configuration
-#  - name: Discover
+  # - name: Discover
   - name: Genre
   - name: Keywords
   - name: Movie Lists
@@ -31,8 +32,8 @@ paths:
     $ref: 'configuration.yml#/components/paths/PrimaryTranslations'
   /configuration/timezones:
     $ref: 'configuration.yml#/components/paths/Timezones'
-#  /discover/movie:
-#    $ref: 'discover.yml#/components/paths/Movie'
+  #  /discover/movie:
+  #    $ref: 'discover.yml#/components/paths/Movie'
   /genre/movie/list:
     $ref: 'genre.yml#/components/paths/Movie'
   /genre/tv/list:
@@ -69,8 +70,8 @@ components:
   parameters:
     CompanyID:
       $ref: 'company.yml#/components/parameters/CompanyID'
-#    DiscoverSortBy:
-#      $ref: 'discover.yml#/components/parameters/SortBy'
+    #    DiscoverSortBy:
+    #      $ref: 'discover.yml#/components/parameters/SortBy'
     IncludeAdult:
       $ref: 'commons.yml#/components/parameters/IncludeAdult'
     KeywordID:
