@@ -43,8 +43,8 @@ components:
         parameters:
           - $ref: '#/components/parameters/KeywordID'
           - $ref: 'commons.yml#/components/parameters/IncludeAdult'
-          - $ref: 'commons.yml#/components/parameters/Language'
-          - $ref: 'commons.yml#/components/parameters/Page'
+          - $ref: 'commons.yml#/components/parameters/LanguageParam'
+          - $ref: 'commons.yml#/components/parameters/PageParam'
         responses:
           '200':
             description: OK

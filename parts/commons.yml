@@ -7,7 +7,7 @@ components:
       schema:
         type: boolean
         default: false
-    Language:
+    LanguageParam:
       in: query
       name: language
       schema:
@@ -17,7 +17,7 @@ components:
         pattern: '^([a-z]{2})-([A-Z]{2})$'
         default: en-US
       description: '`ISO-639-1`-`ISO-3166-1` code'
-    Page:
+    PageParam:
       in: query
       name: page
       schema:
