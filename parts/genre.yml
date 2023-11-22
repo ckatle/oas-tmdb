@@ -9,7 +9,7 @@ components:
         tags:
           - Genre
         parameters:
-          - $ref: 'commons.yml#/components/parameters/Language'
+          - $ref: 'commons.yml#/components/parameters/LanguageParam'
         responses:
           '200':
             description: OK
@@ -32,7 +32,7 @@ components:
         tags:
           - Genre
         parameters:
-          - $ref: 'commons.yml#/components/parameters/Language'
+          - $ref: 'commons.yml#/components/parameters/LanguageParam'
         responses:
           '200':
             description: OK

@@ -11,8 +11,8 @@ components:
         parameters:
           - $ref: 'commons.yml#/components/parameters/Query'
           - $ref: 'commons.yml#/components/parameters/IncludeAdult'
-          - $ref: 'commons.yml#/components/parameters/Language'
-          - $ref: 'commons.yml#/components/parameters/Page'
+          - $ref: 'commons.yml#/components/parameters/LanguageParam'
+          - $ref: 'commons.yml#/components/parameters/PageParam'
           - $ref: 'commons.yml#/components/parameters/Region'
         responses:
           '200':
@@ -59,7 +59,7 @@ components:
           - Search
         parameters:
           - $ref: 'commons.yml#/components/parameters/Query'
-          - $ref: 'commons.yml#/components/parameters/Page'
+          - $ref: 'commons.yml#/components/parameters/PageParam'
         responses:
           '200':
             description: OK
@@ -87,7 +87,7 @@ components:
           - Search
         parameters:
           - $ref: 'commons.yml#/components/parameters/Query'
-          - $ref: 'commons.yml#/components/parameters/Page'
+          - $ref: 'commons.yml#/components/parameters/PageParam'
         responses:
           '200':
             description: OK
@@ -116,9 +116,9 @@ components:
         parameters:
           - $ref: 'commons.yml#/components/parameters/Query'
           - $ref: 'commons.yml#/components/parameters/IncludeAdult'
-          - $ref: 'commons.yml#/components/parameters/Language'
+          - $ref: 'commons.yml#/components/parameters/LanguageParam'
           - $ref: 'commons.yml#/components/parameters/PrimaryReleaseYear'
-          - $ref: 'commons.yml#/components/parameters/Page'
+          - $ref: 'commons.yml#/components/parameters/PageParam'
           - $ref: 'commons.yml#/components/parameters/Region'
           - $ref: 'commons.yml#/components/parameters/Year'
         responses:
@@ -164,8 +164,8 @@ components:
         parameters:
           - $ref: 'commons.yml#/components/parameters/Query'
           - $ref: 'commons.yml#/components/parameters/IncludeAdult'
-          - $ref: 'commons.yml#/components/parameters/Language'
-          - $ref: 'commons.yml#/components/parameters/Page'
+          - $ref: 'commons.yml#/components/parameters/LanguageParam'
+          - $ref: 'commons.yml#/components/parameters/PageParam'
         responses:
           '200':
             description: OK
@@ -210,8 +210,8 @@ components:
         parameters:
           - $ref: 'commons.yml#/components/parameters/Query'
           - $ref: 'commons.yml#/components/parameters/IncludeAdult'
-          - $ref: 'commons.yml#/components/parameters/Language'
-          - $ref: 'commons.yml#/components/parameters/Page'
+          - $ref: 'commons.yml#/components/parameters/LanguageParam'
+          - $ref: 'commons.yml#/components/parameters/PageParam'
         responses:
           '200':
             description: OK
@@ -271,8 +271,8 @@ components:
               maxLength: 4
               pattern: '^([1-9][0-9]{3})$'
           - $ref: 'commons.yml#/components/parameters/IncludeAdult'
-          - $ref: 'commons.yml#/components/parameters/Language'
-          - $ref: 'commons.yml#/components/parameters/Page'
+          - $ref: 'commons.yml#/components/parameters/LanguageParam'
+          - $ref: 'commons.yml#/components/parameters/PageParam'
           - $ref: 'commons.yml#/components/parameters/Year'
         responses:
           '200':

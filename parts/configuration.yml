@@ -76,7 +76,7 @@ components:
         tags:
           - Configuration
         parameters:
-          - $ref: 'commons.yml#/components/parameters/Language'
+          - $ref: 'commons.yml#/components/parameters/LanguageParam'
         responses:
           '200':
             description: OK

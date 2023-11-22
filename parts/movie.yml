@@ -59,8 +59,8 @@ components:
         tags:
           - Movie Lists
         parameters:
-          - $ref: 'commons.yml#/components/parameters/Language'
-          - $ref: 'commons.yml#/components/parameters/Page'
+          - $ref: 'commons.yml#/components/parameters/LanguageParam'
+          - $ref: 'commons.yml#/components/parameters/PageParam'
           - $ref: 'commons.yml#/components/parameters/Region'
         responses:
           '200':
@@ -110,8 +110,8 @@ components:
         tags:
           - Movie Lists
         parameters:
-          - $ref: 'commons.yml#/components/parameters/Language'
-          - $ref: 'commons.yml#/components/parameters/Page'
+          - $ref: 'commons.yml#/components/parameters/LanguageParam'
+          - $ref: 'commons.yml#/components/parameters/PageParam'
           - $ref: 'commons.yml#/components/parameters/Region'
         responses:
           '200':
@@ -160,8 +160,8 @@ components:
           - Movies
         parameters:
           - $ref: '#/components/parameters/MovieID'
-          - $ref: 'commons.yml#/components/parameters/Language'
-          - $ref: 'commons.yml#/components/parameters/Page'
+          - $ref: 'commons.yml#/components/parameters/LanguageParam'
+          - $ref: 'commons.yml#/components/parameters/PageParam'
         responses:
           '200':
             description: OK
@@ -209,8 +209,8 @@ components:
         tags:
           - Movie Lists
         parameters:
-          - $ref: 'commons.yml#/components/parameters/Language'
-          - $ref: 'commons.yml#/components/parameters/Page'
+          - $ref: 'commons.yml#/components/parameters/LanguageParam'
+          - $ref: 'commons.yml#/components/parameters/PageParam'
           - $ref: 'commons.yml#/components/parameters/Region'
         responses:
           '200':
@@ -258,8 +258,8 @@ components:
         tags:
           - Movie Lists
         parameters:
-          - $ref: 'commons.yml#/components/parameters/Language'
-          - $ref: 'commons.yml#/components/parameters/Page'
+          - $ref: 'commons.yml#/components/parameters/LanguageParam'
+          - $ref: 'commons.yml#/components/parameters/PageParam'
           - $ref: 'commons.yml#/components/parameters/Region'
         responses:
           '200':
