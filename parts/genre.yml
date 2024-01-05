@@ -24,6 +24,8 @@ components:
                       name: Action
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
     TV:
       get:
         summary: TV List
@@ -47,3 +49,5 @@ components:
                       name: Action & Adventure
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'

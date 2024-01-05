@@ -50,6 +50,8 @@ components:
             $ref: 'commons.yml#/components/responses/InvalidPage'
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
     Company:
       get:
         summary: Company
@@ -78,6 +80,8 @@ components:
             $ref: 'commons.yml#/components/responses/InvalidPage'
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
     Keyword:
       get:
         summary: Keyword
@@ -106,6 +110,8 @@ components:
             $ref: 'commons.yml#/components/responses/InvalidPage'
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
     Movie:
       get:
         summary: Movie
@@ -154,6 +160,8 @@ components:
             $ref: 'commons.yml#/components/responses/InvalidPage'
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
     Multi:
       get:
         summary: Multi
@@ -200,6 +208,8 @@ components:
             $ref: 'commons.yml#/components/responses/InvalidPage'
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
     Person:
       get:
         summary: Person
@@ -254,6 +264,8 @@ components:
             $ref: 'commons.yml#/components/responses/InvalidPage'
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
     TV:
       get:
         summary: TV
@@ -307,3 +319,5 @@ components:
             $ref: 'commons.yml#/components/responses/InvalidPage'
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'

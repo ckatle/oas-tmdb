@@ -46,6 +46,8 @@ components:
             $ref: 'commons.yml#/components/responses/Unauthorized'
           '404':
             $ref: 'commons.yml#/components/responses/NotFound'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
     NowPlaying:
       get:
         summary: Now Playing
@@ -97,6 +99,8 @@ components:
             $ref: 'commons.yml#/components/responses/InvalidPage'
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
     Popular:
       get:
         summary: Popular
@@ -146,6 +150,8 @@ components:
             $ref: 'commons.yml#/components/responses/InvalidPage'
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
     Similar:
       get:
         summary: Similar
@@ -196,6 +202,8 @@ components:
             $ref: 'commons.yml#/components/responses/Unauthorized'
           '404':
             $ref: 'commons.yml#/components/responses/NotFound'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
     TopRated:
       get:
         summary: Top Rated
@@ -245,6 +253,8 @@ components:
             $ref: 'commons.yml#/components/responses/InvalidPage'
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
     Upcoming:
       get:
         summary: Upcoming
@@ -296,3 +306,5 @@ components:
             $ref: 'commons.yml#/components/responses/InvalidPage'
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
