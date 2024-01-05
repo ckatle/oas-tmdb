@@ -3,7 +3,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.23.5
+  version: 0.23.6
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -95,6 +95,8 @@ components:
       $ref: 'commons.yml#/components/responses/InvalidPage'
     NotFound:
       $ref: 'commons.yml#/components/responses/NotFound'
+    TooManyRequests:
+      $ref: 'commons.yml#/components/responses/TooManyRequests'
     Unauthorized:
       $ref: 'commons.yml#/components/responses/Unauthorized'
   schemas:

@@ -33,6 +33,8 @@ components:
             $ref: 'commons.yml#/components/responses/Unauthorized'
           '404':
             $ref: 'commons.yml#/components/responses/NotFound'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
     Movies:
       get:
         summary: Movies
@@ -81,4 +83,6 @@ components:
             $ref: 'commons.yml#/components/responses/Unauthorized'
           '404':
             $ref: 'commons.yml#/components/responses/NotFound'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
         deprecated: true

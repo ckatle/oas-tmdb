@@ -76,6 +76,16 @@ components:
             - success: false
               status_code: 34
               status_message: 'The resource you requested could not be found.'
+    TooManyRequests:
+      description: Too many requests in a given amount of time (“rate limiting”).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            - success: false
+              status_code: 25
+              status_message: 'Your request count is over the allowed limit.'
     Unauthorized:
       description: Authorization information is missing or invalid.
       content:

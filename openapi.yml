@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.23.5
+  version: 0.23.6
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -34,6 +34,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   '/company/{company_id}/images':
     get:
       summary: Images
@@ -74,6 +76,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   /configuration:
     get:
       summary: Details
@@ -141,6 +145,8 @@ paths:
                   - change_keys
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   /configuration/countries:
     get:
       summary: Countries
@@ -161,6 +167,8 @@ paths:
                   $ref: '#/components/schemas/Country'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   /configuration/jobs:
     get:
       summary: Jobs
@@ -190,6 +198,8 @@ paths:
                       - Other
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   /configuration/languages:
     get:
       summary: Languages
@@ -215,6 +225,8 @@ paths:
                     name: Esperanto
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   /configuration/primary_translations:
     get:
       summary: Primary Translations
@@ -237,6 +249,8 @@ paths:
                   - eo-EO
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   /configuration/timezones:
     get:
       summary: Timezones
@@ -264,6 +278,8 @@ paths:
                       - Europe/London
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   /genre/movie/list:
     get:
       summary: Movie List
@@ -287,6 +303,8 @@ paths:
                     name: Action
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   /genre/tv/list:
     get:
       summary: TV List
@@ -310,6 +328,8 @@ paths:
                     name: Action & Adventure
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   '/keyword/{keyword_id}':
     get:
       summary: Details
@@ -332,6 +352,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   '/keyword/{keyword_id}/movies':
     get:
       summary: Movies
@@ -378,6 +400,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
       deprecated: true
   /movie/now_playing:
     get:
@@ -429,6 +453,8 @@ paths:
           $ref: '#/components/responses/InvalidPage'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   /movie/popular:
     get:
       summary: Popular
@@ -476,6 +502,8 @@ paths:
           $ref: '#/components/responses/InvalidPage'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   /movie/top_rated:
     get:
       summary: Top Rated
@@ -523,6 +551,8 @@ paths:
           $ref: '#/components/responses/InvalidPage'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   /movie/upcoming:
     get:
       summary: Upcoming
@@ -573,6 +603,8 @@ paths:
           $ref: '#/components/responses/InvalidPage'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   '/movie/{movie_id}/keywords':
     get:
       summary: Keywords
@@ -608,6 +640,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   '/movie/{movie_id}/similar':
     get:
       summary: Similar
@@ -657,6 +691,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   /search/keyword:
     get:
       summary: Keyword
@@ -685,6 +721,8 @@ paths:
           $ref: '#/components/responses/InvalidPage'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   /search/movie:
     get:
       summary: Movie
@@ -731,6 +769,8 @@ paths:
           $ref: '#/components/responses/InvalidPage'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   /search/multi:
     get:
       summary: Multi
@@ -775,6 +815,8 @@ paths:
           $ref: '#/components/responses/InvalidPage'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   /search/person:
     get:
       summary: Person
@@ -828,6 +870,8 @@ paths:
           $ref: '#/components/responses/InvalidPage'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   /search/tv:
     get:
       summary: TV
@@ -880,6 +924,8 @@ paths:
           $ref: '#/components/responses/InvalidPage'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
 components:
   parameters:
     CompanyID:
@@ -981,6 +1027,16 @@ components:
             - success: false
               status_code: 34
               status_message: The resource you requested could not be found.
+    TooManyRequests:
+      description: Too many requests in a given amount of time (“rate limiting”).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            - success: false
+              status_code: 25
+              status_message: Your request count is over the allowed limit.
     Unauthorized:
       description: Authorization information is missing or invalid.
       content:

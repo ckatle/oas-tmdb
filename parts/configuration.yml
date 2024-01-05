@@ -68,6 +68,8 @@ components:
                     - change_keys
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
     Countries:
       get:
         summary: Countries
@@ -88,6 +90,8 @@ components:
                     $ref: '#/components/schemas/Country'
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
     Jobs:
       get:
         summary: Jobs
@@ -111,6 +115,8 @@ components:
                       jobs: ['Director', 'Other']
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
     Languages:
       get:
         summary: Languages
@@ -136,6 +142,8 @@ components:
                       name: 'Esperanto'
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
     PrimaryTranslations:
       get:
         summary: Primary Translations
@@ -155,6 +163,8 @@ components:
                   example: ['en-GB', 'en-US', 'eo-EO']
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
     Timezones:
       get:
         summary: Timezones
@@ -178,6 +188,8 @@ components:
                       zones: [Europe/London]
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
   schemas:
     Country:
       type: object
