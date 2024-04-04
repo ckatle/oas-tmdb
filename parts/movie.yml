@@ -10,6 +10,30 @@ components:
       required: true
       description: The movie ID.
   paths:
+    Credits:
+      get:
+        summary: Credits
+        operationId: MovieCredits
+        tags:
+          - Movies
+        parameters:
+          - $ref: '#/components/parameters/MovieID'
+          - $ref: 'commons.yml#/components/parameters/LanguageParam'
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: 'commons.yml#/components/schemas/Credits'
+          '400':
+            $ref: 'commons.yml#/components/responses/InvalidPage'
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'
+          '404':
+            $ref: 'commons.yml#/components/responses/NotFound'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
     Keywords:
       get:
         summary: Keywords

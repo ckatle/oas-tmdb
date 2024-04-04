@@ -97,6 +97,53 @@ components:
               status_code: 7
               status_message: 'Invalid API key: You must be granted a valid key.'
   schemas:
+    CastListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 819
+          default: 0
+        adult:
+          type: boolean
+          example: false
+          default: true
+        gender:
+          type: integer
+          example: 2
+          default: 0
+        known_for_department:
+          type: string
+          example: 'Acting'
+        name:
+          type: string
+          example: 'Edward Norton'
+        original_name:
+          type: string
+          example: 'Edward Norton'
+        popularity:
+          type: number
+          example: 26.99
+        profile_path:
+          type: string
+          example: '/8nytsqL59SFJTVYVrN72k6qkGgJ.jpg'
+        cast_id:
+          type: integer
+          example: 4
+          default: 0
+        character:
+          type: string
+          example: 'The Narrator'
+        credit_id:
+          type: string
+          example: '52fe4250c3a36847f80149f3'
+        order:
+          type: integer
+          example: 0
+          default: 0
+      required:
+        - id
+        - name
     CollectionBase:
       type: object
       properties:
@@ -133,6 +180,66 @@ components:
         - name
         - original_language
         - original_name
+    Credits:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 550
+          default: 0
+        cast:
+          type: array
+          items:
+            $ref: '#/components/schemas/CastListItem'
+        crew:
+          type: array
+          items:
+            $ref: '#/components/schemas/CrewListItem'
+      required:
+        - cast
+        - crew
+    CrewListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 376
+          default: 0
+        adult:
+          type: boolean
+          example: false
+          default: true
+        gender:
+          type: integer
+          example: 2
+          default: 0
+        known_for_department:
+          type: string
+          example: 'Production'
+        name:
+          type: string
+          example: 'Arnon Milchan'
+        original_name:
+          type: string
+          example: 'Arnon Milchan'
+        popularity:
+          type: number
+          example: 2.931
+        profile_path:
+          type: string
+          example: '/b2hBExX4NnczNAnLuTBF4kmNhZm.jpg'
+        credit_id:
+          type: string
+          example: '55731b8192514111610027d7'
+        department:
+          type: string
+          example: 'Production'
+        job:
+          type: string
+          example: 'Executive Producer'
+      required:
+        - id
+        - name
     # Schema for error response body
     Error:
       type: object
