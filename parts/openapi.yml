@@ -3,7 +3,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.24.0
+  version: 0.25.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -15,6 +15,8 @@ tags:
   - name: Movie Lists
   - name: Movies
   - name: Search
+  - name: TV Series
+  - name: TV Seasons
 paths:
   /company/{company_id}:
     $ref: 'company.yml#/components/paths/Details'
@@ -68,6 +70,8 @@ paths:
     $ref: 'search.yml#/components/paths/Person'
   /search/tv:
     $ref: 'search.yml#/components/paths/TV'
+  /tv/{series_id}/credits:
+    $ref: 'tv.yml#/components/paths/Credits'
 components:
   parameters:
     CompanyID:
@@ -90,6 +94,8 @@ components:
       $ref: 'commons.yml#/components/parameters/Query'
     Region:
       $ref: 'commons.yml#/components/parameters/Region'
+    SeriesID:
+      $ref: 'commons.yml#/components/parameters/SeriesID'
     Year:
       $ref: 'commons.yml#/components/parameters/Year'
   responses:

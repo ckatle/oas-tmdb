@@ -47,6 +47,14 @@ components:
         maxLength: 2
         pattern: '^([A-Z]{2})$'
       description: '`ISO-3166-1` code'
+    SeriesID:
+      in: path
+      name: series_id
+      schema:
+        type: integer
+        format: int32
+      required: true
+      description: The tv series ID.
     Year:
       in: query
       name: year
@@ -102,44 +110,32 @@ components:
       properties:
         id:
           type: integer
-          example: 819
           default: 0
         adult:
           type: boolean
-          example: false
           default: true
         gender:
           type: integer
-          example: 2
           default: 0
         known_for_department:
           type: string
-          example: 'Acting'
         name:
           type: string
-          example: 'Edward Norton'
         original_name:
           type: string
-          example: 'Edward Norton'
         popularity:
           type: number
-          example: 26.99
         profile_path:
           type: string
-          example: '/8nytsqL59SFJTVYVrN72k6qkGgJ.jpg'
         cast_id:
           type: integer
-          example: 4
           default: 0
         character:
           type: string
-          example: 'The Narrator'
         credit_id:
           type: string
-          example: '52fe4250c3a36847f80149f3'
         order:
           type: integer
-          example: 0
           default: 0
       required:
         - id
@@ -185,7 +181,6 @@ components:
       properties:
         id:
           type: integer
-          example: 550
           default: 0
         cast:
           type: array
@@ -203,40 +198,29 @@ components:
       properties:
         id:
           type: integer
-          example: 376
           default: 0
         adult:
           type: boolean
-          example: false
           default: true
         gender:
           type: integer
-          example: 2
           default: 0
         known_for_department:
           type: string
-          example: 'Production'
         name:
           type: string
-          example: 'Arnon Milchan'
         original_name:
           type: string
-          example: 'Arnon Milchan'
         popularity:
           type: number
-          example: 2.931
         profile_path:
           type: string
-          example: '/b2hBExX4NnczNAnLuTBF4kmNhZm.jpg'
         credit_id:
           type: string
-          example: '55731b8192514111610027d7'
         department:
           type: string
-          example: 'Production'
         job:
           type: string
-          example: 'Executive Producer'
       required:
         - id
         - name
