@@ -47,6 +47,14 @@ components:
         maxLength: 2
         pattern: '^([A-Z]{2})$'
       description: '`ISO-3166-1` code'
+    SeriesID:
+      in: path
+      name: series_id
+      schema:
+        type: integer
+        format: int32
+      required: true
+      description: The tv series ID.
     Year:
       in: query
       name: year
@@ -97,6 +105,41 @@ components:
               status_code: 7
               status_message: 'Invalid API key: You must be granted a valid key.'
   schemas:
+    CastListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 0
+        adult:
+          type: boolean
+          default: true
+        gender:
+          type: integer
+          default: 0
+        known_for_department:
+          type: string
+        name:
+          type: string
+        original_name:
+          type: string
+        popularity:
+          type: number
+        profile_path:
+          type: string
+        cast_id:
+          type: integer
+          default: 0
+        character:
+          type: string
+        credit_id:
+          type: string
+        order:
+          type: integer
+          default: 0
+      required:
+        - id
+        - name
     CollectionBase:
       type: object
       properties:
@@ -133,6 +176,54 @@ components:
         - name
         - original_language
         - original_name
+    Credits:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 0
+        cast:
+          type: array
+          items:
+            $ref: '#/components/schemas/CastListItem'
+        crew:
+          type: array
+          items:
+            $ref: '#/components/schemas/CrewListItem'
+      required:
+        - cast
+        - crew
+    CrewListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 0
+        adult:
+          type: boolean
+          default: true
+        gender:
+          type: integer
+          default: 0
+        known_for_department:
+          type: string
+        name:
+          type: string
+        original_name:
+          type: string
+        popularity:
+          type: number
+        profile_path:
+          type: string
+        credit_id:
+          type: string
+        department:
+          type: string
+        job:
+          type: string
+      required:
+        - id
+        - name
     # Schema for error response body
     Error:
       type: object

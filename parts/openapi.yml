@@ -3,7 +3,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.23.6
+  version: 0.25.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -15,6 +15,8 @@ tags:
   - name: Movie Lists
   - name: Movies
   - name: Search
+  - name: TV Series
+  - name: TV Seasons
 paths:
   /company/{company_id}:
     $ref: 'company.yml#/components/paths/Details'
@@ -50,6 +52,8 @@ paths:
     $ref: 'movie.yml#/components/paths/TopRated'
   /movie/upcoming:
     $ref: 'movie.yml#/components/paths/Upcoming'
+  /movie/{movie_id}/credits:
+    $ref: 'movie.yml#/components/paths/Credits'
   /movie/{movie_id}/keywords:
     $ref: 'movie.yml#/components/paths/Keywords'
   /movie/{movie_id}/similar:
@@ -66,6 +70,8 @@ paths:
     $ref: 'search.yml#/components/paths/Person'
   /search/tv:
     $ref: 'search.yml#/components/paths/TV'
+  /tv/{series_id}/credits:
+    $ref: 'tv.yml#/components/paths/Credits'
 components:
   parameters:
     CompanyID:
@@ -88,6 +94,8 @@ components:
       $ref: 'commons.yml#/components/parameters/Query'
     Region:
       $ref: 'commons.yml#/components/parameters/Region'
+    SeriesID:
+      $ref: 'commons.yml#/components/parameters/SeriesID'
     Year:
       $ref: 'commons.yml#/components/parameters/Year'
   responses:
@@ -100,6 +108,8 @@ components:
     Unauthorized:
       $ref: 'commons.yml#/components/responses/Unauthorized'
   schemas:
+    CastListItem:
+      $ref: 'commons.yml#/components/schemas/CastListItem'
     Company:
       $ref: 'company.yml#/components/schemas/Company'
     CompanyLogo:
@@ -108,6 +118,10 @@ components:
       $ref: 'configuration.yml#/components/schemas/Country'
     CountryWithTimezones:
       $ref: 'configuration.yml#/components/schemas/CountryWithTimezones'
+    Credits:
+      $ref: 'commons.yml#/components/schemas/Credits'
+    CrewListItem:
+      $ref: 'commons.yml#/components/schemas/CrewListItem'
     Department:
       $ref: 'configuration.yml#/components/schemas/Department'
     Error:

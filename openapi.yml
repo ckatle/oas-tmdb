@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.23.6
+  version: 0.25.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -13,6 +13,7 @@ tags:
   - name: Movie Lists
   - name: Movies
   - name: Search
+  - name: TV Series
 paths:
   '/company/{company_id}':
     get:
@@ -605,6 +606,57 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/TooManyRequests'
+  '/movie/{movie_id}/credits':
+    get:
+      summary: Credits
+      operationId: MovieCredits
+      tags:
+        - Movies
+      parameters:
+        - $ref: '#/components/parameters/MovieID'
+        - $ref: '#/components/parameters/LanguageParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Credits'
+              example:
+                id: 550
+                cast:
+                  - id: 819
+                    adult: false
+                    gender: 2
+                    known_for_department: Acting
+                    name: Edward Norton
+                    original_name: Edward Norton
+                    popularity: 26.99
+                    profile_path: /8nytsqL59SFJTVYVrN72k6qkGgJ.jpg
+                    cast_id: 4
+                    character: The Narrator
+                    credit_id: 52fe4250c3a36847f80149f3
+                    order: 0
+                crew:
+                  - id: 376
+                    adult: false
+                    gender: 2
+                    known_for_department: Production
+                    name: Arnon Milchan
+                    original_name: Arnon Milchan
+                    popularity: 2.931
+                    profile_path: /b2hBExX4NnczNAnLuTBF4kmNhZm.jpg
+                    credit_id: 55731b8192514111610027d7
+                    department: Production
+                    job: Executive Producer
+        '400':
+          $ref: '#/components/responses/InvalidPage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   '/movie/{movie_id}/keywords':
     get:
       summary: Keywords
@@ -926,6 +978,56 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/TooManyRequests'
+  '/tv/{series_id}/credits':
+    get:
+      summary: Credits
+      operationId: TvSeriesCredits
+      tags:
+        - TV Series
+      parameters:
+        - $ref: '#/components/parameters/SeriesID'
+        - $ref: '#/components/parameters/LanguageParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Credits'
+              example:
+                id: 1399
+                cast:
+                  - id: 22970
+                    adult: false
+                    gender: 2
+                    known_for_department: Acting
+                    name: Peter Dinklage
+                    original_name: Peter Dinklage
+                    popularity: 30.6
+                    profile_path: /lRsRgnksAhBRXwAB68MFjmTtLrk.jpg
+                    character: Tyrion Lannister
+                    credit_id: 5256c8b219c2956ff6047cd8
+                    order: 0
+                crew:
+                  - id: 1406855
+                    adult: false
+                    gender: 2
+                    known_for_department: Production
+                    name: Duncan Muggoch
+                    original_name: Duncan Muggoch
+                    popularity: 1.592
+                    profile_path: /ukGjJ62Ejd4cFziald03G34Fsrp.jpg
+                    credit_id: 5ceab029c3a3682e93217a85
+                    department: Production
+                    job: Producer
+        '400':
+          $ref: '#/components/responses/InvalidPage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
 components:
   parameters:
     CompanyID:
@@ -998,6 +1100,14 @@ components:
         maxLength: 2
         pattern: '^([A-Z]{2})$'
       description: '`ISO-3166-1` code'
+    SeriesID:
+      in: path
+      name: series_id
+      schema:
+        type: integer
+        format: int32
+      required: true
+      description: The tv series ID.
     Year:
       in: query
       name: year
@@ -1048,6 +1158,41 @@ components:
               status_code: 7
               status_message: 'Invalid API key: You must be granted a valid key.'
   schemas:
+    CastListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 0
+        adult:
+          type: boolean
+          default: true
+        gender:
+          type: integer
+          default: 0
+        known_for_department:
+          type: string
+        name:
+          type: string
+        original_name:
+          type: string
+        popularity:
+          type: number
+        profile_path:
+          type: string
+        cast_id:
+          type: integer
+          default: 0
+        character:
+          type: string
+        credit_id:
+          type: string
+        order:
+          type: integer
+          default: 0
+      required:
+        - id
+        - name
     Company:
       type: object
       additionalProperties: false
@@ -1142,6 +1287,54 @@ components:
       required:
         - iso_3166_1
         - zones
+    Credits:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 0
+        cast:
+          type: array
+          items:
+            $ref: '#/components/schemas/CastListItem'
+        crew:
+          type: array
+          items:
+            $ref: '#/components/schemas/CrewListItem'
+      required:
+        - cast
+        - crew
+    CrewListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 0
+        adult:
+          type: boolean
+          default: true
+        gender:
+          type: integer
+          default: 0
+        known_for_department:
+          type: string
+        name:
+          type: string
+        original_name:
+          type: string
+        popularity:
+          type: number
+        profile_path:
+          type: string
+        credit_id:
+          type: string
+        department:
+          type: string
+        job:
+          type: string
+      required:
+        - id
+        - name
     Department:
       type: object
       additionalProperties: false
