@@ -3,7 +3,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.25.0
+  version: 0.26.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -16,7 +16,7 @@ tags:
   - name: Movies
   - name: Search
   - name: TV Series
-  - name: TV Seasons
+  # - name: TV Seasons
 paths:
   /company/{company_id}:
     $ref: 'company.yml#/components/paths/Details'
@@ -56,6 +56,8 @@ paths:
     $ref: 'movie.yml#/components/paths/Credits'
   /movie/{movie_id}/keywords:
     $ref: 'movie.yml#/components/paths/Keywords'
+  /movie/{movie_id}/recommendations:
+    $ref: 'movie.yml#/components/paths/Recommendations'
   /movie/{movie_id}/similar:
     $ref: 'movie.yml#/components/paths/Similar'
   #  /search/collection:
