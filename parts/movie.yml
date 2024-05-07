@@ -9,6 +9,26 @@ components:
         format: int32
       required: true
       description: The movie ID.
+    MovieAppendToResponse:
+      in: query
+      name: append_to_response
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - alternative_titles
+            - credits
+            - external_ids
+            - keywords
+            - recommendations
+            - release_dates
+            - reviews
+            - similar
+            - translations
+        maxItems: 20
+      explode: false
+      description: comma separated list of endpoints within this namespace, 20 items max
   paths:
     Credits:
       get:
@@ -53,6 +73,32 @@ components:
                       credit_id: '55731b8192514111610027d7'
                       department: 'Production'
                       job: 'Executive Producer'
+          '400':
+            $ref: 'commons.yml#/components/responses/InvalidPage'
+          '401':
+            $ref: 'commons.yml#/components/responses/Unauthorized'
+          '404':
+            $ref: 'commons.yml#/components/responses/NotFound'
+          '429':
+            $ref: 'commons.yml#/components/responses/TooManyRequests'
+    Details:
+      get:
+        summary: Details
+        description: Get the top level details of a movie by ID.
+        operationId: MovieDetails
+        tags:
+          - Movies
+        parameters:
+          - $ref: '#/components/parameters/MovieID'
+          - $ref: 'commons.yml#/components/parameters/LanguageParam'
+          - $ref: '#/components/parameters/MovieAppendToResponse'
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Movie'
           '400':
             $ref: 'commons.yml#/components/responses/InvalidPage'
           '401':
@@ -405,3 +451,125 @@ components:
             $ref: 'commons.yml#/components/responses/Unauthorized'
           '429':
             $ref: 'commons.yml#/components/responses/TooManyRequests'
+  schemas:
+    Movie:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 0
+          example: 671
+        title:
+          type: string
+          example: "Harry Potter and the Philosopher's Stone"
+        original_language:
+          type: string
+          example: 'en'
+        original_title:
+          type: string
+          example: "Harry Potter and the Philosopher's Stone"
+        adult:
+          type: boolean
+          default: false
+          example: false
+        backdrop_path:
+          type: string
+          example: '/hziiv14OpD73u9gAak4XDDfBKa2.jpg'
+        belongs_to_collection:
+          $ref: 'commons.yml#/components/schemas/CollectionBase'
+        budget:
+          type: integer
+          example: 125000000
+        genres:
+          type: array
+          items:
+            $ref: 'commons.yml#/components/schemas/Object'
+          example:
+            - id: 12
+              name: Adventure
+            - id: 14
+              name: Fantasy
+        homepage:
+          type: string
+          example: 'https://www.warnerbros.com/movies/harry-potter-and-sorcerers-stone/'
+        imdb_id:
+          type: string
+          example: 'tt0468569'
+        origin_country:
+          type: array
+          items:
+            type: string
+          example:
+            - 'GB'
+        overview:
+          type: string
+          example: "Harry Potter has lived under the stairs at his aunt and uncle's house his whole life. But on his
+          11th birthday, he learns he's a powerful wizard—with a place waiting for him at the Hogwarts School of
+          Witchcraft and Wizardry. As he learns to harness his newfound powers with the help of the school's kindly
+          headmaster, Harry uncovers the truth about his parents' deaths—and about the villain who's to blame."
+        popularity:
+          type: number
+          example: 203.037
+        poster_path:
+          type: string
+          example: '/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg'
+        production_companies:
+          type: array
+          items:
+            $ref: 'commons.yml#/components/schemas/ProductionCompany'
+          example:
+            - id: 174
+              logo_path: "/zhD3hhtKB5qyv7ZeL4uLpNxgMVU.png"
+              name: "Warner Bros. Pictures"
+              origin_country: "US"
+            - id: 437
+              logo_path: "/nu20mtwbEIhUNnQ5NXVhHsNknZj.png"
+              name: "Heyday Films"
+              origin_country: "GB"
+            - id: 436
+              logo_path: "/A7WCkG3F0NFvjGCwUnclpGdIu9E.png"
+              name: "1492 Pictures"
+              origin_country: "US"
+        production_countries:
+          type: array
+          items:
+            $ref: 'commons.yml#/components/schemas/ProductionCountry'
+          example:
+            - iso_3166_1: 'GB'
+              name: 'United Kingdom'
+            - iso_3166_1: 'US'
+              name: 'United States of America'
+        release_date:
+          type: string
+          example: '2001-11-16'
+        revenue:
+          type: integer
+          example: 976475550
+        runtime:
+          type: integer
+          example: 152
+        spoken_languages:
+          type: array
+          items:
+            $ref: 'commons.yml#/components/schemas/Language'
+        status:
+          type: string
+          example: 'Released'
+        tagline:
+          type: string
+          example: 'Let the magic begin.'
+        video:
+          type: boolean
+          default: true
+          example: false
+        vote_average:
+          type: number
+          example: 7.914
+        vote_count:
+          type: integer
+          example: 26490
+      required:
+        - id
+        - title
+        - original_language
+        - original_title
