@@ -143,6 +143,24 @@ components:
     CollectionBase:
       type: object
       properties:
+        id:
+          type: integer
+          example: 1241
+        name:
+          type: string
+          example: "Harry Potter Collection"
+        poster_path:
+          type: string
+          example: "/eVPs2Y0LyvTLZn6AP5Z6O2rtiGB.jpg"
+        backdrop_path:
+          type: string
+          example: "/hWK8gTH2riuv65Ej43hPSeE16Mu.jpg"
+      required:
+        - id
+        - name
+    CollectionListItem:
+      type: object
+      properties:
         adult:
           type: boolean
           default: false
@@ -241,6 +259,23 @@ components:
         - success
         - status_code
         - status_message
+    Language:
+      type: object
+      additionalProperties: false
+      properties:
+        iso_639_1:
+          type: string
+          description: ISO 3166-1 tag
+          minLength: 2
+          maxLength: 2
+          pattern: '^[a-z]{2}$'
+        english_name:
+          type: string
+        name:
+          type: string
+      required:
+        - iso_639_1
+        - english_name
     Media:
       type: object
       properties:
@@ -507,6 +542,35 @@ components:
         - results
         - total_pages
         - total_results
+    ProductionCompany:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 0
+        name:
+          type: string
+        origin_country:
+          type: string
+        logo_path:
+          type: string
+      required:
+        - id
+        - name
+    ProductionCountry:
+      type: object
+      properties:
+        iso_3166_1:
+          type: string
+          description: ISO 3166-1 tag
+          minLength: 2
+          maxLength: 2
+          pattern: '^[A-Z]{2}$'
+        name:
+          type: string
+      required:
+        - iso_3166_1
+        - name
     TvListItem:
       type: object
       properties:

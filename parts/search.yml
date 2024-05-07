@@ -32,7 +32,7 @@ components:
                     results:
                       type: array
                       items:
-                        $ref: 'commons.yml#/components/schemas/CollectionBase'
+                        $ref: 'commons.yml#/components/schemas/CollectionListItem'
                     total_pages:
                       type: integer
                       format: int32

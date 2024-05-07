@@ -132,7 +132,7 @@ components:
                 schema:
                   type: array
                   items:
-                    $ref: '#/components/schemas/Language'
+                    $ref: 'commons.yml#/components/schemas/Language'
                   example:
                     - iso_639_1: 'en'
                       english_name: 'English'
@@ -242,20 +242,3 @@ components:
       required:
         - department
         - jobs
-    Language:
-      type: object
-      additionalProperties: false
-      properties:
-        iso_639_1:
-          type: string
-          description: ISO 3166-1 tag
-          minLength: 2
-          maxLength: 2
-          pattern: '^[a-z]{2}$'
-        english_name:
-          type: string
-        name:
-          type: string
-      required:
-        - iso_639_1
-        - english_name

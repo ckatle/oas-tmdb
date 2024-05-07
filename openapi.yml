@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.25.0
+  version: 0.27.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -606,6 +606,32 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/TooManyRequests'
+  '/movie/{movie_id}':
+    get:
+      summary: Details
+      description: Get the top level details of a movie by ID.
+      operationId: MovieDetails
+      tags:
+        - Movies
+      parameters:
+        - $ref: '#/components/parameters/MovieID'
+        - $ref: '#/components/parameters/LanguageParam'
+        - $ref: '#/components/parameters/MovieAppendToResponse'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '400':
+          $ref: '#/components/responses/InvalidPage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   '/movie/{movie_id}/credits':
     get:
       summary: Credits
@@ -688,6 +714,51 @@ paths:
                 keywords:
                   - id: 818
                     name: based on novel or book
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  '/movie/{movie_id}/recommendations':
+    get:
+      summary: Recommendations
+      operationId: MovieRecommendations
+      tags:
+        - Movies
+      parameters:
+        - $ref: '#/components/parameters/MovieID'
+        - $ref: '#/components/parameters/LanguageParam'
+        - $ref: '#/components/parameters/PageParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieListPage'
+              example:
+                page: 1
+                results:
+                  - adult: false
+                    backdrop_path: /3YAldML4EDyoC6RBpzceALigrAZ.jpg
+                    genre_ids:
+                      - 18
+                    id: 9300
+                    original_language: en
+                    original_title: Orlando
+                    overview: 'England, 1600. Queen Elizabeth I promises Orlando, a young nobleman obsessed with poetry, that she will grant him land and fortune if he agrees to satisfy a very particular request.'
+                    popularity: 7.768
+                    poster_path: /xvz0qZkXXMq3dH2Revxii8drxWc.jpg
+                    release_date: '1992-12-11'
+                    title: Orlando
+                    video: false
+                    vote_average: 6.966
+                    vote_count: 262
+                total_pages: 364
+                total_results: 7269
+        '400':
+          $ref: '#/components/responses/InvalidPage'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -1062,6 +1133,26 @@ components:
         pattern: '^([a-z]{2})-([A-Z]{2})$'
         default: en-US
       description: '`ISO-639-1`-`ISO-3166-1` code'
+    MovieAppendToResponse:
+      in: query
+      name: append_to_response
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - alternative_titles
+            - credits
+            - external_ids
+            - keywords
+            - recommendations
+            - release_dates
+            - reviews
+            - similar
+            - translations
+        maxItems: 20
+      explode: false
+      description: 'comma separated list of endpoints within this namespace, 20 items max'
     MovieID:
       in: path
       name: movie_id
@@ -1400,6 +1491,140 @@ components:
         - media_type
       discriminator:
         propertyName: media_type
+    Movie:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 0
+          example: 671
+        title:
+          type: string
+          example: Harry Potter and the Philosopher's Stone
+        original_language:
+          type: string
+          example: en
+        original_title:
+          type: string
+          example: Harry Potter and the Philosopher's Stone
+        adult:
+          type: boolean
+          default: false
+          example: false
+        backdrop_path:
+          type: string
+          example: /hziiv14OpD73u9gAak4XDDfBKa2.jpg
+        belongs_to_collection:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1241
+            name:
+              type: string
+              example: Harry Potter Collection
+            poster_path:
+              type: string
+              example: /eVPs2Y0LyvTLZn6AP5Z6O2rtiGB.jpg
+            backdrop_path:
+              type: string
+              example: /hWK8gTH2riuv65Ej43hPSeE16Mu.jpg
+          required:
+            - id
+            - name
+        budget:
+          type: integer
+          example: 125000000
+        genres:
+          type: array
+          items:
+            $ref: '#/components/schemas/Object'
+          example:
+            - id: 12
+              name: Adventure
+            - id: 14
+              name: Fantasy
+        homepage:
+          type: string
+          example: 'https://www.warnerbros.com/movies/harry-potter-and-sorcerers-stone/'
+        imdb_id:
+          type: string
+          example: tt0468569
+        origin_country:
+          type: array
+          items:
+            type: string
+          example:
+            - GB
+        overview:
+          type: string
+          example: 'Harry Potter has lived under the stairs at his aunt and uncle''s house his whole life. But on his 11th birthday, he learns he''s a powerful wizard—with a place waiting for him at the Hogwarts School of Witchcraft and Wizardry. As he learns to harness his newfound powers with the help of the school''s kindly headmaster, Harry uncovers the truth about his parents'' deaths—and about the villain who''s to blame.'
+        popularity:
+          type: number
+          example: 203.037
+        poster_path:
+          type: string
+          example: /wuMc08IPKEatf9rnMNXvIDxqP4W.jpg
+        production_companies:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductionCompany'
+          example:
+            - id: 174
+              logo_path: /zhD3hhtKB5qyv7ZeL4uLpNxgMVU.png
+              name: Warner Bros. Pictures
+              origin_country: US
+            - id: 437
+              logo_path: /nu20mtwbEIhUNnQ5NXVhHsNknZj.png
+              name: Heyday Films
+              origin_country: GB
+            - id: 436
+              logo_path: /A7WCkG3F0NFvjGCwUnclpGdIu9E.png
+              name: 1492 Pictures
+              origin_country: US
+        production_countries:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductionCountry'
+          example:
+            - iso_3166_1: GB
+              name: United Kingdom
+            - iso_3166_1: US
+              name: United States of America
+        release_date:
+          type: string
+          example: '2001-11-16'
+        revenue:
+          type: integer
+          example: 976475550
+        runtime:
+          type: integer
+          example: 152
+        spoken_languages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Language'
+        status:
+          type: string
+          example: Released
+        tagline:
+          type: string
+          example: Let the magic begin.
+        video:
+          type: boolean
+          default: true
+          example: false
+        vote_average:
+          type: number
+          example: 7.914
+        vote_count:
+          type: integer
+          example: 26490
+      required:
+        - id
+        - title
+        - original_language
+        - original_title
     MovieListItem:
       type: object
       properties:
@@ -1651,6 +1876,35 @@ components:
         - results
         - total_pages
         - total_results
+    ProductionCompany:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 0
+        name:
+          type: string
+        origin_country:
+          type: string
+        logo_path:
+          type: string
+      required:
+        - id
+        - name
+    ProductionCountry:
+      type: object
+      properties:
+        iso_3166_1:
+          type: string
+          description: ISO 3166-1 tag
+          minLength: 2
+          maxLength: 2
+          pattern: '^[A-Z]{2}$'
+        name:
+          type: string
+      required:
+        - iso_3166_1
+        - name
     TvListItem:
       type: object
       properties:

@@ -3,7 +3,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.25.0
+  version: 0.27.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -16,7 +16,7 @@ tags:
   - name: Movies
   - name: Search
   - name: TV Series
-  - name: TV Seasons
+  # - name: TV Seasons
 paths:
   /company/{company_id}:
     $ref: 'company.yml#/components/paths/Details'
@@ -52,10 +52,14 @@ paths:
     $ref: 'movie.yml#/components/paths/TopRated'
   /movie/upcoming:
     $ref: 'movie.yml#/components/paths/Upcoming'
+  /movie/{movie_id}:
+    $ref: 'movie.yml#/components/paths/Details'
   /movie/{movie_id}/credits:
     $ref: 'movie.yml#/components/paths/Credits'
   /movie/{movie_id}/keywords:
     $ref: 'movie.yml#/components/paths/Keywords'
+  /movie/{movie_id}/recommendations:
+    $ref: 'movie.yml#/components/paths/Recommendations'
   /movie/{movie_id}/similar:
     $ref: 'movie.yml#/components/paths/Similar'
   #  /search/collection:
@@ -84,6 +88,8 @@ components:
       $ref: 'keyword.yml#/components/parameters/KeywordID'
     LanguageParam:
       $ref: 'commons.yml#/components/parameters/LanguageParam'
+    MovieAppendToResponse:
+      $ref: 'movie.yml#/components/parameters/MovieAppendToResponse'
     MovieID:
       $ref: 'movie.yml#/components/parameters/MovieID'
     PageParam:
@@ -127,9 +133,11 @@ components:
     Error:
       $ref: 'commons.yml#/components/schemas/Error'
     Language:
-      $ref: 'configuration.yml#/components/schemas/Language'
+      $ref: 'commons.yml#/components/schemas/Language'
     Media:
       $ref: 'commons.yml#/components/schemas/Media'
+    Movie:
+      $ref: 'movie.yml#/components/schemas/Movie'
     MovieListItem:
       $ref: 'commons.yml#/components/schemas/MovieListItem'
     MovieListItemWithMediaType:
@@ -152,6 +160,10 @@ components:
       $ref: 'commons.yml#/components/schemas/PersonListItemWithMediaType'
     PersonListPage:
       $ref: 'commons.yml#/components/schemas/PersonListPage'
+    ProductionCompany:
+      $ref: 'commons.yml#/components/schemas/ProductionCompany'
+    ProductionCountry:
+      $ref: 'commons.yml#/components/schemas/ProductionCountry'
     TvListItem:
       $ref: 'commons.yml#/components/schemas/TvListItem'
     TvListItemWithMediaType:
