@@ -544,6 +544,7 @@ components:
           example: '2001-11-16'
         revenue:
           type: integer
+          format: int64
           example: 976475550
         runtime:
           type: integer
@@ -564,6 +565,7 @@ components:
           example: false
         vote_average:
           type: number
+          format: float
           example: 7.914
         vote_count:
           type: integer

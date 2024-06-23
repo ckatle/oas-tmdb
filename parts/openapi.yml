@@ -3,7 +3,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.27.0
+  version: 0.27.1
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -116,6 +116,8 @@ components:
   schemas:
     CastListItem:
       $ref: 'commons.yml#/components/schemas/CastListItem'
+    CollectionBase:
+      $ref: 'commons.yml#/components/schemas/CollectionBase'
     Company:
       $ref: 'company.yml#/components/schemas/Company'
     CompanyLogo:
@@ -132,6 +134,8 @@ components:
       $ref: 'configuration.yml#/components/schemas/Department'
     Error:
       $ref: 'commons.yml#/components/schemas/Error'
+    GenreList:
+      $ref: 'genre.yml#/components/schemas/GenreList'
     Language:
       $ref: 'commons.yml#/components/schemas/Language'
     Media:
