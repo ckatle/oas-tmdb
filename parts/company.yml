@@ -110,6 +110,7 @@ components:
       properties:
         aspect_ratio:
           type: number
+          format: double
           example: 2.97979797979798
         file_path:
           type: string
@@ -125,6 +126,7 @@ components:
           example: .svg
         vote_average:
           type: number
+          format: float
           example: 5.384
         vote_count:
           type: integer

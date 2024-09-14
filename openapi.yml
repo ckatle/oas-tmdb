@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.27.1
+  version: 0.27.4
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -1269,6 +1269,7 @@ components:
           type: string
         popularity:
           type: number
+          format: float
         profile_path:
           type: string
         cast_id:
@@ -1337,6 +1338,7 @@ components:
       properties:
         aspect_ratio:
           type: number
+          format: double
           example: 2.97979797979798
         file_path:
           type: string
@@ -1352,6 +1354,7 @@ components:
           example: .svg
         vote_average:
           type: number
+          format: float
           example: 5.384
         vote_count:
           type: integer
@@ -1433,6 +1436,7 @@ components:
           type: string
         popularity:
           type: number
+          format: float
         profile_path:
           type: string
         credit_id:
@@ -1572,6 +1576,7 @@ components:
           example: 'Harry Potter has lived under the stairs at his aunt and uncle''s house his whole life. But on his 11th birthday, he learns he''s a powerful wizard—with a place waiting for him at the Hogwarts School of Witchcraft and Wizardry. As he learns to harness his newfound powers with the help of the school''s kindly headmaster, Harry uncovers the truth about his parents'' deaths—and about the villain who''s to blame.'
         popularity:
           type: number
+          format: float
           example: 203.037
         poster_path:
           type: string
@@ -1604,6 +1609,7 @@ components:
               name: United States of America
         release_date:
           type: string
+          format: date
           example: '2001-11-16'
         revenue:
           type: integer
@@ -1665,15 +1671,18 @@ components:
           type: string
         popularity:
           type: number
+          format: float
         poster_path:
           type: string
         release_date:
           type: string
+          format: date
         video:
           type: boolean
           default: true
         vote_average:
           type: number
+          format: float
         vote_count:
           type: integer
       required:
@@ -1838,6 +1847,7 @@ components:
           type: string
         popularity:
           type: number
+          format: float
         profile_path:
           type: string
         known_for:
@@ -1952,12 +1962,15 @@ components:
           type: string
         popularity:
           type: number
+          format: float
         poster_path:
           type: string
         first_air_date:
           type: string
+          format: date
         vote_average:
           type: number
+          format: float
         vote_count:
           type: integer
       required:

@@ -125,6 +125,7 @@ components:
           type: string
         popularity:
           type: number
+          format: float
         profile_path:
           type: string
         cast_id:
@@ -231,6 +232,7 @@ components:
           type: string
         popularity:
           type: number
+          format: float
         profile_path:
           type: string
         credit_id:
@@ -318,15 +320,18 @@ components:
           type: string
         popularity:
           type: number
+          format: float
         poster_path:
           type: string
         release_date:
           type: string
+          format: date
         video:
           type: boolean
           default: true
         vote_average:
           type: number
+          format: float
         vote_count:
           type: integer
       required:
@@ -491,6 +496,7 @@ components:
           type: string
         popularity:
           type: number
+          format: float
         profile_path:
           type: string
         known_for:
@@ -605,12 +611,15 @@ components:
           type: string
         popularity:
           type: number
+          format: float
         poster_path:
           type: string
         first_air_date:
           type: string
+          format: date
         vote_average:
           type: number
+          format: float
         vote_count:
           type: integer
       required:
