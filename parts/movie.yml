@@ -509,6 +509,7 @@ components:
           headmaster, Harry uncovers the truth about his parents' deaths—and about the villain who's to blame."
         popularity:
           type: number
+          format: float
           example: 203.037
         poster_path:
           type: string
@@ -541,9 +542,11 @@ components:
               name: 'United States of America'
         release_date:
           type: string
+          format: date
           example: '2001-11-16'
         revenue:
           type: integer
+          format: int64
           example: 976475550
         runtime:
           type: integer
@@ -564,6 +567,7 @@ components:
           example: false
         vote_average:
           type: number
+          format: float
           example: 7.914
         vote_count:
           type: integer

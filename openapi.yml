@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.27.0
+  version: 0.27.4
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -296,12 +296,13 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Object'
-                example:
+                $ref: '#/components/schemas/GenreList'
+              example:
+                genres:
                   - id: 28
                     name: Action
+                  - id: 12
+                    name: Adventure
         '401':
           $ref: '#/components/responses/Unauthorized'
         '429':
@@ -321,10 +322,9 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Object'
-                example:
+                $ref: '#/components/schemas/GenreList'
+              example:
+                genres:
                   - id: 10759
                     name: Action & Adventure
         '401':
@@ -1269,6 +1269,7 @@ components:
           type: string
         popularity:
           type: number
+          format: float
         profile_path:
           type: string
         cast_id:
@@ -1281,6 +1282,24 @@ components:
         order:
           type: integer
           default: 0
+      required:
+        - id
+        - name
+    CollectionBase:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1241
+        name:
+          type: string
+          example: Harry Potter Collection
+        poster_path:
+          type: string
+          example: /eVPs2Y0LyvTLZn6AP5Z6O2rtiGB.jpg
+        backdrop_path:
+          type: string
+          example: /hWK8gTH2riuv65Ej43hPSeE16Mu.jpg
       required:
         - id
         - name
@@ -1319,6 +1338,7 @@ components:
       properties:
         aspect_ratio:
           type: number
+          format: double
           example: 2.97979797979798
         file_path:
           type: string
@@ -1334,6 +1354,7 @@ components:
           example: .svg
         vote_average:
           type: number
+          format: float
           example: 5.384
         vote_count:
           type: integer
@@ -1415,6 +1436,7 @@ components:
           type: string
         popularity:
           type: number
+          format: float
         profile_path:
           type: string
         credit_id:
@@ -1456,6 +1478,15 @@ components:
         - success
         - status_code
         - status_message
+    GenreList:
+      type: object
+      properties:
+        genres:
+          type: array
+          items:
+            $ref: '#/components/schemas/Object'
+      required:
+        - genres
     Language:
       type: object
       additionalProperties: false
@@ -1515,23 +1546,7 @@ components:
           type: string
           example: /hziiv14OpD73u9gAak4XDDfBKa2.jpg
         belongs_to_collection:
-          type: object
-          properties:
-            id:
-              type: integer
-              example: 1241
-            name:
-              type: string
-              example: Harry Potter Collection
-            poster_path:
-              type: string
-              example: /eVPs2Y0LyvTLZn6AP5Z6O2rtiGB.jpg
-            backdrop_path:
-              type: string
-              example: /hWK8gTH2riuv65Ej43hPSeE16Mu.jpg
-          required:
-            - id
-            - name
+          $ref: '#/components/schemas/CollectionBase'
         budget:
           type: integer
           example: 125000000
@@ -1561,6 +1576,7 @@ components:
           example: 'Harry Potter has lived under the stairs at his aunt and uncle''s house his whole life. But on his 11th birthday, he learns he''s a powerful wizard—with a place waiting for him at the Hogwarts School of Witchcraft and Wizardry. As he learns to harness his newfound powers with the help of the school''s kindly headmaster, Harry uncovers the truth about his parents'' deaths—and about the villain who''s to blame.'
         popularity:
           type: number
+          format: float
           example: 203.037
         poster_path:
           type: string
@@ -1593,9 +1609,11 @@ components:
               name: United States of America
         release_date:
           type: string
+          format: date
           example: '2001-11-16'
         revenue:
           type: integer
+          format: int64
           example: 976475550
         runtime:
           type: integer
@@ -1616,6 +1634,7 @@ components:
           example: false
         vote_average:
           type: number
+          format: float
           example: 7.914
         vote_count:
           type: integer
@@ -1652,15 +1671,18 @@ components:
           type: string
         popularity:
           type: number
+          format: float
         poster_path:
           type: string
         release_date:
           type: string
+          format: date
         video:
           type: boolean
           default: true
         vote_average:
           type: number
+          format: float
         vote_count:
           type: integer
       required:
@@ -1825,6 +1847,7 @@ components:
           type: string
         popularity:
           type: number
+          format: float
         profile_path:
           type: string
         known_for:
@@ -1939,12 +1962,15 @@ components:
           type: string
         popularity:
           type: number
+          format: float
         poster_path:
           type: string
         first_air_date:
           type: string
+          format: date
         vote_average:
           type: number
+          format: float
         vote_count:
           type: integer
       required:

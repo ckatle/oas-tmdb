@@ -16,12 +16,13 @@ components:
             content:
               application/json:
                 schema:
-                  type: array
-                  items:
-                    $ref: 'commons.yml#/components/schemas/Object'
-                  example:
+                  $ref: '#/components/schemas/GenreList'
+                example:
+                  genres:
                     - id: 28
                       name: Action
+                    - id: 12
+                      name: Adventure
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
           '429':
@@ -41,13 +42,22 @@ components:
             content:
               application/json:
                 schema:
-                  type: array
-                  items:
-                    $ref: 'commons.yml#/components/schemas/Object'
-                  example:
+                  $ref: '#/components/schemas/GenreList'
+                example:
+                  genres:
                     - id: 10759
                       name: Action & Adventure
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
           '429':
             $ref: 'commons.yml#/components/responses/TooManyRequests'
+  schemas:
+    GenreList:
+      type: object
+      properties:
+        genres:
+          type: array
+          items:
+            $ref: 'commons.yml#/components/schemas/Object'
+      required:
+        - genres
