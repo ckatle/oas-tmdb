@@ -27,6 +27,9 @@ components:
             - similar
             - translations
         maxItems: 20
+        description: >
+          * `alternative_titles` - Append alternative titles for a movie
+          * `similar` - Append similar movies based on genres and keywords
       explode: false
       description: comma separated list of endpoints within this namespace, 20 items max
   paths:
@@ -457,7 +460,6 @@ components:
       properties:
         id:
           type: integer
-          default: 0
           example: 671
         title:
           type: string
@@ -470,7 +472,6 @@ components:
           example: "Harry Potter and the Philosopher's Stone"
         adult:
           type: boolean
-          default: false
           example: false
         backdrop_path:
           type: string
@@ -491,6 +492,7 @@ components:
               name: Fantasy
         homepage:
           type: string
+          format: uri
           example: 'https://www.warnerbros.com/movies/harry-potter-and-sorcerers-stone/'
         imdb_id:
           type: string
@@ -498,7 +500,7 @@ components:
         origin_country:
           type: array
           items:
-            type: string
+            $ref: 'commons.yml#/components/schemas/CountryCode'
           example:
             - 'GB'
         overview:
@@ -517,7 +519,7 @@ components:
         production_companies:
           type: array
           items:
-            $ref: 'commons.yml#/components/schemas/ProductionCompany'
+            $ref: 'commons.yml#/components/schemas/CompanyBase'
           example:
             - id: 174
               logo_path: "/zhD3hhtKB5qyv7ZeL4uLpNxgMVU.png"
@@ -563,7 +565,6 @@ components:
           example: 'Let the magic begin.'
         video:
           type: boolean
-          default: true
           example: false
         vote_average:
           type: number
@@ -572,8 +573,25 @@ components:
         vote_count:
           type: integer
           example: 26490
+        keywords:
+          $ref: '#/components/schemas/MovieKeywordList'
+          example:
+            keywords:
+              - id: 616
+                name: witch
+              - id: 177912
+                name: wizard
       required:
         - id
         - title
         - original_language
         - original_title
+    MovieKeywordList:
+      type: object
+      properties:
+        id:
+          type: integer
+        keywords:
+          type: array
+          items:
+            $ref: 'commons.yml#/components/schemas/Object'

@@ -19,10 +19,10 @@ components:
                   $ref: '#/components/schemas/GenreList'
                 example:
                   genres:
-                    - id: 28
-                      name: Action
                     - id: 12
                       name: Adventure
+                    - id: 14
+                      name: Fantasy
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
           '429':
@@ -47,6 +47,8 @@ components:
                   genres:
                     - id: 10759
                       name: Action & Adventure
+                    - id: 10765
+                      name: Sci-Fi & Fantasy
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
           '429':

@@ -88,6 +88,13 @@ components:
                   type: array
                   items:
                     $ref: '#/components/schemas/Country'
+                  example:
+                    - iso_3166_1: 'GB'
+                      english_name: 'United Kingdom'
+                      native_name: 'United Kingdom'
+                    - iso_3166_1: 'US'
+                      english_name: 'United States of America'
+                      native_name: 'United States'
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
           '429':
@@ -196,18 +203,11 @@ components:
       additionalProperties: false
       properties:
         iso_3166_1:
-          type: string
-          description: ISO 3166-1 tag
-          minLength: 2
-          maxLength: 2
-          pattern: '^[A-Z]{2}$'
-          example: AD
+          $ref: 'commons.yml#/components/schemas/CountryCode'
         english_name:
           type: string
-          example: Andorra
         native_name:
           type: string
-          example: Andorra
       required:
         - iso_3166_1
         - english_name
@@ -216,11 +216,7 @@ components:
       additionalProperties: false
       properties:
         iso_3166_1:
-          type: string
-          description: ISO 3166-1 tag
-          minLength: 2
-          maxLength: 2
-          pattern: '^[A-Z]{2}$'
+          $ref: 'commons.yml#/components/schemas/CountryCode'
         zones:
           type: array
           items:

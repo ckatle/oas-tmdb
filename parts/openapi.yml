@@ -3,7 +3,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.27.4
+  version: 0.28.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -62,8 +62,8 @@ paths:
     $ref: 'movie.yml#/components/paths/Recommendations'
   /movie/{movie_id}/similar:
     $ref: 'movie.yml#/components/paths/Similar'
-  #  /search/collection:
-  #    $ref: 'search.yml#/components/paths/Collection'
+  /search/collection:
+    $ref: 'search.yml#/components/paths/Collection'
   /search/keyword:
     $ref: 'search.yml#/components/paths/Keyword'
   /search/movie:
@@ -118,12 +118,20 @@ components:
       $ref: 'commons.yml#/components/schemas/CastListItem'
     CollectionBase:
       $ref: 'commons.yml#/components/schemas/CollectionBase'
+    CollectionListItem:
+      $ref: 'commons.yml#/components/schemas/CollectionListItem'
+    CollectionListPage:
+      $ref: 'commons.yml#/components/schemas/CollectionListPage'
     Company:
       $ref: 'company.yml#/components/schemas/Company'
+    CompanyBase:
+      $ref: 'commons.yml#/components/schemas/CompanyBase'
     CompanyLogo:
       $ref: 'company.yml#/components/schemas/CompanyLogo'
     Country:
       $ref: 'configuration.yml#/components/schemas/Country'
+    CountryCode:
+      $ref: 'commons.yml#/components/schemas/CountryCode'
     CountryWithTimezones:
       $ref: 'configuration.yml#/components/schemas/CountryWithTimezones'
     Credits:
@@ -142,6 +150,8 @@ components:
       $ref: 'commons.yml#/components/schemas/Media'
     Movie:
       $ref: 'movie.yml#/components/schemas/Movie'
+    MovieKeywordList:
+      $ref: 'movie.yml#/components/schemas/MovieKeywordList'
     MovieListItem:
       $ref: 'commons.yml#/components/schemas/MovieListItem'
     MovieListItemWithMediaType:
@@ -156,7 +166,7 @@ components:
       $ref: 'commons.yml#/components/schemas/Object'
     ObjectListPage:
       $ref: 'commons.yml#/components/schemas/ObjectListPage'
-    Page:
+    ResultPage:
       $ref: 'commons.yml#/components/schemas/Page'
     PersonListItem:
       $ref: 'commons.yml#/components/schemas/PersonListItem'
@@ -164,8 +174,6 @@ components:
       $ref: 'commons.yml#/components/schemas/PersonListItemWithMediaType'
     PersonListPage:
       $ref: 'commons.yml#/components/schemas/PersonListPage'
-    ProductionCompany:
-      $ref: 'commons.yml#/components/schemas/ProductionCompany'
     ProductionCountry:
       $ref: 'commons.yml#/components/schemas/ProductionCountry'
     TvListItem:
