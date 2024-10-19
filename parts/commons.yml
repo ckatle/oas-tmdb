@@ -138,9 +138,12 @@ components:
         - name
     CollectionBase:
       allOf:
-        - $ref: '#/components/schemas/Object'
+        - $ref: '#/components/schemas/Thing'
         - type: object
           additionalProperties: false
+          required:
+            - backdrop_path
+            - poster_path
           properties:
             poster_path:
               type: string
@@ -176,7 +179,7 @@ components:
             - results
     CompanyBase:
       allOf:
-        - $ref: '#/components/schemas/Object'
+        - $ref: '#/components/schemas/Thing'
         - type: object
           additionalProperties: false
           properties:
@@ -277,13 +280,10 @@ components:
           minLength: 2
           maxLength: 2
           pattern: '^[a-z]{2}$'
-          example: en
         english_name:
           type: string
-          example: English
         name:
           type: string
-          example: English
       required:
         - iso_639_1
         - english_name
@@ -399,13 +399,17 @@ components:
                     tv: '#/components/schemas/TvListItemWithMediaType'
           required:
             - results
-    Object:
+    Thing:
+      title: Object
       type: object
       additionalProperties: false
       properties:
         id:
           type: integer
           format: int32
+          description: >
+            The identifier property represents any kind of identifier for any kind of [Thing](https://schema.org/Thing),
+            such as ISBNs, GTIN codes, UUIDs etc.
         name:
           type: string
       required:
@@ -420,7 +424,7 @@ components:
             results:
               type: array
               items:
-                $ref: '#/components/schemas/Object'
+                $ref: '#/components/schemas/Thing'
           required:
             - results
     Page:

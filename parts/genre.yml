@@ -60,6 +60,6 @@ components:
         genres:
           type: array
           items:
-            $ref: 'commons.yml#/components/schemas/Object'
+            $ref: 'commons.yml#/components/schemas/Thing'
       required:
         - genres

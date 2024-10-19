@@ -102,8 +102,224 @@ components:
               application/json:
                 schema:
                   $ref: '#/components/schemas/Movie'
-          '400':
-            $ref: 'commons.yml#/components/responses/InvalidPage'
+                example:
+                  id: 671
+                  title: Harry Potter and the Philosopher's Stone
+                  original_language: en
+                  original_title: Harry Potter and the Philosopher's Stone
+                  adult: false
+                  backdrop_path: '/hziiv14OpD73u9gAak4XDDfBKa2.jpg'
+                  belongs_to_collection:
+                    id: 1241
+                    name: Harry Potter Collection
+                    poster_path: '/eVPs2Y0LyvTLZn6AP5Z6O2rtiGB.jpg'
+                    backdrop_path: '/hWK8gTH2riuv65Ej43hPSeE16Mu.jpg'
+                  budget: 125000000
+                  genres:
+                    - id: 12
+                      name: Adventure
+                    - id: 14
+                      name: Fantasy
+                  homepage: https://www.warnerbros.com/movies/harry-potter-and-sorcerers-stone/
+                  imdb_id: tt0468569
+                  origin_country:
+                    - 'GB'
+                  overview: "Harry Potter has lived under the stairs at his aunt and uncle's house his whole life. But
+                  on his 11th birthday, he learns he's a powerful wizard—with a place waiting for him at the Hogwarts
+                  School of Witchcraft and Wizardry. As he learns to harness his newfound powers with the help of the
+                  school's kindly headmaster, Harry uncovers the truth about his parents' deaths—and about the villain
+                  who's to blame."
+                  popularity: 203.037
+                  poster_path: '/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg'
+                  production_companies:
+                    - id: 174
+                      logo_path: "/zhD3hhtKB5qyv7ZeL4uLpNxgMVU.png"
+                      name: "Warner Bros. Pictures"
+                      origin_country: "US"
+                    - id: 437
+                      logo_path: "/nu20mtwbEIhUNnQ5NXVhHsNknZj.png"
+                      name: "Heyday Films"
+                      origin_country: "GB"
+                    - id: 436
+                      logo_path: "/A7WCkG3F0NFvjGCwUnclpGdIu9E.png"
+                      name: "1492 Pictures"
+                      origin_country: "US"
+                  production_countries:
+                    - iso_3166_1: 'GB'
+                      name: 'United Kingdom'
+                    - iso_3166_1: 'US'
+                      name: 'United States of America'
+                  release_date: '2001-11-16'
+                  revenue: 976475550
+                  runtime: 152
+                  spoken_languages:
+                    - iso_639_1: en
+                      english_name: English
+                      name: English
+                  status: Released
+                  tagline: Let the magic begin.
+                  video: false
+                  vote_average: 7.914
+                  vote_count: 26490
+                  credits:
+                    cast:
+                      - id: 10980
+                        gender: 2
+                        name: Daniel Radcliffe
+                        original_name: Daniel Radcliffe
+                        known_for_department: Acting
+                        adult: false
+                        popularity: 52.373
+                        profile_path: '/iPg0J9UzAlPj1fLEJNllpW9IhGe.jpg'
+                        cast_id: 27
+                        character: Harry Potter
+                        credit_id: 52fe4267c3a36847f801be91
+                        order: 0
+                      - id: 10989
+                        gender: 2
+                        name: Rupert Grint
+                        original_name: Rupert Grint
+                        known_for_department: Acting
+                        adult: false
+                        popularity: 35.698
+                        profile_path: '/q2KZZ0ltTEl7Sf8volNFV1JDEP4.jpg'
+                        cast_id: 37
+                        character: Ron Weasley
+                        credit_id: 52fe4267c3a36847f801beb9
+                        order: 1
+                      - id: 10990
+                        gender: 1
+                        name: Emma Watson
+                        original_name: Emma Watson
+                        known_for_department: Acting
+                        adult: false
+                        popularity: 43.528
+                        profile_path: '/tvPPRGzAzdQFhlKzLbMO1EpuTJI.jpg'
+                        cast_id: 49
+                        character: Hermione Granger
+                        credit_id: 531736ea92514138c00010a3
+                        order: 2
+                    crew:
+                      - id: 10965
+                        gender: 2
+                        name: Chris Columbus
+                        original_name: Chris Columbus
+                        known_for_department: Directing
+                        adult: false
+                        popularity: 15.78
+                        profile_path: '/yCyEz90NqjEXKZ7HYcEhDXlLlPc.jpg'
+                        credit_id: 52fe4267c3a36847f801be05
+                        department: Directing
+                        job: Director
+                      - id: 10966
+                        gender: 1
+                        name: J.K. Rowling
+                        original_name: J.K. Rowling
+                        known_for_department: Writing
+                        adult: false
+                        popularity: 20.202
+                        profile_path: '/8VDx3K8NBGJDEWr4KdsGsuT8wuj.jpg'
+                        credit_id: 52fe4267c3a36847f801be0b
+                        department: Writing
+                        job: Novel
+                      - id: 491
+                        gender: 2
+                        name: John Williams
+                        original_name: John Williams
+                        known_for_department: Sound
+                        adult: false
+                        popularity: 20.73
+                        profile_path: '/KFyMqUWeiBdP9tJcZyGWOqnrgK.jpg'
+                        credit_id: 52fe4267c3a36847f801be1d
+                        department: Sound
+                        job: Original Music Composer
+                  keywords:
+                    keywords:
+                      - id: 616
+                        name: witch
+                      - id: 177912
+                        name: wizard
+                  recommendations:
+                    page: 1
+                    results:
+                      - id: 672
+                        title: Harry Potter and the Chamber of Secrets
+                        original_language: en
+                        original_title: Harry Potter and the Chamber of Secrets
+                        overview: "Cars fly, trees fight back, and a mysterious house-elf comes to warn Harry Potter at
+                        the start of his second year at Hogwarts. Adventure and danger await when bloody writing on a
+                        wall announces: The Chamber Of Secrets Has Been Opened. To save Hogwarts will require all of
+                        Harry, Ron and Hermione’s magical abilities and courage."
+                        backdrop_path: '/1stUIsjawROZxjiCMtqqXqgfZWC.jpg'
+                        poster_path: '/sdEOH0992YZ0QSxgXNIGLq1ToUi.jpg'
+                        media_type: movie
+                        adult: false
+                        genre_ids: [12, 14]
+                        popularity: 151.674
+                        release_date: '2002-11-13'
+                        video: false
+                        vote_average: 7.721
+                        vote_count: 21255
+                      - id: 674
+                        title: Harry Potter and the Goblet of Fire
+                        original_language: en
+                        original_title: Harry Potter and the Goblet of Fire
+                        overview: "When Harry Potter's name emerges from the Goblet of Fire, he becomes a competitor in
+                        a grueling battle for glory among three wizarding schools—the Triwizard Tournament. But since
+                        Harry never submitted his name for the Tournament, who did? Now Harry must confront a deadly
+                        dragon, fierce water demons and an enchanted maze only to find himself in the cruel grasp of He
+                        Who Must Not Be Named."
+                        backdrop_path: '/5rrGVmRUuCKVbqUu41XIWTXJmNA.jpg'
+                        poster_path: '/fECBtHlr0RB3foNHDiCBXeg9Bv9.jpg'
+                        media_type: movie
+                        adult: false
+                        genre_ids: [12, 14]
+                        popularity: 142.666
+                        release_date: '2005-11-16'
+                        video: false
+                        vote_average: 7.814
+                        vote_count: 20045
+                    total_pages: 2
+                    total_results: 40
+                  similar:
+                    page: 1
+                    results:
+                      - id: 601
+                        title: E.T. the Extra-Terrestrial
+                        original_language: en
+                        original_title: E.T. the Extra-Terrestrial
+                        overview: "An alien is left behind on Earth and saved by the 10-year-old Elliot who decides to
+                        keep him hidden in his home. While a task force hunts for the extra-terrestrial, Elliot, his
+                        brother, and his little sister Gertie form an emotional bond with their new friend, and try to
+                        help him find his way home."
+                        backdrop_path: '/zlp6WHCh44zzG4aFxQW8dmczuBH.jpg'
+                        poster_path: '/pEKStszBzTZCvR0H4tosjqxmE7X.jpg'
+                        adult: false
+                        genre_ids: [878, 12, 10751, 14]
+                        popularity: 56.389
+                        release_date: '1982-06-11'
+                        video: false
+                        vote_average: 7.516
+                        vote_count: 10846
+                      - id: 630
+                        title: The Wizard of Oz
+                        original_language: en
+                        original_title: The Wizard of Oz
+                        overview: "Young Dorothy finds herself in a magical world where she makes friends with a lion, a
+                        scarecrow and a tin man as they make their way along the yellow brick road to talk with the
+                        Wizard and ask for the things they miss most in their lives. The Wicked Witch of the West is the
+                        only thing that could stop them."
+                        backdrop_path: '/nRsr98MFztBGm532hCVMGXV6qOp.jpg'
+                        poster_path: '/pfAZFD7I2hxW9HCChTuAzsdE6UX.jpg'
+                        adult: false
+                        genre_ids: [12, 14, 10751]
+                        popularity: 61.997
+                        release_date: '1939-08-15'
+                        video: false
+                        vote_average: 7.584
+                        vote_count: 5320
+                    total_pages: 2
+                    total_results: 40
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
           '404':
@@ -133,7 +349,7 @@ components:
                     keywords:
                       type: array
                       items:
-                        $ref: 'commons.yml#/components/schemas/Object'
+                        $ref: 'commons.yml#/components/schemas/Thing'
                   required:
                     - id
                     - keywords
@@ -460,127 +676,79 @@ components:
       properties:
         id:
           type: integer
-          example: 671
         title:
           type: string
-          example: "Harry Potter and the Philosopher's Stone"
         original_language:
           type: string
-          example: 'en'
         original_title:
           type: string
-          example: "Harry Potter and the Philosopher's Stone"
         adult:
           type: boolean
-          example: false
         backdrop_path:
           type: string
-          example: '/hziiv14OpD73u9gAak4XDDfBKa2.jpg'
         belongs_to_collection:
           $ref: 'commons.yml#/components/schemas/CollectionBase'
         budget:
           type: integer
-          example: 125000000
         genres:
           type: array
           items:
-            $ref: 'commons.yml#/components/schemas/Object'
-          example:
-            - id: 12
-              name: Adventure
-            - id: 14
-              name: Fantasy
+            $ref: 'commons.yml#/components/schemas/Thing'
         homepage:
           type: string
           format: uri
-          example: 'https://www.warnerbros.com/movies/harry-potter-and-sorcerers-stone/'
         imdb_id:
           type: string
-          example: 'tt0468569'
         origin_country:
           type: array
           items:
             $ref: 'commons.yml#/components/schemas/CountryCode'
-          example:
-            - 'GB'
         overview:
           type: string
-          example: "Harry Potter has lived under the stairs at his aunt and uncle's house his whole life. But on his
-          11th birthday, he learns he's a powerful wizard—with a place waiting for him at the Hogwarts School of
-          Witchcraft and Wizardry. As he learns to harness his newfound powers with the help of the school's kindly
-          headmaster, Harry uncovers the truth about his parents' deaths—and about the villain who's to blame."
         popularity:
           type: number
           format: float
-          example: 203.037
         poster_path:
           type: string
-          example: '/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg'
         production_companies:
           type: array
           items:
             $ref: 'commons.yml#/components/schemas/CompanyBase'
-          example:
-            - id: 174
-              logo_path: "/zhD3hhtKB5qyv7ZeL4uLpNxgMVU.png"
-              name: "Warner Bros. Pictures"
-              origin_country: "US"
-            - id: 437
-              logo_path: "/nu20mtwbEIhUNnQ5NXVhHsNknZj.png"
-              name: "Heyday Films"
-              origin_country: "GB"
-            - id: 436
-              logo_path: "/A7WCkG3F0NFvjGCwUnclpGdIu9E.png"
-              name: "1492 Pictures"
-              origin_country: "US"
         production_countries:
           type: array
           items:
             $ref: 'commons.yml#/components/schemas/ProductionCountry'
-          example:
-            - iso_3166_1: 'GB'
-              name: 'United Kingdom'
-            - iso_3166_1: 'US'
-              name: 'United States of America'
         release_date:
           type: string
           format: date
-          example: '2001-11-16'
         revenue:
           type: integer
           format: int64
-          example: 976475550
         runtime:
           type: integer
-          example: 152
         spoken_languages:
           type: array
           items:
             $ref: 'commons.yml#/components/schemas/Language'
         status:
           type: string
-          example: 'Released'
         tagline:
           type: string
-          example: 'Let the magic begin.'
         video:
           type: boolean
-          example: false
         vote_average:
           type: number
           format: float
-          example: 7.914
         vote_count:
           type: integer
-          example: 26490
+        credits:
+          $ref: 'commons.yml#/components/schemas/Credits'
         keywords:
           $ref: '#/components/schemas/MovieKeywordList'
-          example:
-            keywords:
-              - id: 616
-                name: witch
-              - id: 177912
-                name: wizard
+        recommendations:
+          $ref: 'commons.yml#/components/schemas/MultiListPage'
+        similar:
+          $ref: 'commons.yml#/components/schemas/MovieListPage'
       required:
         - id
         - title
@@ -594,4 +762,4 @@ components:
         keywords:
           type: array
           items:
-            $ref: 'commons.yml#/components/schemas/Object'
+            $ref: 'commons.yml#/components/schemas/Thing'

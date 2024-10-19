@@ -3,10 +3,11 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.28.0
+  version: 0.29.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
+  - name: Collections
   - name: Companies
   - name: Configuration
   # - name: Discover
@@ -18,6 +19,8 @@ tags:
   - name: TV Series
   # - name: TV Seasons
 paths:
+  /collection/{collection_id}:
+    $ref: 'collection.yml#/components/paths/Details'
   /company/{company_id}:
     $ref: 'company.yml#/components/paths/Details'
   /company/{company_id}/images:
@@ -78,6 +81,8 @@ paths:
     $ref: 'tv.yml#/components/paths/Credits'
 components:
   parameters:
+    CollectionID:
+      $ref: 'collection.yml#/components/parameters/CollectionID'
     CompanyID:
       $ref: 'company.yml#/components/parameters/CompanyID'
     #    DiscoverSortBy:
@@ -116,6 +121,8 @@ components:
   schemas:
     CastListItem:
       $ref: 'commons.yml#/components/schemas/CastListItem'
+    Collection:
+      $ref: 'collection.yml#/components/schemas/Collection'
     CollectionBase:
       $ref: 'commons.yml#/components/schemas/CollectionBase'
     CollectionListItem:
@@ -163,7 +170,7 @@ components:
     MultiListPage:
       $ref: 'commons.yml#/components/schemas/MultiListPage'
     Object:
-      $ref: 'commons.yml#/components/schemas/Object'
+      $ref: 'commons.yml#/components/schemas/Thing'
     ObjectListPage:
       $ref: 'commons.yml#/components/schemas/ObjectListPage'
     ResultPage:
