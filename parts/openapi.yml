@@ -3,7 +3,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.29.0
+  version: 0.30.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -77,6 +77,8 @@ paths:
     $ref: 'search.yml#/components/paths/Person'
   /search/tv:
     $ref: 'search.yml#/components/paths/TV'
+  /tv/{series_id}:
+    $ref: 'tv.yml#/components/paths/Details'
   /tv/{series_id}/credits:
     $ref: 'tv.yml#/components/paths/Credits'
 components:
@@ -106,7 +108,7 @@ components:
     Region:
       $ref: 'commons.yml#/components/parameters/Region'
     SeriesID:
-      $ref: 'commons.yml#/components/parameters/SeriesID'
+      $ref: 'tv.yml#/components/parameters/SeriesId'
     Year:
       $ref: 'commons.yml#/components/parameters/Year'
   responses:
@@ -141,6 +143,10 @@ components:
       $ref: 'commons.yml#/components/schemas/CountryCode'
     CountryWithTimezones:
       $ref: 'configuration.yml#/components/schemas/CountryWithTimezones'
+    Creator:
+      $ref: 'commons.yml#/components/schemas/Creator'
+    CreditBase:
+      $ref: 'commons.yml#/components/schemas/CreditBase'
     Credits:
       $ref: 'commons.yml#/components/schemas/Credits'
     CrewListItem:
@@ -183,12 +189,24 @@ components:
       $ref: 'commons.yml#/components/schemas/PersonListPage'
     ProductionCountry:
       $ref: 'commons.yml#/components/schemas/ProductionCountry'
+    TvBase:
+      $ref: 'commons.yml#/components/schemas/TvBase'
+    TvEpisodeBase:
+      $ref: 'tv.yml#/components/schemas/TvEpisodeBase'
     TvListItem:
       $ref: 'commons.yml#/components/schemas/TvListItem'
     TvListItemWithMediaType:
       $ref: 'commons.yml#/components/schemas/TvListItemWithMediaType'
     TvListPage:
       $ref: 'commons.yml#/components/schemas/TvListPage'
+    TvSeasonBase:
+      $ref: 'tv.yml#/components/schemas/TvSeasonBase'
+    TvSeries:
+      $ref: 'tv.yml#/components/schemas/TvSeries'
+    TvSeriesEpisode:
+      $ref: 'tv.yml#/components/schemas/TvSeriesEpisode'
+    TvSeriesSeason:
+      $ref: 'tv.yml#/components/schemas/TvSeriesSeason'
   securitySchemes:
     bearerAuth:
       type: http

@@ -47,14 +47,6 @@ components:
         maxLength: 2
         pattern: '^([A-Z]{2})$'
       description: '`ISO-3166-1` code'
-    SeriesID:
-      in: path
-      name: series_id
-      schema:
-        type: integer
-        format: int32
-      required: true
-      description: The tv series ID.
     Year:
       in: query
       name: year
@@ -106,36 +98,17 @@ components:
               status_message: 'Invalid API key: You must be granted a valid key.'
   schemas:
     CastListItem:
-      type: object
-      properties:
-        id:
-          type: integer
-        adult:
-          type: boolean
-        gender:
-          type: integer
-        known_for_department:
-          type: string
-        name:
-          type: string
-        original_name:
-          type: string
-        popularity:
-          type: number
-          format: float
-        profile_path:
-          type: string
-        cast_id:
-          type: integer
-        character:
-          type: string
-        credit_id:
-          type: string
-        order:
-          type: integer
-      required:
-        - id
-        - name
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/CreditBase'
+        - type: object
+          properties:
+            cast_id:
+              type: integer
+            character:
+              type: string
+            order:
+              type: integer
     CollectionBase:
       allOf:
         - $ref: '#/components/schemas/Thing'
@@ -207,6 +180,34 @@ components:
       minLength: 2
       maxLength: 2
       pattern: '^[A-Z]{2}$'
+    Creator:
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/Thing'
+        - type: object
+          properties:
+            credit_id:
+              type: string
+            original_name:
+              type: string
+            gender:
+              type: integer
+              format: int32
+            profile_path:
+              type: string
+    CreditBase:
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/Creator'
+        - type: object
+          properties:
+            adult:
+              type: boolean
+            known_for_department:
+              type: string
+            popularity:
+              type: number
+              format: float
     Credits:
       type: object
       properties:
@@ -224,34 +225,15 @@ components:
         - cast
         - crew
     CrewListItem:
-      type: object
-      properties:
-        id:
-          type: integer
-        adult:
-          type: boolean
-        gender:
-          type: integer
-        known_for_department:
-          type: string
-        name:
-          type: string
-        original_name:
-          type: string
-        popularity:
-          type: number
-          format: float
-        profile_path:
-          type: string
-        credit_id:
-          type: string
-        department:
-          type: string
-        job:
-          type: string
-      required:
-        - id
-        - name
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/CreditBase'
+        - type: object
+          properties:
+            department:
+              type: string
+            job:
+              type: string
     # Schema for error response body
     Error:
       type: object
@@ -508,53 +490,53 @@ components:
       required:
         - iso_3166_1
         - name
+    TvBase:
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/Thing'
+        - type: object
+          required:
+            - original_language
+            - original_name
+          properties:
+            adult:
+              type: boolean
+            backdrop_path:
+              type: string
+            first_air_date:
+              type: string
+              format: date
+            origin_country:
+              type: array
+              items:
+                $ref: '#/components/schemas/CountryCode'
+            original_language:
+              type: string
+            original_name:
+              type: string
+            overview:
+              type: string
+            popularity:
+              type: number
+              format: float
+            poster_path:
+              type: string
+            vote_average:
+              type: number
+              format: float
+            vote_count:
+              type: integer
     TvListItem:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        original_language:
-          type: string
-        original_name:
-          type: string
-        adult:
-          type: boolean
-        backdrop_path:
-          type: string
-        genre_ids:
-          type: array
-          items:
-            type: integer
-            format: int32
-        origin_country:
-          type: array
-          items:
-            type: string
-            minLength: 2
-            maxLength: 2
-            pattern: '^([A-Z]{2})$'
-        overview:
-          type: string
-        popularity:
-          type: number
-          format: float
-        poster_path:
-          type: string
-        first_air_date:
-          type: string
-          format: date
-        vote_average:
-          type: number
-          format: float
-        vote_count:
-          type: integer
-      required:
-        - id
-        - name
-        - original_language
-        - original_name
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/TvBase'
+        - type: object
+          properties:
+            genre_ids:
+              type: array
+              items:
+                type: integer
+                format: int32
     TvListItemWithMediaType:
       allOf:
         - $ref: '#/components/schemas/Media'
