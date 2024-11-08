@@ -2,10 +2,11 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.27.4
+  version: 0.30.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
+  - name: Collections
   - name: Companies
   - name: Configuration
   - name: Genre
@@ -15,6 +16,70 @@ tags:
   - name: Search
   - name: TV Series
 paths:
+  '/collection/{collection_id}':
+    get:
+      summary: Details
+      description: Get collection details by ID.
+      operationId: CollectionDetails
+      tags:
+        - Collections
+      parameters:
+        - $ref: '#/components/parameters/CollectionID'
+        - $ref: '#/components/parameters/LanguageParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection'
+              example:
+                id: 1241
+                name: Harry Potter Collection
+                poster_path: /eVPs2Y0LyvTLZn6AP5Z6O2rtiGB.jpg
+                backdrop_path: /hWK8gTH2riuv65Ej43hPSeE16Mu.jpg
+                overview: The Harry Potter films are a fantasy series based on the series of seven Harry Potter novels by British writer J. K. Rowling.
+                parts:
+                  - adult: false
+                    backdrop_path: /hziiv14OpD73u9gAak4XDDfBKa2.jpg
+                    genre_ids:
+                      - 12
+                      - 14
+                    id: 671
+                    media_type: movie
+                    original_language: en
+                    original_title: Harry Potter and the Philosopher's Stone
+                    overview: 'Harry Potter has lived under the stairs at his aunt and uncle''s house his whole life. But on his 11th birthday, he learns he''s a powerful wizard—with a place waiting for him at the Hogwarts School of Witchcraft and Wizardry. As he learns to harness his newfound powers with the help of the school''s kindly headmaster, Harry uncovers the truth about his parents'' deaths—and about the villain who''s to blame.'
+                    popularity: 203.037
+                    poster_path: /wuMc08IPKEatf9rnMNXvIDxqP4W.jpg
+                    release_date: '2001-11-16'
+                    title: Harry Potter and the Philosopher's Stone
+                    video: false
+                    vote_average: 7.914
+                    vote_count: 26490
+                  - adult: false
+                    backdrop_path: /yHzyPJrVqlTySQ9mc379yxrLBYQ.jpg
+                    genre_ids:
+                      - 12
+                      - 14
+                    id: 672
+                    media_type: movie
+                    original_language: en
+                    original_title: Harry Potter and the Chamber of Secrets
+                    overview: 'Cars fly, trees fight back, and a mysterious house-elf comes to warn Harry Potter at the start of his second year at Hogwarts. Adventure and danger await when bloody writing on a wall announces: The Chamber Of Secrets Has Been Opened. To save Hogwarts will require all of Harry, Ron and Hermione’s magical abilities and courage.'
+                    popularity: 157.67
+                    poster_path: /sdEOH0992YZ0QSxgXNIGLq1ToUi.jpg
+                    release_date: '2002-11-13'
+                    title: Harry Potter and the Chamber of Secrets
+                    video: false
+                    vote_average: 7.7
+                    vote_count: 21775
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   '/company/{company_id}':
     get:
       summary: Details
@@ -31,6 +96,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Company'
+              example:
+                id: 1
+                name: Lucasfilm Ltd.
+                origin_country: US
+                logo_path: /eDWGeg5tdVNcI8aBaaJ21bEBtFa.png
+                headquarters: 'San Francisco, California'
+                homepage: 'https://www.lucasfilm.com'
+                description: ''
+                parent_company: ''
         '401':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -68,11 +142,29 @@ paths:
                   id:
                     type: integer
                     format: int32
-                    example: 1
                   logos:
                     type: array
                     items:
                       $ref: '#/components/schemas/CompanyLogo'
+              example:
+                id: 1
+                logos:
+                  - aspect_ratio: 2.97979797979798
+                    file_path: /o86DbpburjxrqAzEDhXZcyE8pDb.png
+                    height: 99
+                    id: 5aa080d6c3a3683fea00011e
+                    file_type: .svg
+                    vote_average: 5.384
+                    vote_count: 2
+                    width: 295
+                  - aspect_ratio: 3.03951367781155
+                    file_path: /tlVSws0RvvtPBwViUyOFAO0vcQS.png
+                    height: 329
+                    id: 63306b352b8a430096598b3d
+                    file_type: .svg
+                    vote_average: 5.312
+                    vote_count: 1
+                    width: 1000
         '401':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -166,6 +258,13 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Country'
+                example:
+                  - iso_3166_1: GB
+                    english_name: United Kingdom
+                    native_name: United Kingdom
+                  - iso_3166_1: US
+                    english_name: United States of America
+                    native_name: United States
         '401':
           $ref: '#/components/responses/Unauthorized'
         '429':
@@ -299,10 +398,10 @@ paths:
                 $ref: '#/components/schemas/GenreList'
               example:
                 genres:
-                  - id: 28
-                    name: Action
                   - id: 12
                     name: Adventure
+                  - id: 14
+                    name: Fantasy
         '401':
           $ref: '#/components/responses/Unauthorized'
         '429':
@@ -327,6 +426,8 @@ paths:
                 genres:
                   - id: 10759
                     name: Action & Adventure
+                  - id: 10765
+                    name: Sci-Fi & Fantasy
         '401':
           $ref: '#/components/responses/Unauthorized'
         '429':
@@ -624,8 +725,218 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Movie'
-        '400':
-          $ref: '#/components/responses/InvalidPage'
+              example:
+                id: 671
+                title: Harry Potter and the Philosopher's Stone
+                original_language: en
+                original_title: Harry Potter and the Philosopher's Stone
+                adult: false
+                backdrop_path: /hziiv14OpD73u9gAak4XDDfBKa2.jpg
+                belongs_to_collection:
+                  id: 1241
+                  name: Harry Potter Collection
+                  poster_path: /eVPs2Y0LyvTLZn6AP5Z6O2rtiGB.jpg
+                  backdrop_path: /hWK8gTH2riuv65Ej43hPSeE16Mu.jpg
+                budget: 125000000
+                genres:
+                  - id: 12
+                    name: Adventure
+                  - id: 14
+                    name: Fantasy
+                homepage: 'https://www.warnerbros.com/movies/harry-potter-and-sorcerers-stone/'
+                imdb_id: tt0468569
+                origin_country:
+                  - GB
+                overview: 'Harry Potter has lived under the stairs at his aunt and uncle''s house his whole life. But on his 11th birthday, he learns he''s a powerful wizard—with a place waiting for him at the Hogwarts School of Witchcraft and Wizardry. As he learns to harness his newfound powers with the help of the school''s kindly headmaster, Harry uncovers the truth about his parents'' deaths—and about the villain who''s to blame.'
+                popularity: 203.037
+                poster_path: /wuMc08IPKEatf9rnMNXvIDxqP4W.jpg
+                production_companies:
+                  - id: 174
+                    logo_path: /zhD3hhtKB5qyv7ZeL4uLpNxgMVU.png
+                    name: Warner Bros. Pictures
+                    origin_country: US
+                  - id: 437
+                    logo_path: /nu20mtwbEIhUNnQ5NXVhHsNknZj.png
+                    name: Heyday Films
+                    origin_country: GB
+                  - id: 436
+                    logo_path: /A7WCkG3F0NFvjGCwUnclpGdIu9E.png
+                    name: 1492 Pictures
+                    origin_country: US
+                production_countries:
+                  - iso_3166_1: GB
+                    name: United Kingdom
+                  - iso_3166_1: US
+                    name: United States of America
+                release_date: '2001-11-16'
+                revenue: 976475550
+                runtime: 152
+                spoken_languages:
+                  - iso_639_1: en
+                    english_name: English
+                    name: English
+                status: Released
+                tagline: Let the magic begin.
+                video: false
+                vote_average: 7.914
+                vote_count: 26490
+                credits:
+                  cast:
+                    - id: 10980
+                      gender: 2
+                      name: Daniel Radcliffe
+                      original_name: Daniel Radcliffe
+                      known_for_department: Acting
+                      adult: false
+                      popularity: 52.373
+                      profile_path: /iPg0J9UzAlPj1fLEJNllpW9IhGe.jpg
+                      cast_id: 27
+                      character: Harry Potter
+                      credit_id: 52fe4267c3a36847f801be91
+                      order: 0
+                    - id: 10989
+                      gender: 2
+                      name: Rupert Grint
+                      original_name: Rupert Grint
+                      known_for_department: Acting
+                      adult: false
+                      popularity: 35.698
+                      profile_path: /q2KZZ0ltTEl7Sf8volNFV1JDEP4.jpg
+                      cast_id: 37
+                      character: Ron Weasley
+                      credit_id: 52fe4267c3a36847f801beb9
+                      order: 1
+                    - id: 10990
+                      gender: 1
+                      name: Emma Watson
+                      original_name: Emma Watson
+                      known_for_department: Acting
+                      adult: false
+                      popularity: 43.528
+                      profile_path: /tvPPRGzAzdQFhlKzLbMO1EpuTJI.jpg
+                      cast_id: 49
+                      character: Hermione Granger
+                      credit_id: 531736ea92514138c00010a3
+                      order: 2
+                  crew:
+                    - id: 10965
+                      gender: 2
+                      name: Chris Columbus
+                      original_name: Chris Columbus
+                      known_for_department: Directing
+                      adult: false
+                      popularity: 15.78
+                      profile_path: /yCyEz90NqjEXKZ7HYcEhDXlLlPc.jpg
+                      credit_id: 52fe4267c3a36847f801be05
+                      department: Directing
+                      job: Director
+                    - id: 10966
+                      gender: 1
+                      name: J.K. Rowling
+                      original_name: J.K. Rowling
+                      known_for_department: Writing
+                      adult: false
+                      popularity: 20.202
+                      profile_path: /8VDx3K8NBGJDEWr4KdsGsuT8wuj.jpg
+                      credit_id: 52fe4267c3a36847f801be0b
+                      department: Writing
+                      job: Novel
+                    - id: 491
+                      gender: 2
+                      name: John Williams
+                      original_name: John Williams
+                      known_for_department: Sound
+                      adult: false
+                      popularity: 20.73
+                      profile_path: /KFyMqUWeiBdP9tJcZyGWOqnrgK.jpg
+                      credit_id: 52fe4267c3a36847f801be1d
+                      department: Sound
+                      job: Original Music Composer
+                keywords:
+                  keywords:
+                    - id: 616
+                      name: witch
+                    - id: 177912
+                      name: wizard
+                recommendations:
+                  page: 1
+                  results:
+                    - id: 672
+                      title: Harry Potter and the Chamber of Secrets
+                      original_language: en
+                      original_title: Harry Potter and the Chamber of Secrets
+                      overview: 'Cars fly, trees fight back, and a mysterious house-elf comes to warn Harry Potter at the start of his second year at Hogwarts. Adventure and danger await when bloody writing on a wall announces: The Chamber Of Secrets Has Been Opened. To save Hogwarts will require all of Harry, Ron and Hermione’s magical abilities and courage.'
+                      backdrop_path: /1stUIsjawROZxjiCMtqqXqgfZWC.jpg
+                      poster_path: /sdEOH0992YZ0QSxgXNIGLq1ToUi.jpg
+                      media_type: movie
+                      adult: false
+                      genre_ids:
+                        - 12
+                        - 14
+                      popularity: 151.674
+                      release_date: '2002-11-13'
+                      video: false
+                      vote_average: 7.721
+                      vote_count: 21255
+                    - id: 674
+                      title: Harry Potter and the Goblet of Fire
+                      original_language: en
+                      original_title: Harry Potter and the Goblet of Fire
+                      overview: 'When Harry Potter''s name emerges from the Goblet of Fire, he becomes a competitor in a grueling battle for glory among three wizarding schools—the Triwizard Tournament. But since Harry never submitted his name for the Tournament, who did? Now Harry must confront a deadly dragon, fierce water demons and an enchanted maze only to find himself in the cruel grasp of He Who Must Not Be Named.'
+                      backdrop_path: /5rrGVmRUuCKVbqUu41XIWTXJmNA.jpg
+                      poster_path: /fECBtHlr0RB3foNHDiCBXeg9Bv9.jpg
+                      media_type: movie
+                      adult: false
+                      genre_ids:
+                        - 12
+                        - 14
+                      popularity: 142.666
+                      release_date: '2005-11-16'
+                      video: false
+                      vote_average: 7.814
+                      vote_count: 20045
+                  total_pages: 2
+                  total_results: 40
+                similar:
+                  page: 1
+                  results:
+                    - id: 601
+                      title: E.T. the Extra-Terrestrial
+                      original_language: en
+                      original_title: E.T. the Extra-Terrestrial
+                      overview: 'An alien is left behind on Earth and saved by the 10-year-old Elliot who decides to keep him hidden in his home. While a task force hunts for the extra-terrestrial, Elliot, his brother, and his little sister Gertie form an emotional bond with their new friend, and try to help him find his way home.'
+                      backdrop_path: /zlp6WHCh44zzG4aFxQW8dmczuBH.jpg
+                      poster_path: /pEKStszBzTZCvR0H4tosjqxmE7X.jpg
+                      adult: false
+                      genre_ids:
+                        - 878
+                        - 12
+                        - 10751
+                        - 14
+                      popularity: 56.389
+                      release_date: '1982-06-11'
+                      video: false
+                      vote_average: 7.516
+                      vote_count: 10846
+                    - id: 630
+                      title: The Wizard of Oz
+                      original_language: en
+                      original_title: The Wizard of Oz
+                      overview: 'Young Dorothy finds herself in a magical world where she makes friends with a lion, a scarecrow and a tin man as they make their way along the yellow brick road to talk with the Wizard and ask for the things they miss most in their lives. The Wicked Witch of the West is the only thing that could stop them.'
+                      backdrop_path: /nRsr98MFztBGm532hCVMGXV6qOp.jpg
+                      poster_path: /pfAZFD7I2hxW9HCChTuAzsdE6UX.jpg
+                      adult: false
+                      genre_ids:
+                        - 12
+                        - 14
+                        - 10751
+                      popularity: 61.997
+                      release_date: '1939-08-15'
+                      video: false
+                      vote_average: 7.584
+                      vote_count: 5320
+                  total_pages: 2
+                  total_results: 40
         '401':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -816,6 +1127,45 @@ paths:
           $ref: '#/components/responses/NotFound'
         '429':
           $ref: '#/components/responses/TooManyRequests'
+  /search/collection:
+    get:
+      summary: Collection
+      description: 'Search for collections by their original, translated and alternative names.'
+      operationId: SearchCollection
+      tags:
+        - Search
+      parameters:
+        - $ref: '#/components/parameters/Query'
+        - $ref: '#/components/parameters/IncludeAdult'
+        - $ref: '#/components/parameters/LanguageParam'
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/Region'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionListPage'
+              example:
+                page: 1
+                results:
+                  - id: 1241
+                    name: Harry Potter Collection
+                    adult: false
+                    original_language: en
+                    original_name: Harry Potter Collection
+                    overview: The Harry Potter films are a fantasy series based on the series of seven Harry Potter novels by British writer J. K. Rowling.
+                    poster_path: /eVPs2Y0LyvTLZn6AP5Z6O2rtiGB.jpg
+                    backdrop_path: /xN6SBJVG8jqqKQrgxthn3J2m49S.jpg
+                total_pages: 1
+                total_results: 1
+        '400':
+          $ref: '#/components/responses/InvalidPage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   /search/keyword:
     get:
       summary: Keyword
@@ -872,20 +1222,37 @@ paths:
                 page: 1
                 results:
                   - adult: false
-                    backdrop_path: /hZkgoQYus5vegHoetLkCJzb17zJ.jpg
+                    backdrop_path: /hziiv14OpD73u9gAak4XDDfBKa2.jpg
                     genre_ids:
-                      - 18
-                    id: 550
+                      - 12
+                      - 14
+                    id: 671
                     original_language: en
-                    original_title: Fight Club
-                    overview: 'A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground \"fight clubs\" forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion.'
-                    popularity: 73.433
-                    poster_path: /pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg
-                    release_date: '1999-10-15'
-                    title: Fight Club
+                    original_title: Harry Potter and the Philosopher's Stone
+                    overview: 'Harry Potter has lived under the stairs at his aunt and uncle''s house his whole life. But on his 11th birthday, he learns he''s a powerful wizard—with a place waiting for him at the Hogwarts School of Witchcraft and Wizardry. As he learns to harness his newfound powers with the help of the school''s kindly headmaster, Harry uncovers the truth about his parents'' deaths—and about the villain who''s to blame.'
+                    popularity: 203.037
+                    poster_path: /wuMc08IPKEatf9rnMNXvIDxqP4W.jpg
+                    release_date: '2001-11-16'
+                    title: Harry Potter and the Philosopher's Stone
                     video: false
-                    vote_average: 8.433
-                    vote_count: 26279
+                    vote_average: 7.914
+                    vote_count: 26490
+                  - adult: false
+                    backdrop_path: /yHzyPJrVqlTySQ9mc379yxrLBYQ.jpg
+                    genre_ids:
+                      - 12
+                      - 14
+                    id: 672
+                    original_language: en
+                    original_title: Harry Potter and the Chamber of Secrets
+                    overview: 'Cars fly, trees fight back, and a mysterious house-elf comes to warn Harry Potter at the start of his second year at Hogwarts. Adventure and danger await when bloody writing on a wall announces: The Chamber Of Secrets Has Been Opened. To save Hogwarts will require all of Harry, Ron and Hermione’s magical abilities and courage.'
+                    popularity: 157.67
+                    poster_path: /sdEOH0992YZ0QSxgXNIGLq1ToUi.jpg
+                    release_date: '2002-11-13'
+                    title: Harry Potter and the Chamber of Secrets
+                    video: false
+                    vote_average: 7.7
+                    vote_count: 21775
                 total_pages: 2
                 total_results: 39
         '400':
@@ -1049,6 +1416,149 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/TooManyRequests'
+  '/tv/{series_id}':
+    get:
+      summary: Details
+      operationId: TvSeriesDetails
+      tags:
+        - TV Series
+      parameters:
+        - $ref: '#/components/parameters/SeriesID'
+        - $ref: '#/components/parameters/LanguageParam'
+        - in: query
+          name: append_to_response
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - aggregate_credits
+                - alternative_titles
+                - credits
+                - episode_groups
+                - external_ids
+                - keywords
+                - recommendations
+                - reviews
+                - similar
+                - translations
+            maxItems: 20
+            description: |
+              * `aggregate_credits` - Append the aggregate credits (cast and crew) that have been added to a TV show * `alternative_titles` - Append the alternative titles that have been added to a TV show * `similar` - Append similar movies based on genres and keywords
+          explode: false
+          description: 'comma separated list of endpoints within this namespace, 20 items max'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TvSeries'
+              example:
+                adult: false
+                backdrop_path: /vcFW09U4834DyFOeRZpsx9x1D3S.jpg
+                created_by:
+                  - id: 1213434
+                    credit_id: 527f9c7619c29514f208c31e
+                    name: C. E. Webber
+                    original_name: C. E. Webber
+                    gender: 2
+                    profile_path: /lHzDADWGW2ESV1uDovZzLG79sRc.jpg
+                  - id: 57293
+                    credit_id: 527f9c6b19c29514f208c30e
+                    name: Sydney Newman
+                    original_name: Sydney Newman
+                    gender: 2
+                    profile_path: /QKW3Widw7yaemYlB3NKEmJrhrF.jpg
+                episode_run_time: []
+                first_air_date: '2005-03-26'
+                genres:
+                  - id: 10759
+                    name: Action & Adventure
+                  - id: 10765
+                    name: Sci-Fi & Fantasy
+                homepage: 'http://www.bbc.co.uk/programmes/b006q2x0'
+                id: 57243
+                in_production: false
+                languages:
+                  - en
+                last_air_date: '2021-12-05'
+                last_episode_to_air:
+                  id: 3336493
+                  name: The Vanquishers
+                  overview: 'In the final epic chapter in the story of the Flux, all hope is lost. The forces of darkness are in control. But when the monsters have won, who can you count upon to save the universe?'
+                  vote_average: 6.3
+                  vote_count: 27
+                  air_date: '2021-12-05'
+                  episode_number: 6
+                  episode_type: finale
+                  production_code: ''
+                  runtime: 60
+                  season_number: 13
+                  show_id: 57243
+                  still_path: /20wu1cj5iZWyphnYQvKY1M9yBYQ.jpg
+                name: Doctor Who
+                next_episode_to_air: null
+                networks:
+                  - id: 6
+                    logo_path: /uJjcCg3O4DMEjM0xtno9OWFciRP.png
+                    name: BBC One
+                    origin_country: GB
+                number_of_episodes: 153
+                number_of_seasons: 13
+                origin_country:
+                  - GB
+                original_language: en
+                original_name: Doctor Who
+                overview: 'The Doctor is a Time Lord: a 900 year old alien with 2 hearts, part of a gifted civilization who mastered time travel. The Doctor saves planets for a living—more of a hobby actually, and the Doctor''s very, very good at it.'
+                popularity: 254.394
+                poster_path: /4edFyasCrkH4MKs6H4mHqlrxA6b.jpg
+                production_companies:
+                  - id: 4762
+                    logo_path: /cey5EAFwOb7AfDOsQ4p4q5MixzX.png
+                    name: BBC Cymru Wales
+                    origin_country: GB
+                  - id: 80893
+                    logo_path: /hFzOkuR4FoZE1U1hvuojMp4Qfxa.png
+                    name: BBC Studios
+                    origin_country: GB
+                production_countries:
+                  - iso_3166_1: CA
+                    name: Canada
+                  - iso_3166_1: GB
+                    name: United Kingdom
+                seasons:
+                  - air_date: '2005-03-26'
+                    episode_count: 13
+                    id: 58468
+                    name: Series 1
+                    overview: 'The first series features Christopher Eccleston as the ninth incarnation of the Doctor, his only series in the role, accompanied by Billie Piper, as his first and main companion Rose Tyler, whom he plucks from obscurity on planet Earth, and to whom he grows increasingly attached. He also travels briefly with unruly boy-genius Adam Mitchell, played by Bruno Langley, and with 51st-century con man and former "Time Agent" Captain Jack Harkness, portrayed by John Barrowman. Episodes in the series form a loose story arc, based upon the recurring phrase "Bad Wolf".'
+                    poster_path: /9Jt2FFCAME7eHDC28r4qCHErhhF.jpg
+                    season_number: 1
+                    vote_average: 7.7
+                  - air_date: '2010-04-03'
+                    episode_count: 13
+                    id: 58472
+                    name: Series 5
+                    overview: 'This is the first series to feature Matt Smith as the eleventh incarnation of the Doctor. Karen Gillan is introduced as the Doctor''s new companion, Amy Pond. Alex Kingston returns as River Song, a mysterious woman from the Doctor''s future who summons him twice. The main story arc concerns a pattern of cracks in the universe that are sometimes unnoticed by the characters. It is discovered that the cracks can erase things from existence.'
+                    poster_path: /hUsQerEeMqsu9cVYzMEB2OGJjrw.jpg
+                    season_number: 5
+                    vote_average: 7.6
+                spoken_languages:
+                  - english_name: English
+                    iso_639_1: en
+                    name: English
+                status: Ended
+                tagline: Space. For all.
+                type: Scripted
+                vote_average: 7.5
+                vote_count: 2994
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   '/tv/{series_id}/credits':
     get:
       summary: Credits
@@ -1091,8 +1601,6 @@ paths:
                     credit_id: 5ceab029c3a3682e93217a85
                     department: Production
                     job: Producer
-        '400':
-          $ref: '#/components/responses/InvalidPage'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -1101,6 +1609,14 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   parameters:
+    CollectionID:
+      in: path
+      name: collection_id
+      schema:
+        type: integer
+        format: int32
+      required: true
+      description: The collection ID.
     CompanyID:
       in: path
       name: company_id
@@ -1151,6 +1667,8 @@ components:
             - similar
             - translations
         maxItems: 20
+        description: |
+          * `alternative_titles` - Append alternative titles for a movie * `similar` - Append similar movies based on genres and keywords
       explode: false
       description: 'comma separated list of endpoints within this namespace, 20 items max'
     MovieID:
@@ -1198,7 +1716,7 @@ components:
         type: integer
         format: int32
       required: true
-      description: The tv series ID.
+      description: The TV series ID.
     Year:
       in: query
       name: year
@@ -1250,88 +1768,98 @@ components:
               status_message: 'Invalid API key: You must be granted a valid key.'
   schemas:
     CastListItem:
-      type: object
-      properties:
-        id:
-          type: integer
-          default: 0
-        adult:
-          type: boolean
-          default: true
-        gender:
-          type: integer
-          default: 0
-        known_for_department:
-          type: string
-        name:
-          type: string
-        original_name:
-          type: string
-        popularity:
-          type: number
-          format: float
-        profile_path:
-          type: string
-        cast_id:
-          type: integer
-          default: 0
-        character:
-          type: string
-        credit_id:
-          type: string
-        order:
-          type: integer
-          default: 0
-      required:
-        - id
-        - name
-    CollectionBase:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1241
-        name:
-          type: string
-          example: Harry Potter Collection
-        poster_path:
-          type: string
-          example: /eVPs2Y0LyvTLZn6AP5Z6O2rtiGB.jpg
-        backdrop_path:
-          type: string
-          example: /hWK8gTH2riuv65Ej43hPSeE16Mu.jpg
-      required:
-        - id
-        - name
-    Company:
-      type: object
       additionalProperties: false
-      properties:
-        description:
-          type: string
-          example: ''
-        headquarters:
-          type: string
-          example: 'San Francisco, California'
-        homepage:
-          type: string
-          example: 'https://www.lucasfilm.com'
-        id:
-          type: integer
-          format: int32
-          example: 1
-        logo_path:
-          type: string
-          example: /o86DbpburjxrqAzEDhXZcyE8pDb.png
-        name:
-          type: string
-          example: Lucasfilm Ltd.
-        origin_country:
-          type: string
-          example: US
-      required:
-        - id
-        - name
+      allOf:
+        - $ref: '#/components/schemas/CreditBase'
+        - type: object
+          properties:
+            cast_id:
+              type: integer
+            character:
+              type: string
+            order:
+              type: integer
+    Collection:
+      allOf:
+        - $ref: '#/components/schemas/CollectionBase'
+        - type: object
+          additionalProperties: false
+          required:
+            - overview
+            - parts
+          properties:
+            overview:
+              type: string
+            parts:
+              type: array
+              items:
+                $ref: '#/components/schemas/MovieListItemWithMediaType'
+    CollectionBase:
+      allOf:
+        - $ref: '#/components/schemas/Object'
+        - type: object
+          additionalProperties: false
+          required:
+            - backdrop_path
+            - poster_path
+          properties:
+            poster_path:
+              type: string
+            backdrop_path:
+              type: string
+    CollectionListItem:
+      allOf:
+        - $ref: '#/components/schemas/CollectionBase'
+        - type: object
+          properties:
+            adult:
+              type: boolean
+            original_language:
+              type: string
+            original_name:
+              type: string
+            overview:
+              type: string
+          required:
+            - original_language
+            - original_name
+    CollectionListPage:
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/ResultPage'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/CollectionListItem'
+          required:
+            - results
+    Company:
+      allOf:
+        - $ref: '#/components/schemas/CompanyBase'
+        - type: object
+          additionalProperties: false
+          properties:
+            headquarters:
+              type: string
+            homepage:
+              type: string
+              format: uri
+            description:
+              type: string
+            parent_company:
+              type: string
+    CompanyBase:
+      allOf:
+        - $ref: '#/components/schemas/Object'
+        - type: object
+          additionalProperties: false
+          properties:
+            origin_country:
+              $ref: '#/components/schemas/CountryCode'
+            logo_path:
+              type: string
     CompanyLogo:
       type: object
       additionalProperties: false
@@ -1339,59 +1867,48 @@ components:
         aspect_ratio:
           type: number
           format: double
-          example: 2.97979797979798
         file_path:
           type: string
-          example: /o86DbpburjxrqAzEDhXZcyE8pDb.png
         height:
           type: integer
-          example: 99
         id:
           type: string
-          example: 5aa080d6c3a3683fea00011e
         file_type:
           type: string
-          example: .svg
         vote_average:
           type: number
           format: float
-          example: 5.384
         vote_count:
           type: integer
-          example: 2
         width:
           type: integer
-          example: 295
     Country:
       type: object
       additionalProperties: false
       properties:
         iso_3166_1:
-          type: string
-          description: ISO 3166-1 tag
-          minLength: 2
-          maxLength: 2
-          pattern: '^[A-Z]{2}$'
-          example: AD
+          $ref: '#/components/schemas/CountryCode'
         english_name:
           type: string
-          example: Andorra
         native_name:
           type: string
-          example: Andorra
       required:
         - iso_3166_1
         - english_name
+    CountryCode:
+      type: string
+      title: ISO 3166-1 tag
+      description: |
+        [ISO 3166-1 alpha-2 code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+      minLength: 2
+      maxLength: 2
+      pattern: '^[A-Z]{2}$'
     CountryWithTimezones:
       type: object
       additionalProperties: false
       properties:
         iso_3166_1:
-          type: string
-          description: ISO 3166-1 tag
-          minLength: 2
-          maxLength: 2
-          pattern: '^[A-Z]{2}$'
+          $ref: '#/components/schemas/CountryCode'
         zones:
           type: array
           items:
@@ -1399,12 +1916,39 @@ components:
       required:
         - iso_3166_1
         - zones
+    Creator:
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/Object'
+        - type: object
+          properties:
+            credit_id:
+              type: string
+            original_name:
+              type: string
+            gender:
+              type: integer
+              format: int32
+            profile_path:
+              type: string
+    CreditBase:
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/Creator'
+        - type: object
+          properties:
+            adult:
+              type: boolean
+            known_for_department:
+              type: string
+            popularity:
+              type: number
+              format: float
     Credits:
       type: object
       properties:
         id:
           type: integer
-          default: 0
         cast:
           type: array
           items:
@@ -1417,37 +1961,15 @@ components:
         - cast
         - crew
     CrewListItem:
-      type: object
-      properties:
-        id:
-          type: integer
-          default: 0
-        adult:
-          type: boolean
-          default: true
-        gender:
-          type: integer
-          default: 0
-        known_for_department:
-          type: string
-        name:
-          type: string
-        original_name:
-          type: string
-        popularity:
-          type: number
-          format: float
-        profile_path:
-          type: string
-        credit_id:
-          type: string
-        department:
-          type: string
-        job:
-          type: string
-      required:
-        - id
-        - name
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/CreditBase'
+        - type: object
+          properties:
+            department:
+              type: string
+            job:
+              type: string
     Department:
       type: object
       additionalProperties: false
@@ -1464,6 +1986,7 @@ components:
         - jobs
     Error:
       type: object
+      additionalProperties: false
       properties:
         success:
           type: boolean
@@ -1493,7 +2016,7 @@ components:
       properties:
         iso_639_1:
           type: string
-          description: ISO 3166-1 tag
+          description: ISO 639-1 tag
           minLength: 2
           maxLength: 2
           pattern: '^[a-z]{2}$'
@@ -1506,6 +2029,7 @@ components:
         - english_name
     Media:
       type: object
+      additionalProperties: false
       properties:
         media_type:
           type: string
@@ -1527,129 +2051,98 @@ components:
       properties:
         id:
           type: integer
-          default: 0
-          example: 671
         title:
           type: string
-          example: Harry Potter and the Philosopher's Stone
         original_language:
           type: string
-          example: en
         original_title:
           type: string
-          example: Harry Potter and the Philosopher's Stone
         adult:
           type: boolean
-          default: false
-          example: false
         backdrop_path:
           type: string
-          example: /hziiv14OpD73u9gAak4XDDfBKa2.jpg
         belongs_to_collection:
           $ref: '#/components/schemas/CollectionBase'
         budget:
           type: integer
-          example: 125000000
         genres:
           type: array
           items:
             $ref: '#/components/schemas/Object'
-          example:
-            - id: 12
-              name: Adventure
-            - id: 14
-              name: Fantasy
         homepage:
           type: string
-          example: 'https://www.warnerbros.com/movies/harry-potter-and-sorcerers-stone/'
+          format: uri
         imdb_id:
           type: string
-          example: tt0468569
         origin_country:
           type: array
           items:
-            type: string
-          example:
-            - GB
+            $ref: '#/components/schemas/CountryCode'
         overview:
           type: string
-          example: 'Harry Potter has lived under the stairs at his aunt and uncle''s house his whole life. But on his 11th birthday, he learns he''s a powerful wizard—with a place waiting for him at the Hogwarts School of Witchcraft and Wizardry. As he learns to harness his newfound powers with the help of the school''s kindly headmaster, Harry uncovers the truth about his parents'' deaths—and about the villain who''s to blame.'
         popularity:
           type: number
           format: float
-          example: 203.037
         poster_path:
           type: string
-          example: /wuMc08IPKEatf9rnMNXvIDxqP4W.jpg
         production_companies:
           type: array
           items:
-            $ref: '#/components/schemas/ProductionCompany'
-          example:
-            - id: 174
-              logo_path: /zhD3hhtKB5qyv7ZeL4uLpNxgMVU.png
-              name: Warner Bros. Pictures
-              origin_country: US
-            - id: 437
-              logo_path: /nu20mtwbEIhUNnQ5NXVhHsNknZj.png
-              name: Heyday Films
-              origin_country: GB
-            - id: 436
-              logo_path: /A7WCkG3F0NFvjGCwUnclpGdIu9E.png
-              name: 1492 Pictures
-              origin_country: US
+            $ref: '#/components/schemas/CompanyBase'
         production_countries:
           type: array
           items:
             $ref: '#/components/schemas/ProductionCountry'
-          example:
-            - iso_3166_1: GB
-              name: United Kingdom
-            - iso_3166_1: US
-              name: United States of America
         release_date:
           type: string
           format: date
-          example: '2001-11-16'
         revenue:
           type: integer
           format: int64
-          example: 976475550
         runtime:
           type: integer
-          example: 152
         spoken_languages:
           type: array
           items:
             $ref: '#/components/schemas/Language'
         status:
           type: string
-          example: Released
         tagline:
           type: string
-          example: Let the magic begin.
         video:
           type: boolean
-          default: true
-          example: false
         vote_average:
           type: number
           format: float
-          example: 7.914
         vote_count:
           type: integer
-          example: 26490
+        credits:
+          $ref: '#/components/schemas/Credits'
+        keywords:
+          $ref: '#/components/schemas/MovieKeywordList'
+        recommendations:
+          $ref: '#/components/schemas/MultiListPage'
+        similar:
+          $ref: '#/components/schemas/MovieListPage'
       required:
         - id
         - title
         - original_language
         - original_title
+    MovieKeywordList:
+      type: object
+      properties:
+        id:
+          type: integer
+        keywords:
+          type: array
+          items:
+            $ref: '#/components/schemas/Object'
     MovieListItem:
       type: object
       properties:
         id:
           type: integer
-          default: 0
         title:
           type: string
         original_language:
@@ -1658,7 +2151,6 @@ components:
           type: string
         adult:
           type: boolean
-          default: false
         backdrop_path:
           type: string
         genre_ids:
@@ -1666,7 +2158,6 @@ components:
           items:
             type: integer
             format: int32
-            default: 0
         overview:
           type: string
         popularity:
@@ -1679,7 +2170,6 @@ components:
           format: date
         video:
           type: boolean
-          default: true
         vote_average:
           type: number
           format: float
@@ -1695,35 +2185,16 @@ components:
         - $ref: '#/components/schemas/Media'
         - $ref: '#/components/schemas/MovieListItem'
     MovieListPage:
-      type: object
-      properties:
-        page:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 500
-          default: 1
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/MovieListItem'
-        total_pages:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 500
-          default: 1
-        total_results:
-          type: integer
-          format: int32
-          minimum: 0
-          maximum: 10000
-          default: 0
-      required:
-        - page
-        - results
-        - total_pages
-        - total_results
+      allOf:
+        - $ref: '#/components/schemas/ResultPage'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/MovieListItem'
+          required:
+            - results
     MovieListPageWithDates:
       allOf:
         - type: object
@@ -1745,7 +2216,7 @@ components:
         - $ref: '#/components/schemas/MovieListPage'
     MultiListPage:
       allOf:
-        - $ref: '#/components/schemas/Page'
+        - $ref: '#/components/schemas/ResultPage'
         - type: object
           properties:
             results:
@@ -1764,65 +2235,48 @@ components:
           required:
             - results
     Object:
+      title: Object
       type: object
+      additionalProperties: false
       properties:
         id:
           type: integer
           format: int32
+          description: |
+            The identifier property represents any kind of identifier for any kind of [Thing](https://schema.org/Thing), such as ISBNs, GTIN codes, UUIDs etc.
         name:
           type: string
       required:
         - id
         - name
     ObjectListPage:
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/ResultPage'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/Object'
+          required:
+            - results
+    ResultPage:
       type: object
+      additionalProperties: false
       properties:
         page:
           type: integer
-          format: int32
           minimum: 1
           maximum: 500
-          default: 1
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Object'
         total_pages:
           type: integer
-          format: int32
           minimum: 1
           maximum: 500
-          default: 1
         total_results:
           type: integer
-          format: int32
           minimum: 0
           maximum: 10000
-          default: 0
-      required:
-        - page
-        - results
-        - total_pages
-        - total_results
-    Page:
-      type: object
-      properties:
-        page:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 500
-          default: 1
-        total_pages:
-          type: integer
-          format: int32
-          minimum: 1
-          default: 1
-        total_results:
-          type: integer
-          format: int32
-          minimum: 0
-          default: 0
       required:
         - page
         - total_pages
@@ -1832,14 +2286,12 @@ components:
       properties:
         id:
           type: integer
-          default: 0
         name:
           type: string
         original_name:
           type: string
         adult:
           type: boolean
-          default: false
         gender:
           type: integer
           format: int32
@@ -1870,148 +2322,225 @@ components:
         - $ref: '#/components/schemas/Media'
         - $ref: '#/components/schemas/PersonListItem'
     PersonListPage:
-      type: object
-      properties:
-        page:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 500
-          default: 1
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/PersonListItem'
-        total_pages:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 500
-          default: 1
-        total_results:
-          type: integer
-          format: int32
-          minimum: 0
-          maximum: 10000
-          default: 0
-      required:
-        - page
-        - results
-        - total_pages
-        - total_results
-    ProductionCompany:
-      type: object
-      properties:
-        id:
-          type: integer
-          default: 0
-        name:
-          type: string
-        origin_country:
-          type: string
-        logo_path:
-          type: string
-      required:
-        - id
-        - name
+      allOf:
+        - $ref: '#/components/schemas/ResultPage'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/PersonListItem'
+          required:
+            - results
     ProductionCountry:
       type: object
       properties:
         iso_3166_1:
-          type: string
-          description: ISO 3166-1 tag
-          minLength: 2
-          maxLength: 2
-          pattern: '^[A-Z]{2}$'
+          $ref: '#/components/schemas/CountryCode'
         name:
           type: string
       required:
         - iso_3166_1
         - name
+    TvBase:
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/Object'
+        - type: object
+          required:
+            - original_language
+            - original_name
+          properties:
+            adult:
+              type: boolean
+            backdrop_path:
+              type: string
+            first_air_date:
+              type: string
+              format: date
+            origin_country:
+              type: array
+              items:
+                $ref: '#/components/schemas/CountryCode'
+            original_language:
+              type: string
+            original_name:
+              type: string
+            overview:
+              type: string
+            popularity:
+              type: number
+              format: float
+            poster_path:
+              type: string
+            vote_average:
+              type: number
+              format: float
+            vote_count:
+              type: integer
+    TvEpisodeBase:
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/Object'
+        - type: object
+          properties:
+            air_date:
+              type: string
+              format: date
+            episode_number:
+              type: integer
+              format: int32
+            overview:
+              type: string
+            production_code:
+              type: string
+            runtime:
+              type: integer
+              format: int32
+            season_number:
+              type: integer
+              format: int32
+            still_path:
+              type: string
+            vote_average:
+              type: number
+              format: float
+            vote_count:
+              type: integer
     TvListItem:
-      type: object
-      properties:
-        id:
-          type: integer
-          default: 0
-        name:
-          type: string
-        original_language:
-          type: string
-        original_name:
-          type: string
-        adult:
-          type: boolean
-          default: false
-        backdrop_path:
-          type: string
-        genre_ids:
-          type: array
-          items:
-            type: integer
-            format: int32
-            default: 0
-        origin_country:
-          type: array
-          items:
-            type: string
-            minLength: 2
-            maxLength: 2
-            pattern: '^([A-Z]{2})$'
-        overview:
-          type: string
-        popularity:
-          type: number
-          format: float
-        poster_path:
-          type: string
-        first_air_date:
-          type: string
-          format: date
-        vote_average:
-          type: number
-          format: float
-        vote_count:
-          type: integer
-      required:
-        - id
-        - name
-        - original_language
-        - original_name
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/TvBase'
+        - type: object
+          properties:
+            genre_ids:
+              type: array
+              items:
+                type: integer
+                format: int32
     TvListItemWithMediaType:
       allOf:
         - $ref: '#/components/schemas/Media'
         - $ref: '#/components/schemas/TvListItem'
     TvListPage:
-      type: object
-      properties:
-        page:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 500
-          default: 1
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/TvListItem'
-        total_pages:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 500
-          default: 1
-        total_results:
-          type: integer
-          format: int32
-          minimum: 0
-          maximum: 10000
-          default: 0
-      required:
-        - page
-        - results
-        - total_pages
-        - total_results
+      allOf:
+        - $ref: '#/components/schemas/ResultPage'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/TvListItem'
+          required:
+            - results
+    TvSeasonBase:
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/Object'
+        - type: object
+          properties:
+            air_date:
+              type: string
+              format: date
+            overview:
+              type: string
+            poster_path:
+              type: string
+            season_number:
+              type: integer
+              format: int32
+            vote_average:
+              type: number
+              format: float
+    TvSeries:
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/TvBase'
+        - type: object
+          properties:
+            created_by:
+              type: array
+              items:
+                $ref: '#/components/schemas/Creator'
+            episode_run_time:
+              items:
+                type: integer
+                format: int32
+            genres:
+              type: array
+              items:
+                $ref: '#/components/schemas/Object'
+            homepage:
+              type: string
+              format: uri
+            in_production:
+              type: boolean
+            languages:
+              type: array
+              items:
+                type: string
+                minLength: 2
+                maxLength: 2
+                pattern: '^([a-z]{2})$'
+            last_air_date:
+              type: string
+              format: date
+            last_episode_to_air:
+              $ref: '#/components/schemas/TvSeriesEpisode'
+            next_episode_to_air:
+              $ref: '#/components/schemas/TvSeriesEpisode'
+            networks:
+              type: array
+              items:
+                $ref: '#/components/schemas/CompanyBase'
+            number_of_episodes:
+              type: integer
+              format: int32
+            number_of_seasons:
+              type: integer
+              format: int32
+            production_companies:
+              type: array
+              items:
+                $ref: '#/components/schemas/CompanyBase'
+            production_countries:
+              type: array
+              items:
+                $ref: '#/components/schemas/ProductionCountry'
+            seasons:
+              type: array
+              items:
+                $ref: '#/components/schemas/TvSeriesSeason'
+            spoken_languages:
+              type: array
+              items:
+                $ref: '#/components/schemas/Language'
+            status:
+              type: string
+            tagline:
+              type: string
+            type:
+              type: string
+    TvSeriesEpisode:
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/TvEpisodeBase'
+        - type: object
+          properties:
+            episode_type:
+              type: string
+            show_id:
+              type: integer
+              format: int32
+    TvSeriesSeason:
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/TvSeasonBase'
+        - type: object
+          properties:
+            episode_count:
+              type: integer
+              format: int32
   securitySchemes:
     bearerAuth:
       type: http

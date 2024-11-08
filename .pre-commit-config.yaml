@@ -1,7 +1,7 @@
 ---
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: check-yaml
   - repo: https://github.com/adrienverge/yamllint
@@ -13,3 +13,7 @@ repos:
     rev: v4.0.4
     hooks:
       - id: swagger-validation
+  - repo: https://github.com/python-openapi/openapi-spec-validator
+    rev: 0.7.1
+    hooks:
+      - id: openapi-spec-validator

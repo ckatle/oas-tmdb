@@ -47,14 +47,6 @@ components:
         maxLength: 2
         pattern: '^([A-Z]{2})$'
       description: '`ISO-3166-1` code'
-    SeriesID:
-      in: path
-      name: series_id
-      schema:
-        type: integer
-        format: int32
-      required: true
-      description: The tv series ID.
     Year:
       in: query
       name: year
@@ -106,101 +98,121 @@ components:
               status_message: 'Invalid API key: You must be granted a valid key.'
   schemas:
     CastListItem:
-      type: object
-      properties:
-        id:
-          type: integer
-          default: 0
-        adult:
-          type: boolean
-          default: true
-        gender:
-          type: integer
-          default: 0
-        known_for_department:
-          type: string
-        name:
-          type: string
-        original_name:
-          type: string
-        popularity:
-          type: number
-          format: float
-        profile_path:
-          type: string
-        cast_id:
-          type: integer
-          default: 0
-        character:
-          type: string
-        credit_id:
-          type: string
-        order:
-          type: integer
-          default: 0
-      required:
-        - id
-        - name
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/CreditBase'
+        - type: object
+          properties:
+            cast_id:
+              type: integer
+            character:
+              type: string
+            order:
+              type: integer
     CollectionBase:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1241
-        name:
-          type: string
-          example: "Harry Potter Collection"
-        poster_path:
-          type: string
-          example: "/eVPs2Y0LyvTLZn6AP5Z6O2rtiGB.jpg"
-        backdrop_path:
-          type: string
-          example: "/hWK8gTH2riuv65Ej43hPSeE16Mu.jpg"
-      required:
-        - id
-        - name
+      allOf:
+        - $ref: '#/components/schemas/Thing'
+        - type: object
+          additionalProperties: false
+          required:
+            - backdrop_path
+            - poster_path
+          properties:
+            poster_path:
+              type: string
+            backdrop_path:
+              type: string
     CollectionListItem:
-      type: object
-      properties:
-        adult:
-          type: boolean
-          default: false
-        backdrop_path:
-          type: string
-          example: '/zuW6fOiusv4X9nnW3paHGfXcSll.jpg'
-        id:
-          type: integer
-          example: 86311
-          default: 0
-        name:
-          type: string
-          example: 'The Avengers Collection'
-        original_language:
-          type: string
-          example: 'en'
-        original_name:
-          type: string
-          example: 'The Avengers Collection'
-        overview:
-          type: string
-          example: 'A superhero film series produced by Marvel Studios based on the Marvel Comics superhero team of the
-          same name, and part of the Marvel Cinematic Universe (MCU).  The series features an ensemble cast from the
-          Marvel Cinematic Universe series films, as they join forces for the peacekeeping organization S.H.I.E.L.D.
-          led by Nick Fury.'
-        poster_path:
-          type: string
-          example: '/yFSIUVTCvgYrpalUktulvk3Gi5Y.jpg'
-      required:
-        - id
-        - name
-        - original_language
-        - original_name
+      allOf:
+        - $ref: '#/components/schemas/CollectionBase'
+        - type: object
+          properties:
+            adult:
+              type: boolean
+            original_language:
+              type: string
+            original_name:
+              type: string
+            overview:
+              type: string
+          required:
+            - original_language
+            - original_name
+    CollectionListPage:
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/Page'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/CollectionListItem'
+          required:
+            - results
+    CompanyBase:
+      allOf:
+        - $ref: '#/components/schemas/Thing'
+        - type: object
+          additionalProperties: false
+          properties:
+            origin_country:
+              $ref: '#/components/schemas/CountryCode'
+            logo_path:
+              type: string
+    CompanyListPage:
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/Page'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/CompanyBase'
+          required:
+            - results
+    CountryCode:
+      type: string
+      title: ISO 3166-1 tag
+      description: >
+        [ISO 3166-1 alpha-2 code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+      minLength: 2
+      maxLength: 2
+      pattern: '^[A-Z]{2}$'
+    Creator:
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/Thing'
+        - type: object
+          properties:
+            credit_id:
+              type: string
+            original_name:
+              type: string
+            gender:
+              type: integer
+              format: int32
+            profile_path:
+              type: string
+    CreditBase:
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/Creator'
+        - type: object
+          properties:
+            adult:
+              type: boolean
+            known_for_department:
+              type: string
+            popularity:
+              type: number
+              format: float
     Credits:
       type: object
       properties:
         id:
           type: integer
-          default: 0
         cast:
           type: array
           items:
@@ -213,40 +225,19 @@ components:
         - cast
         - crew
     CrewListItem:
-      type: object
-      properties:
-        id:
-          type: integer
-          default: 0
-        adult:
-          type: boolean
-          default: true
-        gender:
-          type: integer
-          default: 0
-        known_for_department:
-          type: string
-        name:
-          type: string
-        original_name:
-          type: string
-        popularity:
-          type: number
-          format: float
-        profile_path:
-          type: string
-        credit_id:
-          type: string
-        department:
-          type: string
-        job:
-          type: string
-      required:
-        - id
-        - name
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/CreditBase'
+        - type: object
+          properties:
+            department:
+              type: string
+            job:
+              type: string
     # Schema for error response body
     Error:
       type: object
+      additionalProperties: false
       properties:
         success:
           type: boolean
@@ -267,7 +258,7 @@ components:
       properties:
         iso_639_1:
           type: string
-          description: ISO 3166-1 tag
+          description: ISO 639-1 tag
           minLength: 2
           maxLength: 2
           pattern: '^[a-z]{2}$'
@@ -280,6 +271,7 @@ components:
         - english_name
     Media:
       type: object
+      additionalProperties: false
       properties:
         media_type:
           type: string
@@ -298,7 +290,6 @@ components:
       properties:
         id:
           type: integer
-          default: 0
         title:
           type: string
         original_language:
@@ -307,7 +298,6 @@ components:
           type: string
         adult:
           type: boolean
-          default: false
         backdrop_path:
           type: string
         genre_ids:
@@ -315,7 +305,6 @@ components:
           items:
             type: integer
             format: int32
-            default: 0
         overview:
           type: string
         popularity:
@@ -328,7 +317,6 @@ components:
           format: date
         video:
           type: boolean
-          default: true
         vote_average:
           type: number
           format: float
@@ -344,35 +332,16 @@ components:
         - $ref: '#/components/schemas/Media'
         - $ref: '#/components/schemas/MovieListItem'
     MovieListPage:
-      type: object
-      properties:
-        page:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 500
-          default: 1
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/MovieListItem'
-        total_pages:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 500
-          default: 1
-        total_results:
-          type: integer
-          format: int32
-          minimum: 0
-          maximum: 10000
-          default: 0
-      required:
-        - page
-        - results
-        - total_pages
-        - total_results
+      allOf:
+        - $ref: '#/components/schemas/Page'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/MovieListItem'
+          required:
+            - results
     MovieListPageWithDates:
       allOf:
         - type: object
@@ -412,66 +381,50 @@ components:
                     tv: '#/components/schemas/TvListItemWithMediaType'
           required:
             - results
-    Object:
+    Thing:
+      title: Object
       type: object
+      additionalProperties: false
       properties:
         id:
           type: integer
           format: int32
+          description: >
+            The identifier property represents any kind of identifier for any kind of [Thing](https://schema.org/Thing),
+            such as ISBNs, GTIN codes, UUIDs etc.
         name:
           type: string
       required:
         - id
         - name
     ObjectListPage:
-      type: object
-      properties:
-        page:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 500
-          default: 1
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Object'
-        total_pages:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 500
-          default: 1
-        total_results:
-          type: integer
-          format: int32
-          minimum: 0
-          maximum: 10000
-          default: 0
-      required:
-        - page
-        - results
-        - total_pages
-        - total_results
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/Page'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/Thing'
+          required:
+            - results
     Page:
       type: object
+      additionalProperties: false
       properties:
         page:
           type: integer
-          format: int32
           minimum: 1
           maximum: 500
-          default: 1
         total_pages:
           type: integer
-          format: int32
           minimum: 1
-          default: 1
+          maximum: 500
         total_results:
           type: integer
-          format: int32
           minimum: 0
-          default: 0
+          maximum: 10000
       required:
         - page
         - total_pages
@@ -481,14 +434,12 @@ components:
       properties:
         id:
           type: integer
-          default: 0
         name:
           type: string
         original_name:
           type: string
         adult:
           type: boolean
-          default: false
         gender:
           type: integer
           format: int32
@@ -519,145 +470,85 @@ components:
         - $ref: '#/components/schemas/Media'
         - $ref: '#/components/schemas/PersonListItem'
     PersonListPage:
-      type: object
-      properties:
-        page:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 500
-          default: 1
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/PersonListItem'
-        total_pages:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 500
-          default: 1
-        total_results:
-          type: integer
-          format: int32
-          minimum: 0
-          maximum: 10000
-          default: 0
-      required:
-        - page
-        - results
-        - total_pages
-        - total_results
-    ProductionCompany:
-      type: object
-      properties:
-        id:
-          type: integer
-          default: 0
-        name:
-          type: string
-        origin_country:
-          type: string
-        logo_path:
-          type: string
-      required:
-        - id
-        - name
+      allOf:
+        - $ref: '#/components/schemas/Page'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/PersonListItem'
+          required:
+            - results
     ProductionCountry:
       type: object
       properties:
         iso_3166_1:
-          type: string
-          description: ISO 3166-1 tag
-          minLength: 2
-          maxLength: 2
-          pattern: '^[A-Z]{2}$'
+          $ref: '#/components/schemas/CountryCode'
         name:
           type: string
       required:
         - iso_3166_1
         - name
+    TvBase:
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/Thing'
+        - type: object
+          required:
+            - original_language
+            - original_name
+          properties:
+            adult:
+              type: boolean
+            backdrop_path:
+              type: string
+            first_air_date:
+              type: string
+              format: date
+            origin_country:
+              type: array
+              items:
+                $ref: '#/components/schemas/CountryCode'
+            original_language:
+              type: string
+            original_name:
+              type: string
+            overview:
+              type: string
+            popularity:
+              type: number
+              format: float
+            poster_path:
+              type: string
+            vote_average:
+              type: number
+              format: float
+            vote_count:
+              type: integer
     TvListItem:
-      type: object
-      properties:
-        id:
-          type: integer
-          default: 0
-        name:
-          type: string
-        original_language:
-          type: string
-        original_name:
-          type: string
-        adult:
-          type: boolean
-          default: false
-        backdrop_path:
-          type: string
-        genre_ids:
-          type: array
-          items:
-            type: integer
-            format: int32
-            default: 0
-        origin_country:
-          type: array
-          items:
-            type: string
-            minLength: 2
-            maxLength: 2
-            pattern: '^([A-Z]{2})$'
-        overview:
-          type: string
-        popularity:
-          type: number
-          format: float
-        poster_path:
-          type: string
-        first_air_date:
-          type: string
-          format: date
-        vote_average:
-          type: number
-          format: float
-        vote_count:
-          type: integer
-      required:
-        - id
-        - name
-        - original_language
-        - original_name
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/TvBase'
+        - type: object
+          properties:
+            genre_ids:
+              type: array
+              items:
+                type: integer
+                format: int32
     TvListItemWithMediaType:
       allOf:
         - $ref: '#/components/schemas/Media'
         - $ref: '#/components/schemas/TvListItem'
     TvListPage:
-      type: object
-      properties:
-        page:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 500
-          default: 1
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/TvListItem'
-        total_pages:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 500
-          default: 1
-        total_results:
-          type: integer
-          format: int32
-          minimum: 0
-          maximum: 10000
-          default: 0
-      required:
-        - page
-        - results
-        - total_pages
-        - total_results
+      allOf:
+        - $ref: '#/components/schemas/Page'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/TvListItem'
+          required:
+            - results

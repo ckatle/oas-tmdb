@@ -25,7 +25,7 @@ components:
             content:
               application/json:
                 schema:
-                  $ref: 'commons.yml#/components/schemas/Object'
+                  $ref: 'commons.yml#/components/schemas/Thing'
                 example:
                   id: 1701
                   name: hero

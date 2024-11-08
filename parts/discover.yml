@@ -66,29 +66,24 @@ components:
               type: boolean
               default: false
           - $ref: 'commons.yml#/components/parameters/LanguageParam'
-          - $ref: 'commons.yml#/components/parameters/LanguageParam'
           - $ref: 'commons.yml#/components/parameters/PrimaryReleaseYear'
           - in: query
             name: primary_release_date.gte
             schema:
               type: string
-              default: date
           - in: query
             name: primary_release_date.lte
             schema:
               type: string
-              default: date
           - $ref: 'commons.yml#/components/parameters/Region'
           - in: query
             name: release_date.gte
             schema:
               type: string
-              default: date
           - in: query
             name: release_date.lte
             schema:
               type: string
-              default: date
           - $ref: '#/components/parameters/SortBy'
         responses:
           '200':
