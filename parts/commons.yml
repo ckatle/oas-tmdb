@@ -63,9 +63,9 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
           example:
-            - success: false
-              status_code: 22
-              status_message: 'Invalid page: Pages start at 1 and max at 500. They are expected to be an integer.'
+            success: false
+            status_code: 22
+            status_message: 'Invalid page: Pages start at 1 and max at 500. They are expected to be an integer.'
     NotFound:
       description: The server can not find the requested resource.
       content:
@@ -73,9 +73,9 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
           example:
-            - success: false
-              status_code: 34
-              status_message: 'The resource you requested could not be found.'
+            success: false
+            status_code: 34
+            status_message: 'The resource you requested could not be found.'
     TooManyRequests:
       description: Too many requests in a given amount of time (“rate limiting”).
       content:
@@ -83,9 +83,9 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
           example:
-            - success: false
-              status_code: 25
-              status_message: 'Your request count is over the allowed limit.'
+            success: false
+            status_code: 25
+            status_message: 'Your request count is over the allowed limit.'
     Unauthorized:
       description: Authorization information is missing or invalid.
       content:
@@ -93,9 +93,9 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
           example:
-            - success: false
-              status_code: 7
-              status_message: 'Invalid API key: You must be granted a valid key.'
+            success: false
+            status_code: 7
+            status_message: 'Invalid API key: You must be granted a valid key.'
   schemas:
     CastListItem:
       additionalProperties: false
@@ -150,16 +150,6 @@ components:
                 $ref: '#/components/schemas/CollectionListItem'
           required:
             - results
-    CompanyBase:
-      allOf:
-        - $ref: '#/components/schemas/Thing'
-        - type: object
-          additionalProperties: false
-          properties:
-            origin_country:
-              $ref: '#/components/schemas/CountryCode'
-            logo_path:
-              type: string
     CompanyListPage:
       additionalProperties: false
       allOf:
@@ -169,7 +159,7 @@ components:
             results:
               type: array
               items:
-                $ref: '#/components/schemas/CompanyBase'
+                $ref: '#/components/schemas/OrganizationBase'
           required:
             - results
     CountryCode:
@@ -409,6 +399,49 @@ components:
                 $ref: '#/components/schemas/Thing'
           required:
             - results
+    Organization:
+      allOf:
+        - $ref: '#/components/schemas/OrganizationBase'
+        - type: object
+          additionalProperties: false
+          properties:
+            headquarters:
+              type: string
+            homepage:
+              type: string
+              format: uri
+    OrganizationBase:
+      allOf:
+        - $ref: '#/components/schemas/Thing'
+        - type: object
+          additionalProperties: false
+          properties:
+            origin_country:
+              $ref: '#/components/schemas/CountryCode'
+            logo_path:
+              type: string
+    OrganizationLogo:
+      type: object
+      additionalProperties: false
+      properties:
+        aspect_ratio:
+          type: number
+          format: double
+        file_path:
+          type: string
+        height:
+          type: integer
+        id:
+          type: string
+        file_type:
+          type: string
+        vote_average:
+          type: number
+          format: float
+        vote_count:
+          type: integer
+        width:
+          type: integer
     Page:
       type: object
       additionalProperties: false

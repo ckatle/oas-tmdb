@@ -321,7 +321,7 @@ components:
             networks:
               type: array
               items:
-                $ref: 'commons.yml#/components/schemas/CompanyBase'
+                $ref: 'commons.yml#/components/schemas/OrganizationBase'
             number_of_episodes:
               type: integer
               format: int32
@@ -331,7 +331,7 @@ components:
             production_companies:
               type: array
               items:
-                $ref: 'commons.yml#/components/schemas/CompanyBase'
+                $ref: 'commons.yml#/components/schemas/OrganizationBase'
             production_countries:
               type: array
               items:
@@ -350,6 +350,10 @@ components:
               type: string
             type:
               type: string
+            recommendations:
+              $ref: 'commons.yml#/components/schemas/MultiListPage'
+            similar:
+              $ref: 'commons.yml#/components/schemas/TvListPage'
     TvSeriesEpisode:
       additionalProperties: false
       allOf:

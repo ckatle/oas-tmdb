@@ -5,7 +5,7 @@ repos:
     hooks:
       - id: check-yaml
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.35.1
+    rev: v1.37.1
     hooks:
       - id: yamllint
         args: [--strict]
@@ -14,6 +14,6 @@ repos:
     hooks:
       - id: swagger-validation
   - repo: https://github.com/python-openapi/openapi-spec-validator
-    rev: 0.7.1
+    rev: 0.7.2
     hooks:
       - id: openapi-spec-validator

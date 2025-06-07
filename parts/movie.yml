@@ -713,7 +713,7 @@ components:
         production_companies:
           type: array
           items:
-            $ref: 'commons.yml#/components/schemas/CompanyBase'
+            $ref: 'commons.yml#/components/schemas/OrganizationBase'
         production_countries:
           type: array
           items:

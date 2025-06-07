@@ -1,40 +1,38 @@
 ---
 components:
   parameters:
-    CompanyID:
+    NetworkID:
       in: path
-      name: company_id
+      name: network_id
       schema:
         type: integer
         format: int32
       required: true
-      description: The company ID.
+      description: The TV network ID.
   paths:
     Details:
       get:
         summary: Details
-        description: Get the company details by ID.
-        operationId: CompanyDetails
+        description: Get the TV network details by ID.
+        operationId: NetworkDetails
         tags:
-          - Companies
+          - Networks
         parameters:
-          - $ref: '#/components/parameters/CompanyID'
+          - $ref: '#/components/parameters/NetworkID'
         responses:
           '200':
             description: OK
             content:
               application/json:
                 schema:
-                  $ref: '#/components/schemas/Company'
+                  $ref: 'commons.yml#/components/schemas/Organization'
                 example:
-                  id: 1
-                  name: Lucasfilm Ltd.
+                  id: 49
+                  name: HBO
                   origin_country: US
-                  logo_path: "/eDWGeg5tdVNcI8aBaaJ21bEBtFa.png"
-                  headquarters: San Francisco, California
-                  homepage: 'https://www.lucasfilm.com'
-                  description: ''
-                  parent_company: ""
+                  logo_path: "/tuomPhY2UtuPTqqFnKMVHvSb724.png"
+                  headquarters: New York City, New York
+                  homepage: 'https://www.hbo.com'
           '401':
             $ref: 'commons.yml#/components/responses/Unauthorized'
           '404':
@@ -45,7 +43,7 @@ components:
       get:
         summary: Images
         description: |
-          Get the company logos by id.
+          Get the TV network logos by id.
 
           > ## **Note**
           > There are two image formats that are supported for companies, PNG's and SVG's.
@@ -56,11 +54,11 @@ components:
           >
           > For more information about how SVG's and PNG's can be used, take a read through
           > [this document](https://developer.themoviedb.org/docs/images).
-        operationId: CompanyImages
+        operationId: NetworkImages
         tags:
-          - Companies
+          - Networks
         parameters:
-          - $ref: '#/components/parameters/CompanyID'
+          - $ref: '#/components/parameters/NetworkID'
         responses:
           '200':
             description: OK
@@ -101,14 +99,3 @@ components:
             $ref: 'commons.yml#/components/responses/NotFound'
           '429':
             $ref: 'commons.yml#/components/responses/TooManyRequests'
-  schemas:
-    Company:
-      allOf:
-        - $ref: 'commons.yml#/components/schemas/Organization'
-        - type: object
-          additionalProperties: false
-          properties:
-            description:
-              type: string
-            parent_company:
-              type: string
