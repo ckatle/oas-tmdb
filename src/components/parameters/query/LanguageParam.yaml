@@ -1,0 +1,9 @@
+in: query
+name: language
+description: '`ISO-639-1`-`ISO-3166-1` code'
+schema:
+  type: string
+  minLength: 2
+  maxLength: 5
+  pattern: '^([a-z]{2})-([A-Z]{2})$'
+  default: en-US

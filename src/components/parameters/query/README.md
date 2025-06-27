@@ -1,0 +1,3 @@
+# `query`
+
+Reusable query parameters.

@@ -1,0 +1,6 @@
+BasicObject:
+  $ref: './BasicObject.yaml'
+Error:
+  $ref: './Error.yaml'
+GenreList:
+  $ref: './GenreList.yaml'

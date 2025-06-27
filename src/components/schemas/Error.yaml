@@ -1,0 +1,16 @@
+type: object
+additionalProperties: false
+required:
+  - success
+  - status_code
+  - status_message
+properties:
+  success:
+    type: boolean
+  status_code:
+    type: integer
+    format: int32
+    minimum: 1
+    maximum: 47
+  status_message:
+    type: string

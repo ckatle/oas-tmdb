@@ -1,0 +1,2 @@
+LanguageParam:
+  $ref: './query/LanguageParam.yaml'

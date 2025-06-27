@@ -1,0 +1,4 @@
+401Unauthorized:
+  $ref: "./401Unauthorized.yaml"
+429TooManyRequests:
+  $ref: "./429TooManyRequests.yaml"

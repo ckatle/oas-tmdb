@@ -1,0 +1,118 @@
+openapi: 3.0.1
+info:
+  title: TMDB API
+  description: The Movie Database (TMDB) API
+  version: 0.32.0
+servers:
+  - url: https://api.themoviedb.org/3
+    description: Main (production) server
+  - url: https://api.themoviedb.localhost
+    description: Internal staging server for testing
+security:
+  - bearerAuth: []
+tags:
+  - name: Genre
+paths:
+  /genre/movie/list:
+    get:
+      summary: Movie List
+      description: Get the list of official genres for movies.
+      operationId: GenreMovieList
+      tags:
+        - Genre
+      parameters:
+        - $ref: '#/components/parameters/LanguageParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenreList'
+              example:
+                genres:
+                  - id: 12
+                    name: Adventure
+                  - id: 14
+                    name: Fantasy
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '429':
+          $ref: '#/components/responses/429TooManyRequests'
+components:
+  schemas:
+    BasicObject:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: |
+            The identifier property represents any kind of identifier for any kind of [Thing](https://schema.org/Thing), such as ISBNs, GTIN codes, UUIDs etc.
+        name:
+          type: string
+    GenreList:
+      type: object
+      required:
+        - genres
+      properties:
+        genres:
+          type: array
+          items:
+            $ref: '#/components/schemas/BasicObject'
+    Error:
+      type: object
+      additionalProperties: false
+      required:
+        - success
+        - status_code
+        - status_message
+      properties:
+        success:
+          type: boolean
+        status_code:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 47
+        status_message:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  parameters:
+    LanguageParam:
+      in: query
+      name: language
+      description: '`ISO-639-1`-`ISO-3166-1` code'
+      schema:
+        type: string
+        minLength: 2
+        maxLength: 5
+        pattern: ^([a-z]{2})-([A-Z]{2})$
+        default: en-US
+  responses:
+    401Unauthorized:
+      description: Authorization information is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            success: false
+            status_code: 7
+            status_message: 'Invalid API key: You must be granted a valid key.'
+    429TooManyRequests:
+      description: Authorization information is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            success: false
+            status_code: 25
+            status_message: Your request count is over the allowed limit.
