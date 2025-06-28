@@ -1,5 +1,5 @@
 ---
-openapi: 3.0.1
+openapi: 3.0.4
 
 info:
   title: TMDB API
@@ -21,6 +21,8 @@ tags:
 paths:
   /genre/movie/list:
     $ref: './paths/GenreMovieList.yaml'
+  /genre/tv/list:
+    $ref: './paths/GenreTvList.yaml'
 
 components:
   schemas:

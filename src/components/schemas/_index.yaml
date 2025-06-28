@@ -1,3 +1,4 @@
+---
 BasicObject:
   $ref: './BasicObject.yaml'
 Error:

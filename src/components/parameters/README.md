@@ -6,4 +6,4 @@ Reusable path, query, header and cookie parameters
 
 Reusable query parameters.
 
-See the [`query`](query/README.md) directory for reusable query parameters
+See the [`query`](query/README.md) directory for reusable query parameters.

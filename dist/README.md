@@ -1,3 +1,3 @@
 # `dist`
 
-The OpenAPI Specification (OAS) bundled as a single file
+The OpenAPI Specification (OAS) bundled as a single file.

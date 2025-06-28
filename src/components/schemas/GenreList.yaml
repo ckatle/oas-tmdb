@@ -1,3 +1,4 @@
+---
 type: object
 required:
   - genres
@@ -5,4 +6,4 @@ properties:
   genres:
     type: array
     items:
-      $ref: "./_index.yaml#/BasicObject"
+      $ref: './_index.yaml#/BasicObject'

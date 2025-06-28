@@ -1,8 +1,9 @@
-description: Authorization information is missing or invalid.
+---
+description: Too many requests in a given amount of time (“rate limiting”).
 content:
   application/json:
     schema:
-      $ref: "../schemas/_index.yaml#/Error"
+      $ref: '../schemas/_index.yaml#/Error'
     example:
       success: false
       status_code: 25

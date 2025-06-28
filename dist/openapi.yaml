@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.0.4
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
@@ -35,6 +35,32 @@ paths:
                     name: Adventure
                   - id: 14
                     name: Fantasy
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '429':
+          $ref: '#/components/responses/429TooManyRequests'
+  /genre/tv/list:
+    get:
+      summary: TV List
+      description: Get the list of official genres for TV shows.
+      operationId: GenreTvList
+      tags:
+        - Genre
+      parameters:
+        - $ref: '#/components/parameters/LanguageParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenreList'
+              example:
+                genres:
+                  - id: 10759
+                    name: Action & Adventure
+                  - id: 10765
+                    name: Sci-Fi & Fantasy
         '401':
           $ref: '#/components/responses/401Unauthorized'
         '429':
@@ -107,7 +133,7 @@ components:
             status_code: 7
             status_message: 'Invalid API key: You must be granted a valid key.'
     429TooManyRequests:
-      description: Authorization information is missing or invalid.
+      description: Too many requests in a given amount of time (“rate limiting”).
       content:
         application/json:
           schema:
