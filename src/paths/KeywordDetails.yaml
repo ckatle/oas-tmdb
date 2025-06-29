@@ -1,0 +1,25 @@
+---
+get:
+  summary: Details
+  description: ---
+  operationId: KeywordDetails
+  tags:
+    - Keywords
+  parameters:
+    - $ref: '../components/parameters/path/KeywordID.yaml'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/BasicObject.yaml'
+          example:
+            id: 1701
+            name: hero
+    '401':
+      $ref: '../components/responses/401Unauthorized.yaml'
+    '404':
+      $ref: '../components/responses/404NotFound.yaml'
+    '429':
+      $ref: '../components/responses/429TooManyRequests.yaml'

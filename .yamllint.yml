@@ -4,10 +4,11 @@ extends: default
 ignore: /openapi.yml
 
 rules:
+  document-start:
+    ignore: dist/openapi.yaml
   # 80 chars should be enough, but don't fail if a line is longer
   line-length:
-    ignore:
-      - ./dist/openapi.yaml
+    ignore: dist/openapi.yaml
     max: 120
     # allow-non-breakable-words: true
     # allow-non-breakable-inline-mappings: true

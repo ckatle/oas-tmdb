@@ -1,3 +1,8 @@
 ---
+# Path
+KeywordID:
+  $ref: './path/KeywordID.yaml'
+
+# Query
 LanguageParam:
   $ref: './query/LanguageParam.yaml'

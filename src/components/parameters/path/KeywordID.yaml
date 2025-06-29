@@ -1,0 +1,8 @@
+---
+in: path
+name: keyword_id
+description: The keyword ID.
+required: true
+schema:
+  type: integer
+  format: int32

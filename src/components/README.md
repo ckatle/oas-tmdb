@@ -6,13 +6,11 @@ Reusable schemas (data models).
 
 See the [`schemas`](schemas/README.md) directory for examples.
 
-
 ## `parameters`
 
 Reusable path, query, header and cookie parameters.
 
 See the [`parameters`](parameters/README.md) directory for details.
-
 
 ## `responses`
 
