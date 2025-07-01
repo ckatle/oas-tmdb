@@ -1,0 +1,21 @@
+---
+get:
+  summary: Primary Translations
+  description: Get a list of the officially supported translations on TMDB.
+  operationId: ConfigurationPrimaryTranslations
+  tags:
+    - Configuration
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: string
+            example: ['en-GB', 'en-US', 'eo-EO']
+    '401':
+      $ref: '../components/responses/401Unauthorized.yaml'
+    '429':
+      $ref: '../components/responses/429TooManyRequests.yaml'

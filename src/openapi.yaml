@@ -17,8 +17,11 @@ security:
 
 tags:
   - name: Configuration
-  - name: Genre
+    description: The configuration methods are useful to get the static lists of data we use throughout the database.
+  - name: Genres
+    description: Official genres for movies and TV shows.
   - name: Keywords
+    description: Keyword details.
 
 paths:
   /configuration/countries:
@@ -27,6 +30,8 @@ paths:
     $ref: './paths/ConfigurationJobs.yaml'
   /configuration/languages:
     $ref: './paths/ConfigurationLanguages.yaml'
+  /configuration/primary_translations:
+    $ref: './paths/ConfigurationPrimaryTranslations.yaml'
 
   /genre/movie/list:
     $ref: './paths/GenreMovieList.yaml'

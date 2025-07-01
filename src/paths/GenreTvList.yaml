@@ -4,7 +4,7 @@ get:
   description: Get the list of official genres for TV shows.
   operationId: GenreTvList
   tags:
-    - Genre
+    - Genres
   parameters:
     - $ref: '../components/parameters/query/LanguageParam.yaml'
   responses:
