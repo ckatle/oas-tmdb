@@ -1,0 +1,27 @@
+---
+get:
+  summary: Languages
+  description: Get the list of languages (ISO 639-1 tags) used throughout TMDB.
+  operationId: ConfigurationLanguages
+  tags:
+    - Configuration
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../components/schemas/Language.yaml'
+            example:
+              - iso_639_1: 'en'
+                english_name: 'English'
+                name: 'English'
+              - iso_639_1: 'eo'
+                english_name: 'Esperanto'
+                name: 'Esperanto'
+    '401':
+      $ref: '../components/responses/401Unauthorized.yaml'
+    '429':
+      $ref: '../components/responses/429TooManyRequests.yaml'

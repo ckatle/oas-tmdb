@@ -16,3 +16,6 @@ Error:
 
 GenreList:
   $ref: './GenreList.yaml'
+
+Language:
+  $ref: './Language.yaml'

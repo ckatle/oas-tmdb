@@ -75,6 +75,33 @@ paths:
           $ref: '#/components/responses/401Unauthorized'
         '429':
           $ref: '#/components/responses/429TooManyRequests'
+  /configuration/languages:
+    get:
+      summary: Languages
+      description: Get the list of languages (ISO 639-1 tags) used throughout TMDB.
+      operationId: ConfigurationLanguages
+      tags:
+        - Configuration
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Language'
+                example:
+                  - iso_639_1: en
+                    english_name: English
+                    name: English
+                  - iso_639_1: eo
+                    english_name: Esperanto
+                    name: Esperanto
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '429':
+          $ref: '#/components/responses/429TooManyRequests'
   /genre/movie/list:
     get:
       summary: Movie List
@@ -207,6 +234,25 @@ components:
           description: A list of jobs within the department
           items:
             type: string
+    Language:
+      type: object
+      additionalProperties: false
+      required:
+        - iso_639_1
+        - english_name
+      properties:
+        iso_639_1:
+          type: string
+          description: ISO 639-1 tag
+          minLength: 2
+          maxLength: 2
+          pattern: ^[a-z]{2}$
+        english_name:
+          type: string
+          description: English name of the language
+        name:
+          type: string
+          description: Native name of the language
     BaseObject:
       type: object
       description: The most generic type of item.

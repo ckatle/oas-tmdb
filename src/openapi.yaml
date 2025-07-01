@@ -25,6 +25,8 @@ paths:
     $ref: './paths/ConfigurationCountries.yaml'
   /configuration/jobs:
     $ref: './paths/ConfigurationJobs.yaml'
+  /configuration/languages:
+    $ref: './paths/ConfigurationLanguages.yaml'
 
   /genre/movie/list:
     $ref: './paths/GenreMovieList.yaml'

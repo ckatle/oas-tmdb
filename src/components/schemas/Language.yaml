@@ -1,0 +1,19 @@
+---
+type: object
+additionalProperties: false
+required:
+  - iso_639_1
+  - english_name
+properties:
+  iso_639_1:
+    type: string
+    description: ISO 639-1 tag
+    minLength: 2
+    maxLength: 2
+    pattern: '^[a-z]{2}$'
+  english_name:
+    type: string
+    description: English name of the language
+  name:
+    type: string
+    description: Native name of the language

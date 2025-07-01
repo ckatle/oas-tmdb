@@ -5,4 +5,6 @@ on: push
 
 jobs:
   ci:
-    uses: ckatle/actions/.github/workflows/oas-ci.yml@master
+    uses: ckatle/actions/.github/workflows/oas-lint.yml@master
+    with:
+      file-glob: './dist/openapi.yaml'
