@@ -7,4 +7,4 @@ jobs:
   ci:
     uses: ckatle/actions/.github/workflows/oas-lint.yml@master
     with:
-      file-glob: './dist/openapi.yaml'
+      file-glob: 'dist/openapi.yaml'
