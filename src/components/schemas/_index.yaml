@@ -8,6 +8,9 @@ Country:
 CountryCode:
   $ref: './CountryCode.yaml'
 
+Department:
+  $ref: './Department.yaml'
+
 Error:
   $ref: './Error.yaml'
 

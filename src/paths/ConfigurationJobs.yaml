@@ -1,0 +1,25 @@
+---
+get:
+  summary: Jobs
+  description: Get the list of the jobs and departments we use on TMDB.
+  operationId: ConfigurationJobs
+  tags:
+    - Configuration
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../components/schemas/Department.yaml'
+            example:
+              - department: 'Actors'
+                jobs: ['Actor', 'Cameo', 'Special Guest', 'Voice']
+              - department: 'Directing'
+                jobs: ['Director', 'Other']
+    '401':
+      $ref: '../components/responses/401Unauthorized.yaml'
+    '429':
+      $ref: '../components/responses/429TooManyRequests.yaml'

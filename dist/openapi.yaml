@@ -44,6 +44,37 @@ paths:
           $ref: '#/components/responses/401Unauthorized'
         '429':
           $ref: '#/components/responses/429TooManyRequests'
+  /configuration/jobs:
+    get:
+      summary: Jobs
+      description: Get the list of the jobs and departments we use on TMDB.
+      operationId: ConfigurationJobs
+      tags:
+        - Configuration
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Department'
+                example:
+                  - department: Actors
+                    jobs:
+                      - Actor
+                      - Cameo
+                      - Special Guest
+                      - Voice
+                  - department: Directing
+                    jobs:
+                      - Director
+                      - Other
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '429':
+          $ref: '#/components/responses/429TooManyRequests'
   /genre/movie/list:
     get:
       summary: Movie List
@@ -160,6 +191,22 @@ components:
           maximum: 47
         status_message:
           type: string
+    Department:
+      type: object
+      description: Department with jobs
+      additionalProperties: false
+      required:
+        - department
+        - jobs
+      properties:
+        department:
+          type: string
+          description: The name of the department
+        jobs:
+          type: array
+          description: A list of jobs within the department
+          items:
+            type: string
     BaseObject:
       type: object
       description: The most generic type of item.

@@ -23,6 +23,8 @@ tags:
 paths:
   /configuration/countries:
     $ref: './paths/ConfigurationCountries.yaml'
+  /configuration/jobs:
+    $ref: './paths/ConfigurationJobs.yaml'
 
   /genre/movie/list:
     $ref: './paths/GenreMovieList.yaml'

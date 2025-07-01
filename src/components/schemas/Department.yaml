@@ -1,0 +1,16 @@
+---
+type: object
+description: Department with jobs
+additionalProperties: false
+required:
+  - department
+  - jobs
+properties:
+  department:
+    type: string
+    description: The name of the department
+  jobs:
+    type: array
+    description: A list of jobs within the department
+    items:
+      type: string
