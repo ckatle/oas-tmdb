@@ -16,28 +16,37 @@ security:
   - bearerAuth: []
 
 tags:
+  - name: Configuration
   - name: Genre
   - name: Keywords
 
 paths:
+  /configuration/countries:
+    $ref: './paths/ConfigurationCountries.yaml'
+
   /genre/movie/list:
     $ref: './paths/GenreMovieList.yaml'
   /genre/tv/list:
     $ref: './paths/GenreTvList.yaml'
+
   /keyword/{keyword_id}:
     $ref: './paths/KeywordDetails.yaml'
 
 components:
+  # Reusable schemas (data models)
   schemas:
     $ref: './components/schemas/_index.yaml'
 
+  # Reusable path, query, header and cookie parameters
+  parameters:
+    $ref: "./components/parameters/_index.yaml"
+
+  # Security scheme definitions (see Authentication)
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
 
-  parameters:
-    $ref: "./components/parameters/_index.yaml"
-
+  # Reusable responses, such as 401 Unauthorized or 400 Bad Request
   responses:
     $ref: "./components/responses/_index.yaml"

@@ -13,7 +13,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../components/schemas/BasicObject.yaml'
+            $ref: '../components/schemas/BaseObject.yaml'
           example:
             id: 1701
             name: hero

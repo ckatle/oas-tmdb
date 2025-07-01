@@ -1,5 +1,6 @@
 ---
 type: object
+description: The most generic type of item.
 required:
   - id
   - name

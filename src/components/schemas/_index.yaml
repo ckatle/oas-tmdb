@@ -1,7 +1,15 @@
 ---
-BasicObject:
-  $ref: './BasicObject.yaml'
+BaseObject:
+  $ref: './BaseObject.yaml'
+
+Country:
+  $ref: './Country.yaml'
+
+CountryCode:
+  $ref: './CountryCode.yaml'
+
 Error:
   $ref: './Error.yaml'
+
 GenreList:
   $ref: './GenreList.yaml'

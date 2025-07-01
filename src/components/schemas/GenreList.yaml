@@ -1,9 +1,10 @@
 ---
 type: object
+description: A list of genres
 required:
   - genres
 properties:
   genres:
     type: array
     items:
-      $ref: './_index.yaml#/BasicObject'
+      $ref: './BaseObject.yaml'
