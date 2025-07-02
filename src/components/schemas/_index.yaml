@@ -8,6 +8,9 @@ Country:
 CountryCode:
   $ref: './CountryCode.yaml'
 
+CountryWithTimezones:
+  $ref: './CountryWithTimezones.yaml'
+
 Department:
   $ref: './Department.yaml'
 

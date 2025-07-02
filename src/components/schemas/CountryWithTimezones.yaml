@@ -1,0 +1,13 @@
+---
+type: object
+additionalProperties: false
+required:
+  - iso_3166_1
+  - zones
+properties:
+  iso_3166_1:
+    $ref: './CountryCode.yaml'
+  zones:
+    type: array
+    items:
+      type: string
