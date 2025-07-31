@@ -3,7 +3,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.30.0
+  version: 0.32.0
 servers:
   - url: 'https://api.themoviedb.org/3'
 tags:
@@ -13,6 +13,7 @@ tags:
   # - name: Discover
   - name: Genre
   - name: Keywords
+  - name: Networks
   - name: Movie Lists
   - name: Movies
   - name: Search
@@ -47,6 +48,10 @@ paths:
     $ref: 'keyword.yml#/components/paths/Details'
   /keyword/{keyword_id}/movies:
     $ref: 'keyword.yml#/components/paths/Movies'
+  /network/{network_id}:
+    $ref: 'network.yml#/components/paths/Details'
+  /network/{network_id}/images:
+    $ref: 'network.yml#/components/paths/Images'
   /movie/now_playing:
     $ref: 'movie.yml#/components/paths/NowPlaying'
   /movie/popular:
@@ -95,6 +100,8 @@ components:
       $ref: 'keyword.yml#/components/parameters/KeywordID'
     LanguageParam:
       $ref: 'commons.yml#/components/parameters/LanguageParam'
+    NetworkID:
+      $ref: 'network.yml#/components/parameters/NetworkID'
     MovieAppendToResponse:
       $ref: 'movie.yml#/components/parameters/MovieAppendToResponse'
     MovieID:
@@ -133,10 +140,6 @@ components:
       $ref: 'commons.yml#/components/schemas/CollectionListPage'
     Company:
       $ref: 'company.yml#/components/schemas/Company'
-    CompanyBase:
-      $ref: 'commons.yml#/components/schemas/CompanyBase'
-    CompanyLogo:
-      $ref: 'company.yml#/components/schemas/CompanyLogo'
     Country:
       $ref: 'configuration.yml#/components/schemas/Country'
     CountryCode:
@@ -179,6 +182,12 @@ components:
       $ref: 'commons.yml#/components/schemas/Thing'
     ObjectListPage:
       $ref: 'commons.yml#/components/schemas/ObjectListPage'
+    Organization:
+      $ref: 'commons.yml#/components/schemas/Organization'
+    OrganizationBase:
+      $ref: 'commons.yml#/components/schemas/OrganizationBase'
+    OrganizationLogo:
+      $ref: 'commons.yml#/components/schemas/OrganizationLogo'
     ResultPage:
       $ref: 'commons.yml#/components/schemas/Page'
     PersonListItem:

@@ -1,19 +1,65 @@
 ---
+ci:
+  autoupdate_branch: 'develop'
+  autoupdate_schedule: weekly
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
+      - id: check-json
+        name: Verify syntax of all JSON files
       - id: check-yaml
+        name: Verify syntax of all YAML files
+      - id: double-quote-string-fixer
+        name: Replace double quoted strings with single quoted strings
+      - id: end-of-file-fixer
+        name: Makes sure files end in a newline and only a newline
+      - id: forbid-submodules
+      - id: no-commit-to-branch
+      - id: pretty-format-json
+        name: Checks that all JSON files are pretty
+        args: ['--autofix']
+      - id: trailing-whitespace
+        name: Trim trailing whitespace
+
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.18.1
+    hooks:
+      - id: markdownlint-cli2
+        name: Lint Markdown/CommonMark files
+
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.33.0
+    hooks:
+      - id: check-jsonschema
+        files: ^renovate\.json$
+        args: ["--check-metaschema"]
+
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.35.1
+    rev: v1.37.1
     hooks:
       - id: yamllint
+        name: Lint YAML files
         args: [--strict]
+
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.7
+    hooks:
+      - id: actionlint
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.1
+    hooks:
+      - id: codespell
+        name: Fix common misspellings in text files.
+
   - repo: https://github.com/APIDevTools/swagger-cli
     rev: v4.0.4
     hooks:
       - id: swagger-validation
+
   - repo: https://github.com/python-openapi/openapi-spec-validator
-    rev: 0.7.1
+    rev: 0.7.2
     hooks:
       - id: openapi-spec-validator
