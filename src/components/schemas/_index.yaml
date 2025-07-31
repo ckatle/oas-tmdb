@@ -2,6 +2,9 @@
 BaseObject:
   $ref: './BaseObject.yaml'
 
+BaseObjectListPage:
+  $ref: './BaseObjectListPage.yaml'
+
 Country:
   $ref: './Country.yaml'
 

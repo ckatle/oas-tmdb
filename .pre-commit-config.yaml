@@ -30,7 +30,7 @@ repos:
         name: Lint Markdown/CommonMark files
 
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.33.0
+    rev: 0.33.2
     hooks:
       - id: check-jsonschema
         files: ^renovate\.json$
@@ -60,6 +60,6 @@ repos:
       - id: swagger-validation
 
   - repo: https://github.com/python-openapi/openapi-spec-validator
-    rev: 0.7.2
+    rev: 0.8.0b1
     hooks:
       - id: openapi-spec-validator

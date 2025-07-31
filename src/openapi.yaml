@@ -22,6 +22,8 @@ tags:
     description: Official genres for movies and TV shows.
   - name: Keywords
     description: Keyword details.
+  - name: Search
+    description: Search for keywords.
 
 paths:
   /configuration/countries:
@@ -42,6 +44,9 @@ paths:
 
   /keyword/{keyword_id}:
     $ref: './paths/KeywordDetails.yaml'
+
+  /search/keyword:
+    $ref: './paths/SearchKeyword.yaml'
 
 components:
   # Reusable schemas (data models)

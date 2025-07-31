@@ -1,0 +1,6 @@
+---
+in: query
+name: query
+required: true
+schema:
+  type: string

@@ -6,3 +6,9 @@ KeywordID:
 # Query
 LanguageParam:
   $ref: './query/LanguageParam.yaml'
+
+Page:
+  $ref: './query/Page.yaml'
+
+Query:
+  $ref: './query/Query.yaml'

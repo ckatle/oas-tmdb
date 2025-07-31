@@ -1,0 +1,23 @@
+---
+type: object
+description: A base result page.
+required:
+  - page
+  - total_pages
+  - total_results
+properties:
+  page:
+    description: The current page number.
+    type: integer
+    minimum: 1
+    maximum: 500
+  total_pages:
+    description: The number of total pages.
+    type: integer
+    minimum: 1
+    maximum: 500
+  total_results:
+    description: The number of total results.
+    type: integer
+    minimum: 0
+    maximum: 10000

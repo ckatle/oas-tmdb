@@ -1,0 +1,30 @@
+---
+get:
+  summary: Keyword
+  description: Search for keywords by their name.
+  operationId: SearchKeyword
+  tags:
+    - Search
+  parameters:
+    - $ref: '../components/parameters/query/Query.yaml'
+    - $ref: '../components/parameters/query/Page.yaml'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/BaseObjectListPage.yaml'
+          example:
+            page: 1
+            results:
+              - id: 262419
+                name: lost
+            total_pages: 5
+            total_results: 84
+    '400':
+      $ref: '../components/responses/400InvalidPage.yaml'
+    '401':
+      $ref: '../components/responses/401Unauthorized.yaml'
+    '429':
+      $ref: '../components/responses/429TooManyRequests.yaml'
