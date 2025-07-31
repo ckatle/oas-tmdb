@@ -3,7 +3,7 @@
   "assignees": [
     "ckatle"
   ],
-  "baseBranches": [
+  "baseBranchPatterns": [
     "develop"
   ],
   "description": "Schedule on weekdays at night (10 PM - 4 AM) and anytime on weekends",
