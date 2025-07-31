@@ -17,6 +17,8 @@ tags:
     description: Official genres for movies and TV shows.
   - name: Keywords
     description: Keyword details.
+  - name: Search
+    description: Search for companies and keywords.
 paths:
   /configuration/countries:
     get:
@@ -235,6 +237,72 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '429':
           $ref: '#/components/responses/429TooManyRequests'
+  /search/company:
+    get:
+      summary: Company
+      description: Search for companies by their original and alternative names.
+      operationId: SearchCompany
+      tags:
+        - Search
+      parameters:
+        - $ref: '#/components/parameters/Query'
+        - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyListPage'
+              example:
+                page: 1
+                results:
+                  - id: 3268
+                    name: HBO
+                    origin_country: US
+                    logo_path: /tuomPhY2UtuPTqqFnKMVHvSb724.png
+                  - id: 14914
+                    name: HBO Documentary Films
+                    origin_country: US
+                    logo_path: /1RZBWz53SpHUTLpRcM8BGv2plIP.png
+                total_pages: 2
+                total_results: 22
+        '400':
+          $ref: '#/components/responses/400InvalidPage'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '429':
+          $ref: '#/components/responses/429TooManyRequests'
+  /search/keyword:
+    get:
+      summary: Keyword
+      description: Search for keywords by their name.
+      operationId: SearchKeyword
+      tags:
+        - Search
+      parameters:
+        - $ref: '#/components/parameters/Query'
+        - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseObjectListPage'
+              example:
+                page: 1
+                results:
+                  - id: 262419
+                    name: lost
+                total_pages: 5
+                total_results: 84
+        '400':
+          $ref: '#/components/responses/400InvalidPage'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '429':
+          $ref: '#/components/responses/429TooManyRequests'
 components:
   schemas:
     CountryCode:
@@ -346,6 +414,60 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BaseObject'
+    ResultPage:
+      type: object
+      description: A base result page.
+      required:
+        - page
+        - total_pages
+        - total_results
+      properties:
+        page:
+          description: The current page number.
+          type: integer
+          minimum: 1
+          maximum: 500
+        total_pages:
+          description: The number of total pages.
+          type: integer
+          minimum: 1
+          maximum: 500
+        total_results:
+          description: The number of total results.
+          type: integer
+          minimum: 0
+          maximum: 10000
+    OrganizationBase:
+      allOf:
+        - $ref: '#/components/schemas/BaseObject'
+        - type: object
+          properties:
+            origin_country:
+              $ref: '#/components/schemas/CountryCode'
+            logo_path:
+              type: string
+    CompanyListPage:
+      allOf:
+        - $ref: '#/components/schemas/ResultPage'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/OrganizationBase'
+          required:
+            - results
+    BaseObjectListPage:
+      allOf:
+        - $ref: '#/components/schemas/ResultPage'
+        - type: object
+          required:
+            - results
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/BaseObject'
   parameters:
     LanguageParam:
       in: query
@@ -365,6 +487,21 @@ components:
       schema:
         type: integer
         format: int32
+    Query:
+      in: query
+      name: query
+      required: true
+      schema:
+        type: string
+    Page:
+      in: query
+      name: page
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 500
+        default: 1
   securitySchemes:
     bearerAuth:
       type: http
@@ -400,3 +537,13 @@ components:
             success: false
             status_code: 34
             status_message: The resource you requested could not be found.
+    400InvalidPage:
+      description: Invalid page number
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            success: false
+            status_code: 22
+            status_message: 'Invalid page: Pages start at 1 and max at 500. They are expected to be an integer.'

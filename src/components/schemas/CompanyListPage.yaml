@@ -1,0 +1,11 @@
+---
+allOf:
+  - $ref: './ResultPage.yaml'
+  - type: object
+    properties:
+      results:
+        type: array
+        items:
+          $ref: './OrganizationBase.yaml'
+    required:
+      - results

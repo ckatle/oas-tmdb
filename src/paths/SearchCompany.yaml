@@ -1,0 +1,36 @@
+---
+get:
+  summary: Company
+  description: Search for companies by their original and alternative names.
+  operationId: SearchCompany
+  tags:
+    - Search
+  parameters:
+    - $ref: '../components/parameters/query/Query.yaml'
+    - $ref: '../components/parameters/query/Page.yaml'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/CompanyListPage.yaml'
+          example:
+            page: 1
+            results:
+              - id: 3268
+                name: HBO
+                origin_country: US
+                logo_path: "/tuomPhY2UtuPTqqFnKMVHvSb724.png"
+              - id: 14914
+                name: HBO Documentary Films
+                origin_country: US
+                logo_path: "/1RZBWz53SpHUTLpRcM8BGv2plIP.png"
+            total_pages: 2
+            total_results: 22
+    '400':
+      $ref: '../components/responses/400InvalidPage.yaml'
+    '401':
+      $ref: '../components/responses/401Unauthorized.yaml'
+    '429':
+      $ref: '../components/responses/429TooManyRequests.yaml'

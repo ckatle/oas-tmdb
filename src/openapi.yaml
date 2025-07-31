@@ -23,7 +23,7 @@ tags:
   - name: Keywords
     description: Keyword details.
   - name: Search
-    description: Search for keywords.
+    description: Search for companies and keywords.
 
 paths:
   /configuration/countries:
@@ -45,6 +45,8 @@ paths:
   /keyword/{keyword_id}:
     $ref: './paths/KeywordDetails.yaml'
 
+  /search/company:
+    $ref: './paths/SearchCompany.yaml'
   /search/keyword:
     $ref: './paths/SearchKeyword.yaml'
 

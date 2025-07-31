@@ -5,6 +5,9 @@ BaseObject:
 BaseObjectListPage:
   $ref: './BaseObjectListPage.yaml'
 
+CompanyListPage:
+  $ref: './CompanyListPage.yaml'
+
 Country:
   $ref: './Country.yaml'
 
@@ -25,3 +28,9 @@ GenreList:
 
 Language:
   $ref: './Language.yaml'
+
+OrganizationBase:
+  $ref: './OrganizationBase.yaml'
+
+ResultPage:
+  $ref: './ResultPage.yaml'

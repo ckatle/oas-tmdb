@@ -1,0 +1,9 @@
+---
+allOf:
+  - $ref: './BaseObject.yaml'
+  - type: object
+    properties:
+      origin_country:
+        $ref: './CountryCode.yaml'
+      logo_path:
+        type: string
