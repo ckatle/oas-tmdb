@@ -1,5 +1,8 @@
 ---
 # Path
+CompanyID:
+  $ref: './path/CompanyID.yaml'
+
 KeywordID:
   $ref: './path/KeywordID.yaml'
 

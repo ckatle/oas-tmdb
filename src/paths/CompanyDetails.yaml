@@ -1,0 +1,31 @@
+---
+get:
+  summary: Details
+  description: Get the company details by ID.
+  operationId: CompanyDetails
+  tags:
+    - Companies
+  parameters:
+    - $ref: '../components/parameters/path/CompanyID.yaml'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Company.yaml'
+          example:
+            id: 1
+            name: Lucasfilm Ltd.
+            origin_country: US
+            logo_path: "/eDWGeg5tdVNcI8aBaaJ21bEBtFa.png"
+            headquarters: San Francisco, California
+            homepage: 'https://www.lucasfilm.com'
+            description: ''
+            parent_company: ""
+    '401':
+      $ref: '../components/responses/401Unauthorized.yaml'
+    '404':
+      $ref: '../components/responses/404NotFound.yaml'
+    '429':
+      $ref: '../components/responses/429TooManyRequests.yaml'

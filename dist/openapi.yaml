@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.32.11
+  version: 0.32.12
 servers:
   - url: https://api.themoviedb.org/3
     description: Main (production) server
@@ -11,6 +11,8 @@ servers:
 security:
   - bearerAuth: []
 tags:
+  - name: Companies
+    description: Companies details.
   - name: Configuration
     description: The configuration methods are useful to get the static lists of data we use throughout the database.
   - name: Genres
@@ -22,6 +24,37 @@ tags:
   - name: Search
     description: Search for companies and keywords.
 paths:
+  /company/{company_id}:
+    get:
+      summary: Details
+      description: Get the company details by ID.
+      operationId: CompanyDetails
+      tags:
+        - Companies
+      parameters:
+        - $ref: '#/components/parameters/CompanyID'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+              example:
+                id: 1
+                name: Lucasfilm Ltd.
+                origin_country: US
+                logo_path: /eDWGeg5tdVNcI8aBaaJ21bEBtFa.png
+                headquarters: San Francisco, California
+                homepage: https://www.lucasfilm.com
+                description: ''
+                parent_company: ''
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '429':
+          $ref: '#/components/responses/429TooManyRequests'
   /configuration/countries:
     get:
       summary: Countries
@@ -336,6 +369,20 @@ paths:
           $ref: '#/components/responses/429TooManyRequests'
 components:
   schemas:
+    BaseObject:
+      type: object
+      description: The most generic type of item.
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: |
+            The identifier property represents any kind of identifier for any kind of [Thing](https://schema.org/Thing), such as ISBNs, GTIN codes, UUIDs etc.
+        name:
+          type: string
     CountryCode:
       type: string
       description: |
@@ -343,19 +390,36 @@ components:
       minLength: 2
       maxLength: 2
       pattern: ^[A-Z]{2}$
-    Country:
-      type: object
-      additionalProperties: false
-      required:
-        - iso_3166_1
-        - english_name
-      properties:
-        iso_3166_1:
-          $ref: '#/components/schemas/CountryCode'
-        english_name:
-          type: string
-        native_name:
-          type: string
+    OrganizationBase:
+      allOf:
+        - $ref: '#/components/schemas/BaseObject'
+        - type: object
+          properties:
+            origin_country:
+              $ref: '#/components/schemas/CountryCode'
+            logo_path:
+              type: string
+    Organization:
+      description: An organization such as a company or a TV network.
+      allOf:
+        - $ref: '#/components/schemas/OrganizationBase'
+        - type: object
+          properties:
+            headquarters:
+              type: string
+            homepage:
+              type: string
+              format: uri
+    Company:
+      description: A production company.
+      allOf:
+        - $ref: '#/components/schemas/Organization'
+        - type: object
+          properties:
+            description:
+              type: string
+            parent_company:
+              type: string
     Error:
       type: object
       additionalProperties: false
@@ -372,6 +436,19 @@ components:
           minimum: 1
           maximum: 47
         status_message:
+          type: string
+    Country:
+      type: object
+      additionalProperties: false
+      required:
+        - iso_3166_1
+        - english_name
+      properties:
+        iso_3166_1:
+          $ref: '#/components/schemas/CountryCode'
+        english_name:
+          type: string
+        native_name:
           type: string
     Department:
       type: object
@@ -421,20 +498,6 @@ components:
           type: array
           items:
             type: string
-    BaseObject:
-      type: object
-      description: The most generic type of item.
-      required:
-        - id
-        - name
-      properties:
-        id:
-          type: integer
-          format: int32
-          description: |
-            The identifier property represents any kind of identifier for any kind of [Thing](https://schema.org/Thing), such as ISBNs, GTIN codes, UUIDs etc.
-        name:
-          type: string
     GenreList:
       type: object
       description: A list of genres
@@ -445,26 +508,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BaseObject'
-    OrganizationBase:
-      allOf:
-        - $ref: '#/components/schemas/BaseObject'
-        - type: object
-          properties:
-            origin_country:
-              $ref: '#/components/schemas/CountryCode'
-            logo_path:
-              type: string
-    Organization:
-      description: An organization such as a company or a TV network.
-      allOf:
-        - $ref: '#/components/schemas/OrganizationBase'
-        - type: object
-          properties:
-            headquarters:
-              type: string
-            homepage:
-              type: string
-              format: uri
     ResultPage:
       type: object
       description: A base result page.
@@ -511,6 +554,14 @@ components:
               items:
                 $ref: '#/components/schemas/BaseObject'
   parameters:
+    CompanyID:
+      in: path
+      name: company_id
+      description: The company ID.
+      required: true
+      schema:
+        type: integer
+        format: int32
     LanguageParam:
       in: query
       name: language
@@ -567,16 +618,6 @@ components:
             success: false
             status_code: 7
             status_message: 'Invalid API key: You must be granted a valid key.'
-    429TooManyRequests:
-      description: Too many requests in a given amount of time (“rate limiting”).
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            success: false
-            status_code: 25
-            status_message: Your request count is over the allowed limit.
     404NotFound:
       description: The server can not find the requested resource.
       content:
@@ -587,6 +628,16 @@ components:
             success: false
             status_code: 34
             status_message: The resource you requested could not be found.
+    429TooManyRequests:
+      description: Too many requests in a given amount of time (“rate limiting”).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            success: false
+            status_code: 25
+            status_message: Your request count is over the allowed limit.
     400InvalidPage:
       description: Invalid page number
       content:

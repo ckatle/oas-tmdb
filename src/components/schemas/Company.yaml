@@ -1,0 +1,10 @@
+---
+description: A production company.
+allOf:
+  - $ref: './Organization.yaml'
+  - type: object
+    properties:
+      description:
+        type: string
+      parent_company:
+        type: string

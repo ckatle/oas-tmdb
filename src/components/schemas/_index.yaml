@@ -5,6 +5,9 @@ BaseObject:
 BaseObjectListPage:
   $ref: './BaseObjectListPage.yaml'
 
+Company:
+  $ref: './Company.yaml'
+
 CompanyListPage:
   $ref: './CompanyListPage.yaml'
 
