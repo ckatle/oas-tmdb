@@ -1,0 +1,8 @@
+---
+in: path
+name: network_id
+description: The TV network ID.
+required: true
+schema:
+  type: integer
+  format: int32

@@ -1,4 +1,7 @@
 ---
+400InvalidPage:
+  $ref: './400InvalidPage.yaml'
+
 401Unauthorized:
   $ref: './401Unauthorized.yaml'
 

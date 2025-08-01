@@ -3,6 +3,9 @@
 KeywordID:
   $ref: './path/KeywordID.yaml'
 
+NetworkID:
+  $ref: './path/NetworkID.yaml'
+
 # Query
 LanguageParam:
   $ref: './query/LanguageParam.yaml'

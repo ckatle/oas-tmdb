@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.32.0
+  version: 0.32.11
 servers:
   - url: https://api.themoviedb.org/3
     description: Main (production) server
@@ -17,6 +17,8 @@ tags:
     description: Official genres for movies and TV shows.
   - name: Keywords
     description: Keyword details.
+  - name: Networks
+    description: TV network details.
   - name: Search
     description: Search for companies and keywords.
 paths:
@@ -237,6 +239,35 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '429':
           $ref: '#/components/responses/429TooManyRequests'
+  /network/{network_id}:
+    get:
+      summary: Details
+      description: Get the TV network details by ID.
+      operationId: NetworkDetails
+      tags:
+        - Networks
+      parameters:
+        - $ref: '#/components/parameters/NetworkID'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+              example:
+                id: 49
+                name: HBO
+                origin_country: US
+                logo_path: /tuomPhY2UtuPTqqFnKMVHvSb724.png
+                headquarters: New York City, New York
+                homepage: https://www.hbo.com
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '429':
+          $ref: '#/components/responses/429TooManyRequests'
   /search/company:
     get:
       summary: Company
@@ -414,6 +445,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BaseObject'
+    OrganizationBase:
+      allOf:
+        - $ref: '#/components/schemas/BaseObject'
+        - type: object
+          properties:
+            origin_country:
+              $ref: '#/components/schemas/CountryCode'
+            logo_path:
+              type: string
+    Organization:
+      description: An organization such as a company or a TV network.
+      allOf:
+        - $ref: '#/components/schemas/OrganizationBase'
+        - type: object
+          properties:
+            headquarters:
+              type: string
+            homepage:
+              type: string
+              format: uri
     ResultPage:
       type: object
       description: A base result page.
@@ -437,15 +488,6 @@ components:
           type: integer
           minimum: 0
           maximum: 10000
-    OrganizationBase:
-      allOf:
-        - $ref: '#/components/schemas/BaseObject'
-        - type: object
-          properties:
-            origin_country:
-              $ref: '#/components/schemas/CountryCode'
-            logo_path:
-              type: string
     CompanyListPage:
       allOf:
         - $ref: '#/components/schemas/ResultPage'
@@ -483,6 +525,14 @@ components:
       in: path
       name: keyword_id
       description: The keyword ID.
+      required: true
+      schema:
+        type: integer
+        format: int32
+    NetworkID:
+      in: path
+      name: network_id
+      description: The TV network ID.
       required: true
       schema:
         type: integer

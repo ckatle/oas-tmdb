@@ -29,6 +29,9 @@ GenreList:
 Language:
   $ref: './Language.yaml'
 
+Organization:
+  $ref: './Organization.yaml'
+
 OrganizationBase:
   $ref: './OrganizationBase.yaml'
 

@@ -1,0 +1,11 @@
+---
+description: An organization such as a company or a TV network.
+allOf:
+  - $ref: './OrganizationBase.yaml'
+  - type: object
+    properties:
+      headquarters:
+        type: string
+      homepage:
+        type: string
+        format: uri
