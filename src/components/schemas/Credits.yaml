@@ -1,0 +1,14 @@
+---
+type: object
+required:
+  - cast
+  - crew
+properties:
+  cast:
+    type: array
+    items:
+      $ref: './CastMember.yaml'
+  crew:
+    type: array
+    items:
+      $ref: './CrewMember.yaml'

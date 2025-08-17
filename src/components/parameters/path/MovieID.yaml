@@ -1,0 +1,8 @@
+---
+in: path
+name: movie_id
+description: The movie ID.
+required: true
+schema:
+  type: integer
+  format: int32

@@ -1,0 +1,14 @@
+---
+allOf:
+  - $ref: './BaseObject.yaml'
+  - type: object
+    properties:
+      credit_id:
+        type: string
+      original_name:
+        type: string
+      gender:
+        type: integer
+        format: int32
+      profile_path:
+        type: string

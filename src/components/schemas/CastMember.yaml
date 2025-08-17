@@ -1,0 +1,13 @@
+---
+allOf:
+  - $ref: './CreditBase.yaml'
+  - type: object
+    properties:
+      cast_id:
+        type: integer
+        format: int32
+      character:
+        type: string
+      order:
+        type: integer
+        format: int32

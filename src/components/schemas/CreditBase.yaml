@@ -1,0 +1,12 @@
+---
+allOf:
+  - $ref: './Creator.yaml'
+  - type: object
+    properties:
+      adult:
+        type: boolean
+      known_for_department:
+        type: string
+      popularity:
+        type: number
+        format: float

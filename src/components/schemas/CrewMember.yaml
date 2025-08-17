@@ -1,0 +1,9 @@
+---
+allOf:
+  - $ref: './CreditBase.yaml'
+  - type: object
+    properties:
+      department:
+        type: string
+      job:
+        type: string

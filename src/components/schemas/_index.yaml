@@ -5,6 +5,9 @@ BaseObject:
 BaseObjectListPage:
   $ref: './BaseObjectListPage.yaml'
 
+CastMember:
+  $ref: './CastMember.yaml'
+
 Company:
   $ref: './Company.yaml'
 
@@ -19,6 +22,21 @@ CountryCode:
 
 CountryWithTimezones:
   $ref: './CountryWithTimezones.yaml'
+
+Creator:
+  $ref: './Creator.yaml'
+
+CreditBase:
+  $ref: './CreditBase.yaml'
+
+Credits:
+  $ref: './Credits.yaml'
+
+CreditsWithID:
+  $ref: './CreditsWithID.yaml'
+
+CrewMember:
+  $ref: './CrewMember.yaml'
 
 Department:
   $ref: './Department.yaml'

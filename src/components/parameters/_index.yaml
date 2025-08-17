@@ -6,6 +6,9 @@ CompanyID:
 KeywordID:
   $ref: './path/KeywordID.yaml'
 
+MovieID:
+  $ref: './path/MovieID.yaml'
+
 NetworkID:
   $ref: './path/NetworkID.yaml'
 
