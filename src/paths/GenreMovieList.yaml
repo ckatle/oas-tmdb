@@ -6,21 +6,21 @@ get:
   tags:
     - Genres
   parameters:
-    - $ref: '../components/parameters/query/LanguageParam.yaml'
+    - $ref: "../components/parameters/query/LanguageParam.yaml"
   responses:
-    '200':
+    "200":
       description: OK
       content:
         application/json:
           schema:
-            $ref: '../components/schemas/GenreList.yaml'
+            $ref: "../components/schemas/GenreList.yaml"
           example:
             genres:
               - id: 12
                 name: Adventure
               - id: 14
                 name: Fantasy
-    '401':
-      $ref: '../components/responses/401Unauthorized.yaml'
-    '429':
-      $ref: '../components/responses/429TooManyRequests.yaml'
+    "401":
+      $ref: "../components/responses/401Unauthorized.yaml"
+    "429":
+      $ref: "../components/responses/429TooManyRequests.yaml"

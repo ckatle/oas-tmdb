@@ -6,20 +6,20 @@ get:
   tags:
     - Configuration
   responses:
-    '200':
+    "200":
       description: OK
       content:
         application/json:
           schema:
             type: array
             items:
-              $ref: '../components/schemas/CountryWithTimezones.yaml'
+              $ref: "../components/schemas/CountryWithTimezones.yaml"
             example:
               - iso_3166_1: ES
-                zones: [Europe/Madrid, Africa/Ceuta, Atlantic/Canary]
+                zones: ["Europe/Madrid", "Africa/Ceuta", "Atlantic/Canary"]
               - iso_3166_1: GB
-                zones: [Europe/London]
-    '401':
-      $ref: '../components/responses/401Unauthorized.yaml'
-    '429':
-      $ref: '../components/responses/429TooManyRequests.yaml'
+                zones: ["Europe/London"]
+    "401":
+      $ref: "../components/responses/401Unauthorized.yaml"
+    "429":
+      $ref: "../components/responses/429TooManyRequests.yaml"

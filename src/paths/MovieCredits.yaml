@@ -6,15 +6,15 @@ get:
   tags:
     - Movies
   parameters:
-    - $ref: '../components/parameters/path/MovieID.yaml'
-    - $ref: '../components/parameters/query/LanguageParam.yaml'
+    - $ref: "../components/parameters/path/MovieID.yaml"
+    - $ref: "../components/parameters/query/LanguageParam.yaml"
   responses:
-    '200':
+    "200":
       description: OK
       content:
         application/json:
           schema:
-            $ref: '../components/schemas/CreditsWithID.yaml'
+            $ref: "../components/schemas/CreditsWithID.yaml"
           example:
             id: 671
             cast:
@@ -25,7 +25,7 @@ get:
                 name: Daniel Radcliffe
                 original_name: Daniel Radcliffe
                 popularity: 7.6526
-                profile_path: '/iPg0J9UzAlPj1fLEJNllpW9IhGe.jpg'
+                profile_path: "/iPg0J9UzAlPj1fLEJNllpW9IhGe.jpg"
                 cast_id: 27
                 character: Harry Potter
                 credit_id: 52fe4267c3a36847f801be91
@@ -37,7 +37,7 @@ get:
                 name: Rupert Grint
                 original_name: Rupert Grint
                 popularity: 2.3248
-                profile_path: '/q2KZZ0ltTEl7Sf8volNFV1JDEP4.jpg'
+                profile_path: "/q2KZZ0ltTEl7Sf8volNFV1JDEP4.jpg"
                 cast_id: 37
                 character: Ron Weasley
                 credit_id: 52fe4267c3a36847f801beb9
@@ -49,7 +49,7 @@ get:
                 name: Emma Watson
                 original_name: Emma Watson
                 popularity: 5.1613
-                profile_path: '/A14lLCZYDhfYdBa0fFRpwMDiwRN.jpg'
+                profile_path: "/A14lLCZYDhfYdBa0fFRpwMDiwRN.jpg"
                 cast_id: 49
                 character: Hermione Granger
                 credit_id: 531736ea92514138c00010a3
@@ -62,7 +62,7 @@ get:
                 name: Chris Columbus
                 original_name: Chris Columbus
                 popularity: 2.5737
-                profile_path: '/yCyEz90NqjEXKZ7HYcEhDXlLlPc.jpg'
+                profile_path: "/yCyEz90NqjEXKZ7HYcEhDXlLlPc.jpg"
                 credit_id: 52fe4267c3a36847f801be05
                 department: Directing
                 job: Director
@@ -73,13 +73,13 @@ get:
                 name: J.K. Rowling
                 original_name: J.K. Rowling
                 popularity: 0.7377
-                profile_path: '/8VDx3K8NBGJDEWr4KdsGsuT8wuj.jpg'
+                profile_path: "/8VDx3K8NBGJDEWr4KdsGsuT8wuj.jpg"
                 credit_id: 52fe4267c3a36847f801be0b
                 department: Writing
                 job: Novel
-    '401':
-      $ref: '../components/responses/401Unauthorized.yaml'
-    '404':
-      $ref: '../components/responses/404NotFound.yaml'
-    '429':
-      $ref: '../components/responses/429TooManyRequests.yaml'
+    "401":
+      $ref: "../components/responses/401Unauthorized.yaml"
+    "404":
+      $ref: "../components/responses/404NotFound.yaml"
+    "429":
+      $ref: "../components/responses/429TooManyRequests.yaml"

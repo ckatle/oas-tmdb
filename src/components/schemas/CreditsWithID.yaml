@@ -5,4 +5,4 @@ allOf:
       id:
         type: integer
         format: int32
-  - $ref: './Credits.yaml'
+  - $ref: "./Credits.yaml"

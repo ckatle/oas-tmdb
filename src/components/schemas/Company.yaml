@@ -1,7 +1,7 @@
 ---
 description: A production company.
 allOf:
-  - $ref: './Organization.yaml'
+  - $ref: "./Organization.yaml"
   - type: object
     properties:
       description:

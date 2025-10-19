@@ -6,15 +6,15 @@ get:
   tags:
     - Search
   parameters:
-    - $ref: '../components/parameters/query/Query.yaml'
-    - $ref: '../components/parameters/query/Page.yaml'
+    - $ref: "../components/parameters/query/Query.yaml"
+    - $ref: "../components/parameters/query/Page.yaml"
   responses:
-    '200':
+    "200":
       description: OK
       content:
         application/json:
           schema:
-            $ref: '../components/schemas/CompanyListPage.yaml'
+            $ref: "../components/schemas/CompanyListPage.yaml"
           example:
             page: 1
             results:
@@ -28,9 +28,9 @@ get:
                 logo_path: "/1RZBWz53SpHUTLpRcM8BGv2plIP.png"
             total_pages: 2
             total_results: 22
-    '400':
-      $ref: '../components/responses/400InvalidPage.yaml'
-    '401':
-      $ref: '../components/responses/401Unauthorized.yaml'
-    '429':
-      $ref: '../components/responses/429TooManyRequests.yaml'
+    "400":
+      $ref: "../components/responses/400InvalidPage.yaml"
+    "401":
+      $ref: "../components/responses/401Unauthorized.yaml"
+    "429":
+      $ref: "../components/responses/429TooManyRequests.yaml"

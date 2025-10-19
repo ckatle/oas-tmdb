@@ -1,9 +1,10 @@
 ---
+description: Basic information about an organization.
 allOf:
-  - $ref: './BaseObject.yaml'
+  - $ref: "./BaseObject.yaml"
   - type: object
     properties:
       origin_country:
-        $ref: './CountryCode.yaml'
+        $ref: "./CountryCode.yaml"
       logo_path:
         type: string

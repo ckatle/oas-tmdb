@@ -8,8 +8,6 @@ properties:
   id:
     type: integer
     format: int32
-    description: >
-      The identifier property represents any kind of identifier for any kind of [Thing](https://schema.org/Thing),
-      such as ISBNs, GTIN codes, UUIDs etc.
+    description: The identifier of the item.
   name:
     type: string

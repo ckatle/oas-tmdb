@@ -1,60 +1,63 @@
 ---
 BaseObject:
-  $ref: './BaseObject.yaml'
+  $ref: "./BaseObject.yaml"
 
 BaseObjectListPage:
-  $ref: './BaseObjectListPage.yaml'
+  $ref: "./BaseObjectListPage.yaml"
 
 CastMember:
-  $ref: './CastMember.yaml'
+  $ref: "./CastMember.yaml"
 
 Company:
-  $ref: './Company.yaml'
+  $ref: "./Company.yaml"
 
 CompanyListPage:
-  $ref: './CompanyListPage.yaml'
+  $ref: "./CompanyListPage.yaml"
 
 Country:
-  $ref: './Country.yaml'
+  $ref: "./Country.yaml"
 
 CountryCode:
-  $ref: './CountryCode.yaml'
+  $ref: "./CountryCode.yaml"
 
 CountryWithTimezones:
-  $ref: './CountryWithTimezones.yaml'
+  $ref: "./CountryWithTimezones.yaml"
 
 Creator:
-  $ref: './Creator.yaml'
+  $ref: "./Creator.yaml"
 
 CreditBase:
-  $ref: './CreditBase.yaml'
+  $ref: "./CreditBase.yaml"
 
 Credits:
-  $ref: './Credits.yaml'
+  $ref: "./Credits.yaml"
 
 CreditsWithID:
-  $ref: './CreditsWithID.yaml'
+  $ref: "./CreditsWithID.yaml"
 
 CrewMember:
-  $ref: './CrewMember.yaml'
+  $ref: "./CrewMember.yaml"
 
 Department:
-  $ref: './Department.yaml'
+  $ref: "./Department.yaml"
 
 Error:
-  $ref: './Error.yaml'
+  $ref: "./Error.yaml"
 
 GenreList:
-  $ref: './GenreList.yaml'
+  $ref: "./GenreList.yaml"
+
+KeywordsWithID:
+  $ref: "./KeywordsWithID.yaml"
 
 Language:
-  $ref: './Language.yaml'
+  $ref: "./Language.yaml"
 
 Organization:
-  $ref: './Organization.yaml'
+  $ref: "./Organization.yaml"
 
 OrganizationBase:
-  $ref: './OrganizationBase.yaml'
+  $ref: "./OrganizationBase.yaml"
 
 ResultPage:
-  $ref: './ResultPage.yaml'
+  $ref: "./ResultPage.yaml"

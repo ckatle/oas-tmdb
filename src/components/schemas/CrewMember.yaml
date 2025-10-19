@@ -1,6 +1,6 @@
 ---
 allOf:
-  - $ref: './CreditBase.yaml'
+  - $ref: "./CreditBase.yaml"
   - type: object
     properties:
       department:

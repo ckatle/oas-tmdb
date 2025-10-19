@@ -1,5 +1,6 @@
 ---
 type: object
+description: The credits (cast and crew) of a movie or a TV show.
 required:
   - cast
   - crew
@@ -7,8 +8,8 @@ properties:
   cast:
     type: array
     items:
-      $ref: './CastMember.yaml'
+      $ref: "./CastMember.yaml"
   crew:
     type: array
     items:
-      $ref: './CrewMember.yaml'
+      $ref: "./CrewMember.yaml"

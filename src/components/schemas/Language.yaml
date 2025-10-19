@@ -10,7 +10,7 @@ properties:
     description: ISO 639-1 tag
     minLength: 2
     maxLength: 2
-    pattern: '^[a-z]{2}$'
+    pattern: "^[a-z]{2}$"
   english_name:
     type: string
     description: English name of the language

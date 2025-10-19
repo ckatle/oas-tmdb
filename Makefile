@@ -1,30 +1,29 @@
-INPUT_PATH ?= parts/openapi.yml
-OUTPUT_PATH ?= ./openapi.yml
-OUTPUT_FILETYPE ?= yaml
-DEREFERENCE ?= false
+#INPUT_PATH ?= parts/openapi.yml
+#OUTPUT_PATH ?= ./openapi.yml
+#OUTPUT_FILETYPE ?= yaml
+#DEREFERENCE ?= false
 
 .PHONY: *
 
-build: bundle validate ## Bundle and validate OpenAPI files
+build: lint bundle validate ## Bundle and validate OpenAPI files
 
 bundle: ## Bundle OpenAPI files
-	@if [ ! -f ${INPUT_PATH} ]; then \
-		echo "::error::$INPUT_PATH does not exist!"; \
-		exit 1; \
-	fi
-
-	@yamllint .
-
-	@if [ ${OUTPUT_FILETYPE} != "yaml" ] && [ "${OUTPUT_FILETYPE}" != "json" ] ; then \
-		echo "::error::FILETYPE must be either 'yaml' or 'json'!"; \
-		exit 1; \
-	fi
-
 	@if [ ${DEREFERENCE} = true ] ; then \
-		npx --package @apidevtools/swagger-cli swagger-cli bundle -r ${INPUT_PATH} -o ${OUTPUT_PATH} -t ${OUTPUT_FILETYPE}; \
+		@redocly bundle -d; \
 	else \
-		npx --package @apidevtools/swagger-cli swagger-cli bundle ${INPUT_PATH} -o ${OUTPUT_PATH} -t ${OUTPUT_FILETYPE}; \
+		@redocly bundle; \
 	fi
+
+docs: ##
+	@redocly build-docs
+
+down: ## Runs podman-compose down
+	@podman-compose down --remove-orphans
+
+lint: ## Linting
+	@yamllint .
+	@redocly lint
+	@spectral lint ./dist/openapi.yaml
 
 pc: pca pcr
 
@@ -33,6 +32,9 @@ pca: ## Updating hooks automatically
 
 pcr: ## Run against all the files
 	@pre-commit run -a
+
+up: ## Run podman-compose up
+	@podman-compose up -d
 
 validate: ## Validate the bundled OpenAPI file
 	@npx --package @apidevtools/swagger-cli swagger-cli validate ${OUTPUT_PATH}

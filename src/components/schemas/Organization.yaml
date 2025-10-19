@@ -1,7 +1,7 @@
 ---
 description: An organization such as a company or a TV network.
 allOf:
-  - $ref: './OrganizationBase.yaml'
+  - $ref: "./OrganizationBase.yaml"
   - type: object
     properties:
       headquarters:

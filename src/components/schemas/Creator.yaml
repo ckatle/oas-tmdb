@@ -1,6 +1,6 @@
 ---
 allOf:
-  - $ref: './BaseObject.yaml'
+  - $ref: "./BaseObject.yaml"
   - type: object
     properties:
       credit_id:

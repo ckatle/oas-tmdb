@@ -1,6 +1,6 @@
 ---
 ci:
-  autoupdate_branch: 'develop'
+  autoupdate_branch: "develop"
   autoupdate_schedule: weekly
 
 repos:
@@ -19,7 +19,7 @@ repos:
       - id: no-commit-to-branch
       - id: pretty-format-json
         name: Checks that all JSON files are pretty
-        args: ['--autofix']
+        args: ["--autofix"]
       - id: trailing-whitespace
         name: Trim trailing whitespace
 
@@ -30,7 +30,7 @@ repos:
         name: Lint Markdown/CommonMark files
 
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.33.2
+    rev: 0.34.1
     hooks:
       - id: check-jsonschema
         files: ^renovate\.json$
@@ -44,7 +44,7 @@ repos:
         args: [--strict]
 
   - repo: https://github.com/rhysd/actionlint
-    rev: v1.7.7
+    rev: v1.7.8
     hooks:
       - id: actionlint
 

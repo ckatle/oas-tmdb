@@ -6,7 +6,7 @@ required:
   - zones
 properties:
   iso_3166_1:
-    $ref: './CountryCode.yaml'
+    $ref: "./CountryCode.yaml"
   zones:
     type: array
     items:

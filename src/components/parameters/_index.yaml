@@ -1,23 +1,23 @@
 ---
 # Path
 CompanyID:
-  $ref: './path/CompanyID.yaml'
+  $ref: "./path/CompanyID.yaml"
 
 KeywordID:
-  $ref: './path/KeywordID.yaml'
+  $ref: "./path/KeywordID.yaml"
 
 MovieID:
-  $ref: './path/MovieID.yaml'
+  $ref: "./path/MovieID.yaml"
 
 NetworkID:
-  $ref: './path/NetworkID.yaml'
+  $ref: "./path/NetworkID.yaml"
 
 # Query
 LanguageParam:
-  $ref: './query/LanguageParam.yaml'
+  $ref: "./query/LanguageParam.yaml"
 
 Page:
-  $ref: './query/Page.yaml'
+  $ref: "./query/Page.yaml"
 
 Query:
-  $ref: './query/Query.yaml'
+  $ref: "./query/Query.yaml"

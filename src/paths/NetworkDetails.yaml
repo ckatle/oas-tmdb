@@ -6,24 +6,24 @@ get:
   tags:
     - Networks
   parameters:
-    - $ref: '../components/parameters/path/NetworkID.yaml'
+    - $ref: "../components/parameters/path/NetworkID.yaml"
   responses:
-    '200':
+    "200":
       description: OK
       content:
         application/json:
           schema:
-            $ref: '../components/schemas/Organization.yaml'
+            $ref: "../components/schemas/Organization.yaml"
           example:
             id: 49
             name: HBO
             origin_country: US
             logo_path: "/tuomPhY2UtuPTqqFnKMVHvSb724.png"
             headquarters: New York City, New York
-            homepage: 'https://www.hbo.com'
-    '401':
-      $ref: '../components/responses/401Unauthorized.yaml'
-    '404':
-      $ref: '../components/responses/404NotFound.yaml'
-    '429':
-      $ref: '../components/responses/429TooManyRequests.yaml'
+            homepage: "https://www.hbo.com"
+    "401":
+      $ref: "../components/responses/401Unauthorized.yaml"
+    "404":
+      $ref: "../components/responses/404NotFound.yaml"
+    "429":
+      $ref: "../components/responses/429TooManyRequests.yaml"

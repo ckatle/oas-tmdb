@@ -7,4 +7,4 @@ properties:
   genres:
     type: array
     items:
-      $ref: './BaseObject.yaml'
+      $ref: "./BaseObject.yaml"

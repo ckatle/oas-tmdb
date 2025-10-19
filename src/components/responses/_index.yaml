@@ -1,12 +1,12 @@
 ---
 400InvalidPage:
-  $ref: './400InvalidPage.yaml'
+  $ref: "./400InvalidPage.yaml"
 
 401Unauthorized:
-  $ref: './401Unauthorized.yaml'
+  $ref: "./401Unauthorized.yaml"
 
 404NotFound:
-  $ref: './404NotFound.yaml'
+  $ref: "./404NotFound.yaml"
 
 429TooManyRequests:
-  $ref: './429TooManyRequests.yaml'
+  $ref: "./429TooManyRequests.yaml"

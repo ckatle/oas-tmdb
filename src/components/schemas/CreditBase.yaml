@@ -1,6 +1,6 @@
 ---
 allOf:
-  - $ref: './Creator.yaml'
+  - $ref: "./Creator.yaml"
   - type: object
     properties:
       adult:
