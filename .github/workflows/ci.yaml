@@ -1,0 +1,10 @@
+---
+name: CI
+
+on: push
+
+jobs:
+  ci:
+    uses: ckatle/actions/.github/workflows/oas-lint.yaml@master
+    with:
+      file-glob: "/dist/openapi.yaml"

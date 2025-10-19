@@ -1,7 +1,10 @@
 ---
 extends: default
 
-ignore: /openapi.yml
+ignore:
+  - openapi.yml
+  - dist/
+  - parts/
 
 rules:
   document-start:
@@ -16,4 +19,4 @@ rules:
     quote-type: double
     required: false
   truthy:
-    ignore: .github/workflows/*.yml
+    ignore: .github/workflows/*.yaml
