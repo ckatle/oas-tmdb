@@ -1,4 +1,5 @@
 ---
+description: The credits (cast and crew) of a movie or a TV show and the identifier of this item.
 allOf:
   - type: object
     properties:

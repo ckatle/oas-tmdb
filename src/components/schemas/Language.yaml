@@ -1,5 +1,6 @@
 ---
 type: object
+description: A language represented by the ISO 639-1 tag with the english and native name of this language.
 additionalProperties: false
 required:
   - iso_639_1

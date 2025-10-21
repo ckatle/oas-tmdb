@@ -1,4 +1,5 @@
 ---
+description: A member of the cast of a movie or a TV show.
 allOf:
   - $ref: "./CreditBase.yaml"
   - type: object

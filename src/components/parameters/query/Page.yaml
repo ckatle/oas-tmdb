@@ -1,6 +1,7 @@
 ---
 in: query
 name: page
+description: The page number.
 schema:
   type: integer
   format: int32

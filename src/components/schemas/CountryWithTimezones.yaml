@@ -1,5 +1,6 @@
 ---
 type: object
+description: A country represented by the two-letter country code with a list of timezones.
 additionalProperties: false
 required:
   - iso_3166_1

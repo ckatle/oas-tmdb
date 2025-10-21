@@ -1,6 +1,7 @@
 ---
 in: query
 name: query
+description: The search string.
 required: true
 schema:
   type: string

@@ -1,4 +1,5 @@
 ---
+description: The creator of a TV show.
 allOf:
   - $ref: "./BaseObject.yaml"
   - type: object

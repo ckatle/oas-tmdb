@@ -1,4 +1,5 @@
 ---
+description: A result page of a search for companies.
 allOf:
   - $ref: "./ResultPage.yaml"
   - type: object

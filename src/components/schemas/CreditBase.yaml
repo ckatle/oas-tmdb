@@ -1,4 +1,5 @@
 ---
+description: A base model for a member of the cast or the crew.
 allOf:
   - $ref: "./Creator.yaml"
   - type: object
