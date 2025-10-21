@@ -1,5 +1,5 @@
 ---
-openapi: 3.0.3
+openapi: 3.1.0
 
 info:
   title: TMDB API
@@ -56,7 +56,6 @@ paths:
 
   /movie/{movie_id}/credits:
     $ref: "./paths/MovieCredits.yaml"
-
   /movie/{movie_id}/keywords:
     $ref: "./paths/MovieKeywords.yaml"
 

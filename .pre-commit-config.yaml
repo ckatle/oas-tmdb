@@ -63,3 +63,4 @@ repos:
     rev: 0.8.0b1
     hooks:
       - id: openapi-spec-validator
+        files: ^dist/openapi.yaml$

@@ -1,0 +1,14 @@
+---
+type: object
+description: A list of keywords with the movie id.
+required:
+  - keywords
+properties:
+  id:
+    type: integer
+    format: int32
+  keywords:
+    description: A list of keyword for the movie.
+    type: array
+    items:
+      $ref: "./BaseObject.yaml"

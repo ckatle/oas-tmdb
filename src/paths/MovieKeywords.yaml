@@ -1,0 +1,31 @@
+---
+get:
+  summary: Keywords
+  description: Get the keywords for a movie.
+  operationId: MovieKeywords
+  tags:
+    - Movies
+  parameters:
+    - $ref: "../components/parameters/path/MovieID.yaml"
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/KeywordsWithID.yaml"
+          example:
+            id: 671
+            keywords:
+              - id: 616
+                name: witch
+              - id: 818
+                name: based on novel or book
+              - id: 177912
+                name: wizard
+    '401':
+      $ref: "../components/responses/401Unauthorized.yaml"
+    '404':
+      $ref: "../components/responses/404NotFound.yaml"
+    '429':
+      $ref: "../components/responses/429TooManyRequests.yaml"
