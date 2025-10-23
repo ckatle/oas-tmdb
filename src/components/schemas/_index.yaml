@@ -8,6 +8,15 @@ BaseObjectListPage:
 CastMember:
   $ref: "./CastMember.yaml"
 
+CollectionBase:
+  $ref: "./CollectionBase.yaml"
+
+CollectionListItem:
+  $ref: "./CollectionListItem.yaml"
+
+CollectionListPage:
+  $ref: "./CollectionListPage.yaml"
+
 Company:
   $ref: "./Company.yaml"
 
@@ -52,6 +61,15 @@ KeywordsWithID:
 
 Language:
   $ref: "./Language.yaml"
+
+MovieBase:
+  $ref: "./MovieBase.yaml"
+
+MovieListItem:
+  $ref: "./MovieListItem.yaml"
+
+MovieListPage:
+  $ref: "./MovieListPage.yaml"
 
 Organization:
   $ref: "./Organization.yaml"

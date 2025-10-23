@@ -1,0 +1,7 @@
+---
+in: query
+name: include_adult
+schema:
+  type: boolean
+  default: false
+description: Include adult items.

@@ -1,0 +1,40 @@
+---
+type: object
+description: A base movie object.
+required:
+  - id
+  - title
+  - original_language
+  - original_title
+properties:
+  id:
+    type: integer
+    format: int32
+  title:
+    type: string
+  original_language:
+    type: string
+  original_title:
+    type: string
+  adult:
+    type: boolean
+  backdrop_path:
+    type: string
+  overview:
+    type: string
+  popularity:
+    type: number
+    format: float
+  poster_path:
+    type: string
+  release_date:
+    type: string
+    format: date
+  video:
+    type: boolean
+  vote_average:
+    type: number
+    format: float
+  vote_count:
+    type: integer
+    format: int32

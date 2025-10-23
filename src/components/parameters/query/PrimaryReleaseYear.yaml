@@ -1,0 +1,5 @@
+---
+in: query
+name: primary_release_year
+schema:
+  type: string

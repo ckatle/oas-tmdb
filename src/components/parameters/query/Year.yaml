@@ -1,0 +1,5 @@
+---
+in: query
+name: year
+schema:
+  type: string

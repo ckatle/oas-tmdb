@@ -13,11 +13,23 @@ NetworkID:
   $ref: "./path/NetworkID.yaml"
 
 # Query
+IncludeAdult:
+  $ref: "./query/IncludeAdult.yaml"
+
 LanguageParam:
   $ref: "./query/LanguageParam.yaml"
 
 Page:
   $ref: "./query/Page.yaml"
 
+PrimaryReleaseYear:
+  $ref: "./query/PrimaryReleaseYear.yaml"
+
 Query:
   $ref: "./query/Query.yaml"
+
+Region:
+  $ref: "./query/Region.yaml"
+
+Year:
+  $ref: "./query/Year.yaml"

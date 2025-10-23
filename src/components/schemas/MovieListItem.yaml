@@ -1,0 +1,11 @@
+---
+description: A basic movie item for list representation.
+allOf:
+  - $ref: "./MovieBase.yaml"
+  - type: object
+    properties:
+      genre_ids:
+        type: array
+        items:
+          type: integer
+          format: int32
