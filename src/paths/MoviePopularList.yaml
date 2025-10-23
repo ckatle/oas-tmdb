@@ -1,0 +1,32 @@
+---
+get:
+  summary: Popular
+  description: |
+    Get a list of movies ordered by popularity.
+
+    > ### **Note**
+    > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
+    > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
+  operationId: MoviePopularList
+  tags:
+    - Movie Lists
+  parameters:
+    - $ref: "../components/parameters/query/LanguageParam.yaml"
+    - $ref: "../components/parameters/query/Page.yaml"
+    - $ref: "../components/parameters/query/Region.yaml"
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/MovieListPage.yaml"
+          examples:
+            MovieListPageExample:
+              $ref: "../components/examples/MovieListPageExample.yaml"
+    '400':
+      $ref: "../components/responses/400InvalidPage.yaml"
+    '401':
+      $ref: "../components/responses/401Unauthorized.yaml"
+    '429':
+      $ref: "../components/responses/429TooManyRequests.yaml"
