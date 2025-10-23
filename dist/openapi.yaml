@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.32.18
+  version: 0.32.19
 servers:
   - url: https://api.themoviedb.org/3
     description: Main (production) server
@@ -19,6 +19,8 @@ tags:
     description: Official genres for movies and TV shows.
   - name: Keywords
     description: Keyword details.
+  - name: Movie Lists
+    description: Lists of movies currently in theatres, popular movies, movies ordered by rating or upcoming movies.
   - name: Movies
     description: Movie credits, keywords or similar movies.
   - name: Networks
@@ -274,6 +276,38 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '429':
           $ref: '#/components/responses/429TooManyRequests'
+  /movie/top_rated:
+    get:
+      summary: Top Rated
+      description: |
+        Get a list of movies ordered by rating.
+
+        > ### **Note**
+        > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
+        > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
+      operationId: MovieTopRatedList
+      tags:
+        - Movie Lists
+      parameters:
+        - $ref: '#/components/parameters/LanguageParam'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Region'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieListPage'
+              examples:
+                MovieListPageExample:
+                  $ref: '#/components/examples/MovieListPageExample'
+        '400':
+          $ref: '#/components/responses/400InvalidPage'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '429':
+          $ref: '#/components/responses/429TooManyRequests'
   /movie/{movie_id}/credits:
     get:
       summary: Credits
@@ -424,7 +458,7 @@ paths:
       description: |
         Get the similar movies based on genres and keywords.
 
-        > **Note**<br/>
+        > ### **Note**
         > This method only looks for other items based on genres and plot keywords. As such, the results found here
         > are not always going to be perfect. Use it with that in mind.
       operationId: MovieSimilar
@@ -772,96 +806,6 @@ components:
               name: Adventure
             - id: 14
               name: Fantasy
-    Creator:
-      description: The creator of a TV show.
-      allOf:
-        - $ref: '#/components/schemas/BaseObject'
-        - type: object
-          properties:
-            credit_id:
-              type: string
-            original_name:
-              type: string
-            gender:
-              type: integer
-              format: int32
-            profile_path:
-              type: string
-    CreditBase:
-      description: A base model for a member of the cast or the crew.
-      allOf:
-        - $ref: '#/components/schemas/Creator'
-        - type: object
-          properties:
-            adult:
-              type: boolean
-            known_for_department:
-              type: string
-            popularity:
-              type: number
-              format: float
-    CastMember:
-      description: A member of the cast of a movie or a TV show.
-      allOf:
-        - $ref: '#/components/schemas/CreditBase'
-        - type: object
-          properties:
-            cast_id:
-              type: integer
-              format: int32
-            character:
-              type: string
-            order:
-              type: integer
-              format: int32
-    CrewMember:
-      description: A member of the crew of a movie or a TV show.
-      allOf:
-        - $ref: '#/components/schemas/CreditBase'
-        - type: object
-          properties:
-            department:
-              type: string
-            job:
-              type: string
-    Credits:
-      type: object
-      description: The credits (cast and crew) of a movie or a TV show.
-      required:
-        - cast
-        - crew
-      properties:
-        cast:
-          type: array
-          items:
-            $ref: '#/components/schemas/CastMember'
-        crew:
-          type: array
-          items:
-            $ref: '#/components/schemas/CrewMember'
-    CreditsWithID:
-      description: The credits (cast and crew) of a movie or a TV show and the identifier of this item.
-      allOf:
-        - type: object
-          properties:
-            id:
-              type: integer
-              format: int32
-        - $ref: '#/components/schemas/Credits'
-    KeywordsWithID:
-      type: object
-      description: A list of keywords with the movie id.
-      required:
-        - keywords
-      properties:
-        id:
-          type: integer
-          format: int32
-        keywords:
-          description: A list of keyword for the movie.
-          type: array
-          items:
-            $ref: '#/components/schemas/BaseObject'
     ResultPage:
       type: object
       description: A base result page.
@@ -955,6 +899,96 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/MovieListItem'
+    Creator:
+      description: The creator of a TV show.
+      allOf:
+        - $ref: '#/components/schemas/BaseObject'
+        - type: object
+          properties:
+            credit_id:
+              type: string
+            original_name:
+              type: string
+            gender:
+              type: integer
+              format: int32
+            profile_path:
+              type: string
+    CreditBase:
+      description: A base model for a member of the cast or the crew.
+      allOf:
+        - $ref: '#/components/schemas/Creator'
+        - type: object
+          properties:
+            adult:
+              type: boolean
+            known_for_department:
+              type: string
+            popularity:
+              type: number
+              format: float
+    CastMember:
+      description: A member of the cast of a movie or a TV show.
+      allOf:
+        - $ref: '#/components/schemas/CreditBase'
+        - type: object
+          properties:
+            cast_id:
+              type: integer
+              format: int32
+            character:
+              type: string
+            order:
+              type: integer
+              format: int32
+    CrewMember:
+      description: A member of the crew of a movie or a TV show.
+      allOf:
+        - $ref: '#/components/schemas/CreditBase'
+        - type: object
+          properties:
+            department:
+              type: string
+            job:
+              type: string
+    Credits:
+      type: object
+      description: The credits (cast and crew) of a movie or a TV show.
+      required:
+        - cast
+        - crew
+      properties:
+        cast:
+          type: array
+          items:
+            $ref: '#/components/schemas/CastMember'
+        crew:
+          type: array
+          items:
+            $ref: '#/components/schemas/CrewMember'
+    CreditsWithID:
+      description: The credits (cast and crew) of a movie or a TV show and the identifier of this item.
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int32
+        - $ref: '#/components/schemas/Credits'
+    KeywordsWithID:
+      type: object
+      description: A list of keywords with the movie id.
+      required:
+        - keywords
+      properties:
+        id:
+          type: integer
+          format: int32
+        keywords:
+          description: A list of keyword for the movie.
+          type: array
+          items:
+            $ref: '#/components/schemas/BaseObject'
     CollectionBase:
       description: A basic movie collection model.
       allOf:
@@ -1056,14 +1090,6 @@ components:
       schema:
         type: integer
         format: int32
-    MovieID:
-      in: path
-      name: movie_id
-      description: The movie ID.
-      required: true
-      schema:
-        type: integer
-        format: int32
     Page:
       in: query
       name: page
@@ -1074,6 +1100,23 @@ components:
         minimum: 1
         maximum: 500
         default: 1
+    Region:
+      in: query
+      name: region
+      schema:
+        type: string
+        minLength: 2
+        maxLength: 2
+        pattern: ^([A-Z]{2})$
+      description: '`ISO-3166-1` code'
+    MovieID:
+      in: path
+      name: movie_id
+      description: The movie ID.
+      required: true
+      schema:
+        type: integer
+        format: int32
     NetworkID:
       in: path
       name: network_id
@@ -1096,15 +1139,6 @@ components:
         type: boolean
         default: false
       description: Include adult items.
-    Region:
-      in: query
-      name: region
-      schema:
-        type: string
-        minLength: 2
-        maxLength: 2
-        pattern: ^([A-Z]{2})$
-      description: '`ISO-3166-1` code'
     PrimaryReleaseYear:
       in: query
       name: primary_release_year
