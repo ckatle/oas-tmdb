@@ -1,0 +1,32 @@
+---
+get:
+  summary: Now Playing
+  description: |
+    Get a list of movies that are currently in theatres.
+
+    > ### **Note**
+    > This call is really just a discover call behind the scenes. If you would like to tweak any of the default
+    > filters head over and read about [discover](https://developer.themoviedb.org/reference/discover-movie).
+  operationId: MovieNowPlayingList
+  tags:
+    - Movie Lists
+  parameters:
+    - $ref: "../components/parameters/query/LanguageParam.yaml"
+    - $ref: "../components/parameters/query/Page.yaml"
+    - $ref: "../components/parameters/query/Region.yaml"
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/MovieListPageWithDates.yaml"
+          examples:
+            MovieListPageWithDatesExample:
+              $ref: "../components/examples/MovieListPageWithDatesExample.yaml"
+    '400':
+      $ref: "../components/responses/400InvalidPage.yaml"
+    '401':
+      $ref: "../components/responses/401Unauthorized.yaml"
+    '429':
+      $ref: "../components/responses/429TooManyRequests.yaml"

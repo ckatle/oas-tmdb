@@ -1,0 +1,19 @@
+---
+allOf:
+  - type: object
+    properties:
+      dates:
+        type: object
+        properties:
+          maximum:
+            type: string
+            format: date
+          minimum:
+            type: string
+            format: date
+        required:
+          - maximum
+          - minimum
+    required:
+      - dates
+  - $ref: "./MovieListPage.yaml"
