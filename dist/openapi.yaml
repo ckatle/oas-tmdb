@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.32.17
+  version: 0.32.18
 servers:
   - url: https://api.themoviedb.org/3
     description: Main (production) server
@@ -390,13 +390,41 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '429':
           $ref: '#/components/responses/429TooManyRequests'
+  /movie/{movie_id}/recommendations:
+    get:
+      summary: Recommendations
+      operationId: MovieRecommendations
+      tags:
+        - Movies
+      parameters:
+        - $ref: '#/components/parameters/MovieID'
+        - $ref: '#/components/parameters/LanguageParam'
+        - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieListPage'
+              examples:
+                MovieListPageExample:
+                  $ref: '#/components/examples/MovieListPageExample'
+        '400':
+          $ref: '#/components/responses/400InvalidPage'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '429':
+          $ref: '#/components/responses/429TooManyRequests'
   /movie/{movie_id}/similar:
     get:
       summary: Similar
       description: |
         Get the similar movies based on genres and keywords.
 
-        > **Note**
+        > **Note**<br/>
         > This method only looks for other items based on genres and plot keywords. As such, the results found here
         > are not always going to be perfect. Use it with that in mind.
       operationId: MovieSimilar
