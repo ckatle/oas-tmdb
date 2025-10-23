@@ -8,3 +8,8 @@ properties:
     type: array
     items:
       $ref: "./BaseObject.yaml"
+    example:
+      - id: 12
+        name: Adventure
+      - id: 14
+        name: Fantasy

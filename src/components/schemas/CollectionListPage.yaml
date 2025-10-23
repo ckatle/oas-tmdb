@@ -1,0 +1,12 @@
+---
+description: A result page for a search for collections.
+allOf:
+  - $ref: "./ResultPage.yaml"
+  - type: object
+    properties:
+      results:
+        type: array
+        items:
+          $ref: "./CollectionListItem.yaml"
+    required:
+      - results

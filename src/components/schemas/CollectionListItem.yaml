@@ -1,0 +1,22 @@
+---
+description: An item of a collection search result page.
+allOf:
+  - $ref: "./CollectionBase.yaml"
+  - type: object
+    properties:
+      adult:
+        type: boolean
+        example: false
+      original_language:
+        type: string
+        example: en
+      original_name:
+        type: string
+        example: Harry Potter Collection
+      overview:
+        type: string
+        example: "The Harry Potter films are a fantasy series based on the series of seven Harry Potter novels by
+        British writer J. K. Rowling."
+    required:
+      - original_language
+      - original_name

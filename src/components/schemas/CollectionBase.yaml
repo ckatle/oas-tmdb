@@ -1,0 +1,18 @@
+---
+description: A basic movie collection model.
+allOf:
+  - $ref: "./BaseObject.yaml"
+  - type: object
+    required:
+      - backdrop_path
+      - poster_path
+    properties:
+      poster_path:
+        type: string
+      backdrop_path:
+        type: string
+    example:
+      id: 1241
+      name: Harry Potter Collection
+      poster_path: "/eVPs2Y0LyvTLZn6AP5Z6O2rtiGB.jpg"
+      backdrop_path: "/xN6SBJVG8jqqKQrgxthn3J2m49S.jpg"

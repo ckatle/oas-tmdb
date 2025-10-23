@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.32.14
+  version: 0.32.15
 servers:
   - url: https://api.themoviedb.org/3
     description: Main (production) server
@@ -213,12 +213,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenreList'
-              example:
-                genres:
-                  - id: 12
-                    name: Adventure
-                  - id: 14
-                    name: Fantasy
         '401':
           $ref: '#/components/responses/401Unauthorized'
         '429':
@@ -419,6 +413,32 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '429':
           $ref: '#/components/responses/429TooManyRequests'
+  /search/collection:
+    get:
+      summary: Collection
+      description: Search for collections by their original, translated and alternative names.
+      operationId: SearchCollection
+      tags:
+        - Search
+      parameters:
+        - $ref: '#/components/parameters/Query'
+        - $ref: '#/components/parameters/IncludeAdult'
+        - $ref: '#/components/parameters/LanguageParam'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Region'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionListPage'
+        '400':
+          $ref: '#/components/responses/400InvalidPage'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '429':
+          $ref: '#/components/responses/429TooManyRequests'
   /search/company:
     get:
       summary: Company
@@ -498,9 +518,10 @@ components:
           type: integer
           format: int32
           description: The identifier of the item.
-          readOnly: true
+          example: 12
         name:
           type: string
+          example: Adventure
     CountryCode:
       type: string
       description: |
@@ -550,13 +571,16 @@ components:
       properties:
         success:
           type: boolean
+          example: false
         status_code:
           type: integer
           format: int32
           minimum: 1
           maximum: 47
+          example: 1
         status_message:
           type: string
+          example: Success.
     Country:
       type: object
       description: A country represented by the two-letter country code with english and native name.
@@ -631,6 +655,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BaseObject'
+          example:
+            - id: 12
+              name: Adventure
+            - id: 14
+              name: Fantasy
     Creator:
       description: The creator of a TV show.
       allOf:
@@ -747,6 +776,61 @@ components:
           format: int32
           minimum: 0
           maximum: 10000
+      example:
+        page: 1
+        total_pages: 1
+        total_results: 1
+    CollectionBase:
+      description: A basic movie collection model.
+      allOf:
+        - $ref: '#/components/schemas/BaseObject'
+        - type: object
+          required:
+            - backdrop_path
+            - poster_path
+          properties:
+            poster_path:
+              type: string
+            backdrop_path:
+              type: string
+          example:
+            id: 1241
+            name: Harry Potter Collection
+            poster_path: /eVPs2Y0LyvTLZn6AP5Z6O2rtiGB.jpg
+            backdrop_path: /xN6SBJVG8jqqKQrgxthn3J2m49S.jpg
+    CollectionListItem:
+      description: An item of a collection search result page.
+      allOf:
+        - $ref: '#/components/schemas/CollectionBase'
+        - type: object
+          properties:
+            adult:
+              type: boolean
+              example: false
+            original_language:
+              type: string
+              example: en
+            original_name:
+              type: string
+              example: Harry Potter Collection
+            overview:
+              type: string
+              example: The Harry Potter films are a fantasy series based on the series of seven Harry Potter novels by British writer J. K. Rowling.
+          required:
+            - original_language
+            - original_name
+    CollectionListPage:
+      description: A result page for a search for collections.
+      allOf:
+        - $ref: '#/components/schemas/ResultPage'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/CollectionListItem'
+          required:
+            - results
     CompanyListPage:
       description: A result page of a search for companies.
       allOf:
@@ -820,16 +904,32 @@ components:
       required: true
       schema:
         type: string
+    IncludeAdult:
+      in: query
+      name: include_adult
+      schema:
+        type: boolean
+        default: false
+      description: Include adult items.
     Page:
       in: query
       name: page
-      description: The page number.
+      description: The page number to return.
       schema:
         type: integer
         format: int32
         minimum: 1
         maximum: 500
         default: 1
+    Region:
+      in: query
+      name: region
+      schema:
+        type: string
+        minLength: 2
+        maxLength: 2
+        pattern: ^([A-Z]{2})$
+      description: '`ISO-3166-1` code'
   securitySchemes:
     bearerAuth:
       type: http

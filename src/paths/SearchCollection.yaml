@@ -1,0 +1,40 @@
+---
+get:
+  summary: Collection
+  description: Search for collections by their original, translated and alternative names.
+  operationId: SearchCollection
+  tags:
+    - Search
+  parameters:
+    - $ref: "../components/parameters/query/Query.yaml"
+    - $ref: "../components/parameters/query/IncludeAdult.yaml"
+    - $ref: "../components/parameters/query/LanguageParam.yaml"
+    - $ref: "../components/parameters/query/Page.yaml"
+    - $ref: "../components/parameters/query/Region.yaml"
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/CollectionListPage.yaml"
+          example:
+            page: 1
+            results:
+              - id: 1241
+                name: Harry Potter Collection
+                adult: false
+                original_language: en
+                original_name: Harry Potter Collection
+                overview: "The Harry Potter films are a fantasy series based on the series of seven Harry Potter
+                      novels by British writer J. K. Rowling."
+                poster_path: "/eVPs2Y0LyvTLZn6AP5Z6O2rtiGB.jpg"
+                backdrop_path: "/xN6SBJVG8jqqKQrgxthn3J2m49S.jpg"
+            total_pages: 1
+            total_results: 1
+    "400":
+      $ref: "../components/responses/400InvalidPage.yaml"
+    "401":
+      $ref: "../components/responses/401Unauthorized.yaml"
+    "429":
+      $ref: "../components/responses/429TooManyRequests.yaml"

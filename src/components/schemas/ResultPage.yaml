@@ -24,3 +24,7 @@ properties:
     format: int32
     minimum: 0
     maximum: 10000
+example:
+  page: 1
+  total_pages: 1
+  total_results: 1
