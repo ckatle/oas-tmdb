@@ -1,0 +1,3 @@
+---
+MovieListPageExample:
+  $ref: "./MovieListPageExample.yaml"

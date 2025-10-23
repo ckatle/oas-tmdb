@@ -1,18 +1,19 @@
 ---
 get:
-  summary: Movie
-  description: Search for movies by their original, translated and alternative titles.
-  operationId: SearchMovie
+  summary: Similar
+  description: |
+    Get the similar movies based on genres and keywords.
+
+    > **Note**<br/>
+    > This method only looks for other items based on genres and plot keywords. As such, the results found here
+    > are not always going to be perfect. Use it with that in mind.
+  operationId: MovieSimilar
   tags:
-    - Search
+    - Movies
   parameters:
-    - $ref: "../components/parameters/query/Query.yaml"
-    - $ref: "../components/parameters/query/IncludeAdult.yaml"
+    - $ref: "../components/parameters/path/MovieID.yaml"
     - $ref: "../components/parameters/query/LanguageParam.yaml"
-    - $ref: "../components/parameters/query/PrimaryReleaseYear.yaml"
     - $ref: "../components/parameters/query/Page.yaml"
-    - $ref: "../components/parameters/query/Region.yaml"
-    - $ref: "../components/parameters/query/Year.yaml"
   responses:
     '200':
       description: OK
@@ -23,9 +24,11 @@ get:
           examples:
             MovieListPageExample:
               $ref: "../components/examples/MovieListPageExample.yaml"
-    "400":
+    '400':
       $ref: "../components/responses/400InvalidPage.yaml"
-    "401":
+    '401':
       $ref: "../components/responses/401Unauthorized.yaml"
-    "429":
+    '404':
+      $ref: "../components/responses/404NotFound.yaml"
+    '429':
       $ref: "../components/responses/429TooManyRequests.yaml"

@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.32.16
+  version: 0.32.17
 servers:
   - url: https://api.themoviedb.org/3
     description: Main (production) server
@@ -20,11 +20,11 @@ tags:
   - name: Keywords
     description: Keyword details.
   - name: Movies
-    description: Movie credits.
+    description: Movie credits, keywords or similar movies.
   - name: Networks
     description: TV network details.
   - name: Search
-    description: Search for companies and keywords.
+    description: Search for collection, companies, keywords or movies.
 paths:
   /company/{company_id}:
     get:
@@ -390,6 +390,40 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '429':
           $ref: '#/components/responses/429TooManyRequests'
+  /movie/{movie_id}/similar:
+    get:
+      summary: Similar
+      description: |
+        Get the similar movies based on genres and keywords.
+
+        > **Note**
+        > This method only looks for other items based on genres and plot keywords. As such, the results found here
+        > are not always going to be perfect. Use it with that in mind.
+      operationId: MovieSimilar
+      tags:
+        - Movies
+      parameters:
+        - $ref: '#/components/parameters/MovieID'
+        - $ref: '#/components/parameters/LanguageParam'
+        - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieListPage'
+              examples:
+                MovieListPageExample:
+                  $ref: '#/components/examples/MovieListPageExample'
+        '400':
+          $ref: '#/components/responses/400InvalidPage'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '429':
+          $ref: '#/components/responses/429TooManyRequests'
   /network/{network_id}:
     get:
       summary: Details
@@ -546,43 +580,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MovieListPage'
-              example:
-                page: 1
-                results:
-                  - adult: false
-                    backdrop_path: /hziiv14OpD73u9gAak4XDDfBKa2.jpg
-                    genre_ids:
-                      - 12
-                      - 14
-                    id: 671
-                    original_language: en
-                    original_title: Harry Potter and the Philosopher's Stone
-                    overview: Harry Potter has lived under the stairs at his aunt and uncle's house his whole life. But on his 11th birthday, he learns he's a powerful wizard—with a place waiting for him at the Hogwarts School of Witchcraft and Wizardry. As he learns to harness his newfound powers with the help of the school's kindly headmaster, Harry uncovers the truth about his parents' deaths—and about the villain who's to blame.
-                    popularity: 203.037
-                    poster_path: /wuMc08IPKEatf9rnMNXvIDxqP4W.jpg
-                    release_date: '2001-11-16'
-                    title: Harry Potter and the Philosopher's Stone
-                    video: false
-                    vote_average: 7.914
-                    vote_count: 26490
-                  - adult: false
-                    backdrop_path: /yHzyPJrVqlTySQ9mc379yxrLBYQ.jpg
-                    genre_ids:
-                      - 12
-                      - 14
-                    id: 672
-                    original_language: en
-                    original_title: Harry Potter and the Chamber of Secrets
-                    overview: 'Cars fly, trees fight back, and a mysterious house-elf comes to warn Harry Potter at the start of his second year at Hogwarts. Adventure and danger await when bloody writing on a wall announces: The Chamber Of Secrets Has Been Opened. To save Hogwarts will require all of Harry, Ron and Hermione’s magical abilities and courage.'
-                    popularity: 157.67
-                    poster_path: /sdEOH0992YZ0QSxgXNIGLq1ToUi.jpg
-                    release_date: '2002-11-13'
-                    title: Harry Potter and the Chamber of Secrets
-                    video: false
-                    vote_average: 7.7
-                    vote_count: 21775
-                total_pages: 2
-                total_results: 39
+              examples:
+                MovieListPageExample:
+                  $ref: '#/components/examples/MovieListPageExample'
         '400':
           $ref: '#/components/responses/400InvalidPage'
         '401':
@@ -864,6 +864,69 @@ components:
         page: 1
         total_pages: 1
         total_results: 1
+    MovieBase:
+      type: object
+      description: A base movie object.
+      required:
+        - id
+        - title
+        - original_language
+        - original_title
+      properties:
+        id:
+          type: integer
+          format: int32
+        title:
+          type: string
+        original_language:
+          type: string
+        original_title:
+          type: string
+        adult:
+          type: boolean
+        backdrop_path:
+          type: string
+        overview:
+          type: string
+        popularity:
+          type: number
+          format: float
+        poster_path:
+          type: string
+        release_date:
+          type: string
+          format: date
+        video:
+          type: boolean
+        vote_average:
+          type: number
+          format: float
+        vote_count:
+          type: integer
+          format: int32
+    MovieListItem:
+      description: A basic movie item for list representation.
+      allOf:
+        - $ref: '#/components/schemas/MovieBase'
+        - type: object
+          properties:
+            genre_ids:
+              type: array
+              items:
+                type: integer
+                format: int32
+    MovieListPage:
+      description: A result page for a search for movies.
+      allOf:
+        - $ref: '#/components/schemas/ResultPage'
+        - type: object
+          required:
+            - results
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/MovieListItem'
     CollectionBase:
       description: A basic movie collection model.
       allOf:
@@ -938,69 +1001,6 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/BaseObject'
-    MovieBase:
-      type: object
-      description: A base movie object.
-      required:
-        - id
-        - title
-        - original_language
-        - original_title
-      properties:
-        id:
-          type: integer
-          format: int32
-        title:
-          type: string
-        original_language:
-          type: string
-        original_title:
-          type: string
-        adult:
-          type: boolean
-        backdrop_path:
-          type: string
-        overview:
-          type: string
-        popularity:
-          type: number
-          format: float
-        poster_path:
-          type: string
-        release_date:
-          type: string
-          format: date
-        video:
-          type: boolean
-        vote_average:
-          type: number
-          format: float
-        vote_count:
-          type: integer
-          format: int32
-    MovieListItem:
-      description: A basic movie item for list representation.
-      allOf:
-        - $ref: '#/components/schemas/MovieBase'
-        - type: object
-          properties:
-            genre_ids:
-              type: array
-              items:
-                type: integer
-                format: int32
-    MovieListPage:
-      description: A result page for a search for movies.
-      allOf:
-        - $ref: '#/components/schemas/ResultPage'
-        - type: object
-          required:
-            - results
-          properties:
-            results:
-              type: array
-              items:
-                $ref: '#/components/schemas/MovieListItem'
   parameters:
     CompanyID:
       in: path
@@ -1036,6 +1036,16 @@ components:
       schema:
         type: integer
         format: int32
+    Page:
+      in: query
+      name: page
+      description: The page number to return.
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 500
+        default: 1
     NetworkID:
       in: path
       name: network_id
@@ -1058,16 +1068,6 @@ components:
         type: boolean
         default: false
       description: Include adult items.
-    Page:
-      in: query
-      name: page
-      description: The page number to return.
-      schema:
-        type: integer
-        format: int32
-        minimum: 1
-        maximum: 500
-        default: 1
     Region:
       in: query
       name: region
@@ -1132,3 +1132,43 @@ components:
             success: false
             status_code: 22
             status_message: 'Invalid page: Pages start at 1 and max at 500. They are expected to be an integer.'
+  examples:
+    MovieListPageExample:
+      summary: A sample of a movie list page.
+      value:
+        page: 1
+        results:
+          - adult: false
+            backdrop_path: /hziiv14OpD73u9gAak4XDDfBKa2.jpg
+            genre_ids:
+              - 12
+              - 14
+            id: 671
+            original_language: en
+            original_title: Harry Potter and the Philosopher's Stone
+            overview: Harry Potter has lived under the stairs at his aunt and uncle's house his whole life. But on his 11th birthday, he learns he's a powerful wizard—with a place waiting for him at the Hogwarts School of Witchcraft and Wizardry. As he learns to harness his newfound powers with the help of the school's kindly headmaster, Harry uncovers the truth about his parents' deaths—and about the villain who's to blame.
+            popularity: 203.037
+            poster_path: /wuMc08IPKEatf9rnMNXvIDxqP4W.jpg
+            release_date: '2001-11-16'
+            title: Harry Potter and the Philosopher's Stone
+            video: false
+            vote_average: 7.914
+            vote_count: 26490
+          - adult: false
+            backdrop_path: /yHzyPJrVqlTySQ9mc379yxrLBYQ.jpg
+            genre_ids:
+              - 12
+              - 14
+            id: 672
+            original_language: en
+            original_title: Harry Potter and the Chamber of Secrets
+            overview: 'Cars fly, trees fight back, and a mysterious house-elf comes to warn Harry Potter at the start of his second year at Hogwarts. Adventure and danger await when bloody writing on a wall announces: The Chamber Of Secrets Has Been Opened. To save Hogwarts will require all of Harry, Ron and Hermione’s magical abilities and courage.'
+            popularity: 157.67
+            poster_path: /sdEOH0992YZ0QSxgXNIGLq1ToUi.jpg
+            release_date: '2002-11-13'
+            title: Harry Potter and the Chamber of Secrets
+            video: false
+            vote_average: 7.7
+            vote_count: 21775
+        total_pages: 2
+        total_results: 39

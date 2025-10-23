@@ -9,10 +9,13 @@ required:
 properties:
   success:
     type: boolean
+    example: false
   status_code:
     type: integer
     format: int32
     minimum: 1
     maximum: 47
+    example: 1
   status_message:
     type: string
+    example: Success.
