@@ -1,4 +1,5 @@
 ---
+description: A result page for basic objects like genres or keywords.
 allOf:
   - $ref: "./ResultPage.yaml"
   - type: object

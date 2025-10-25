@@ -1,5 +1,6 @@
 ---
 summary: A sample of a movie list page with a minimum and a maximum date.
+description: A sample of a movie list page with a minimum and a maximum date.
 value:
   dates:
     minimum: "2001-11-16"

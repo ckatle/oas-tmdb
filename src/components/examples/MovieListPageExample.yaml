@@ -1,5 +1,6 @@
 ---
 summary: A sample of a movie list page.
+description: A sample of a movie list page.
 value:
   page: 1
   results:

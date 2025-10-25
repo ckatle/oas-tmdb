@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.32.22
+  version: 0.32.23
 servers:
   - url: https://api.themoviedb.org/3
     description: Main (production) server
@@ -12,7 +12,7 @@ security:
   - bearerAuth: []
 tags:
   - name: Companies
-    description: Companies details.
+    description: Company details.
   - name: Configuration
     description: The configuration methods are useful to get the static lists of data we use throughout the database.
   - name: Genres
@@ -26,7 +26,7 @@ tags:
   - name: Networks
     description: TV network details.
   - name: Search
-    description: Search for collection, companies, keywords or movies.
+    description: Search for collection, companies, keywords, movies or TV shows.
 paths:
   /company/{company_id}:
     get:
@@ -747,6 +747,36 @@ paths:
           $ref: '#/components/responses/401Unauthorized'
         '429':
           $ref: '#/components/responses/429TooManyRequests'
+  /search/tv:
+    get:
+      summary: TV
+      description: Search for TV shows by their original, translated and also known as names.
+      operationId: SearchTV
+      tags:
+        - Search
+      parameters:
+        - $ref: '#/components/parameters/Query'
+        - $ref: '#/components/parameters/FirstAirDateYear'
+        - $ref: '#/components/parameters/IncludeAdult'
+        - $ref: '#/components/parameters/LanguageParam'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Year'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TvListPage'
+              examples:
+                TvListPageExample:
+                  $ref: '#/components/examples/TvListPageExample'
+        '400':
+          $ref: '#/components/responses/400InvalidPage'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '429':
+          $ref: '#/components/responses/429TooManyRequests'
 components:
   schemas:
     BaseObject:
@@ -984,7 +1014,7 @@ components:
                 type: integer
                 format: int32
     MovieListPage:
-      description: A result page for a search for movies.
+      description: A result page used for a list of movies ordered by popularity or rating.
       allOf:
         - $ref: '#/components/schemas/ResultPage'
         - type: object
@@ -996,6 +1026,7 @@ components:
               items:
                 $ref: '#/components/schemas/MovieListItem'
     MovieListPageWithDates:
+      description: A result page with min and max dates used for a list of movies that are currently in theatres or upcoming movies.
       allOf:
         - type: object
           properties:
@@ -1178,6 +1209,98 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/BaseObject'
+    TvBase:
+      description: A base TV object.
+      allOf:
+        - $ref: '#/components/schemas/BaseObject'
+        - type: object
+          required:
+            - original_language
+            - original_name
+          properties:
+            adult:
+              type: boolean
+            backdrop_path:
+              type: string
+            first_air_date:
+              type: string
+              format: date
+            origin_country:
+              type: array
+              items:
+                $ref: '#/components/schemas/CountryCode'
+            original_language:
+              type: string
+            original_name:
+              type: string
+            overview:
+              type: string
+            popularity:
+              type: number
+              format: float
+            poster_path:
+              type: string
+            vote_average:
+              type: number
+              format: float
+            vote_count:
+              type: integer
+              format: int32
+    TvListItem:
+      description: A basic TV item for list representation.
+      allOf:
+        - $ref: '#/components/schemas/TvBase'
+        - type: object
+          properties:
+            genre_ids:
+              type: array
+              items:
+                type: integer
+                format: int32
+    TvListPage:
+      description: A result page used for a list of TV shows.
+      allOf:
+        - $ref: '#/components/schemas/ResultPage'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/TvListItem'
+          required:
+            - results
+    MediaType:
+      type: object
+      description: A media type
+      discriminator:
+        propertyName: media_type
+        mapping:
+          movie: '#/components/schemas/MovieListItemWithMediaType'
+          tv: '#/components/schemas/TvListItemWithMediaType'
+      required:
+        - media_type
+      properties:
+        media_type:
+          type: string
+          enum:
+            - movie
+            - person
+            - tv
+          x-enum-varnames:
+            - MediaTypeMovie
+            - MediaTypePerson
+            - MediaTypeTv
+          x-go-type-name: MediaType
+    MovieListItemWithMediaType:
+      description: A movie item with media type as discriminator for list representation.
+      allOf:
+        - $ref: '#/components/schemas/MediaType'
+        - $ref: '#/components/schemas/MovieListItem'
+    TvListItemWithMediaType:
+      description: A basic TV item with media type as discriminator for list representation.
+      allOf:
+        - $ref: '#/components/schemas/MediaType'
+        - $ref: '#/components/schemas/TvListItem'
   parameters:
     CompanyID:
       in: path
@@ -1257,13 +1380,38 @@ components:
     PrimaryReleaseYear:
       in: query
       name: primary_release_year
+      description: Search only the primary release year.
       schema:
-        type: string
+        type: integer
+        format: int32
+        minimum: 1000
+        maximum: 9999
     Year:
       in: query
       name: year
+      description: Search for all release dates or air dates.
       schema:
-        type: string
+        type: integer
+        format: int32
+        minimum: 1000
+        maximum: 9999
+    FirstAirDateYear:
+      in: query
+      name: first_air_date_year
+      description: 'Search only the first air date. Valid values are: 1000..9999'
+      schema:
+        type: integer
+        format: int32
+        minimum: 1000
+        maximum: 9999
+    CollectionID:
+      in: path
+      name: collection_id
+      description: The collection ID.
+      schema:
+        type: integer
+        format: int32
+      required: true
   securitySchemes:
     bearerAuth:
       type: http
@@ -1312,6 +1460,7 @@ components:
   examples:
     MovieListPageWithDatesExample:
       summary: A sample of a movie list page with a minimum and a maximum date.
+      description: A sample of a movie list page with a minimum and a maximum date.
       value:
         dates:
           minimum: '2001-11-16'
@@ -1354,6 +1503,7 @@ components:
         total_results: 39
     MovieListPageExample:
       summary: A sample of a movie list page.
+      description: A sample of a movie list page.
       value:
         page: 1
         results:
@@ -1391,3 +1541,43 @@ components:
             vote_count: 21775
         total_pages: 2
         total_results: 39
+    TvListPageExample:
+      summary: A sample of a TV show list page.
+      description: A sample of a TV show list page.
+      value:
+        page: 1
+        results:
+          - adult: false
+            backdrop_path: /8VWgyQjExeMgeg6Qzv6agduMU1A.jpg
+            genre_ids:
+              - 18
+              - 10759
+              - 10765
+            id: 121
+            original_language: en
+            original_name: Doctor Who
+            overview: The adventures of The Doctor, a time-traveling humanoid alien known as a Time Lord. He explores the universe in his TARDIS, a sentient time-traveling spaceship. Its exterior appears as a blue British police box, which was a common sight in Britain in 1963 when the series first aired. Along with a succession of companions, The Doctor faces a variety of foes while working to save civilizations, help ordinary people, and right many wrongs.
+            popularity: 59.0192
+            poster_path: /xinqAmYrZ1TEwowcQhgTkZVtVE0.jpg
+            release_date: '1963-11-23'
+            name: Doctor Who
+            vote_average: 7.9
+            vote_count: 672
+          - adult: false
+            backdrop_path: /vcFW09U4834DyFOeRZpsx9x1D3S.jpg
+            genre_ids:
+              - 18
+              - 10759
+              - 10765
+            id: 57243
+            original_language: en
+            original_name: Doctor Who
+            overview: 'The Doctor is a Time Lord: a 900 year old alien with 2 hearts, part of a gifted civilization who mastered time travel. The Doctor saves planets for a living—more of a hobby actually, and the Doctor''s very, very good at it.'
+            popularity: 69.7645
+            poster_path: /w8enSKCf6Zm0topeQ2XPccDqsqp.jpg
+            release_date: '2005-03-26'
+            name: Doctor Who
+            vote_average: 7.6
+            vote_count: 3220
+        total_pages: 2
+        total_results: 33

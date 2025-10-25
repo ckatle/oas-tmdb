@@ -79,3 +79,15 @@ OrganizationBase:
 
 ResultPage:
   $ref: "./ResultPage.yaml"
+
+TvBase:
+  $ref: "./TvBase.yaml"
+
+TvListItem:
+  $ref: "./TvListItem.yaml"
+
+TvListItemWithMediaType:
+  $ref: "./TvListItemWithMediaType.yaml"
+
+TvListPage:
+  $ref: "./TvListPage.yaml"

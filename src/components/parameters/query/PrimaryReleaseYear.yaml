@@ -1,5 +1,9 @@
 ---
 in: query
 name: primary_release_year
+description: Search only the primary release year.
 schema:
-  type: string
+  type: integer
+  format: int32
+  minimum: 1000
+  maximum: 9999

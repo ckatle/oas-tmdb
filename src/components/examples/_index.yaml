@@ -3,3 +3,5 @@ MovieListPageExample:
   $ref: "./MovieListPageExample.yaml"
 MovieListPageWithDatesExample:
   $ref: "./MovieListPageWithDatesExample.yaml"
+TvListPageExample:
+  $ref: "./TvListPageExample.yaml"

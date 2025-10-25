@@ -1,0 +1,11 @@
+---
+description: A basic TV item for list representation.
+allOf:
+  - $ref: "./TvBase.yaml"
+  - type: object
+    properties:
+      genre_ids:
+        type: array
+        items:
+          type: integer
+          format: int32

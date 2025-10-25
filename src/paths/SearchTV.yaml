@@ -1,0 +1,30 @@
+---
+get:
+  summary: TV
+  description: Search for TV shows by their original, translated and also known as names.
+  operationId: SearchTV
+  tags:
+    - Search
+  parameters:
+    - $ref: "../components/parameters/query/Query.yaml"
+    - $ref: "../components/parameters/query/FirstAirDateYear.yaml"
+    - $ref: "../components/parameters/query/IncludeAdult.yaml"
+    - $ref: "../components/parameters/query/LanguageParam.yaml"
+    - $ref: "../components/parameters/query/Page.yaml"
+    - $ref: "../components/parameters/query/Year.yaml"
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/TvListPage.yaml"
+          examples:
+            TvListPageExample:
+              $ref: "../components/examples/TvListPageExample.yaml"
+    "400":
+      $ref: "../components/responses/400InvalidPage.yaml"
+    "401":
+      $ref: "../components/responses/401Unauthorized.yaml"
+    "429":
+      $ref: "../components/responses/429TooManyRequests.yaml"

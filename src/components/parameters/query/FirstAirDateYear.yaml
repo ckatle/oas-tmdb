@@ -1,0 +1,9 @@
+---
+in: query
+name: first_air_date_year
+description: "Search only the first air date. Valid values are: 1000..9999"
+schema:
+  type: integer
+  format: int32
+  minimum: 1000
+  maximum: 9999
