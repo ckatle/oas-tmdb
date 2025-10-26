@@ -20,6 +20,8 @@ IncludeAdult:
   $ref: "./query/IncludeAdult.yaml"
 LanguageParam:
   $ref: "./query/LanguageParam.yaml"
+MovieAppendToResponse:
+  $ref: "./query/MovieAppendToResponse.yaml"
 Page:
   $ref: "./query/Page.yaml"
 PrimaryReleaseYear:

@@ -1,0 +1,28 @@
+---
+in: query
+name: append_to_response
+schema:
+  type: array
+  items:
+    type: string
+    enum:
+      - alternative_titles
+      - credits
+      - external_ids
+      - keywords
+      - recommendations
+      - release_dates
+      - reviews
+      - similar
+      - translations
+  maxItems: 20
+explode: false
+description: >
+  comma separated list of endpoints within this namespace, 20 items max
+   * `alternative_titles` - Append alternative titles for this movie
+   * `credits` - Append the cast and crew for this movie
+   * `keywords` - Append the keywords for this movie
+   * `recommendations` - Append recommended movies
+   * `release_dates` - Append the release dates and certifications for this movie
+   * `similar` - Append similar movies based on genres and keywords
+   * `translations` - Append the translations for this movie

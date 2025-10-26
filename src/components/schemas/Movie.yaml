@@ -1,0 +1,51 @@
+---
+allOf:
+  - $ref: "./MovieBase.yaml"
+  - type: object
+    properties:
+      belongs_to_collection:
+        $ref: "./CollectionBase.yaml"
+      budget:
+        type: integer
+      genres:
+        type: array
+        items:
+          $ref: "./BaseObject.yaml"
+      homepage:
+        type: string
+        format: uri
+      imdb_id:
+        type: string
+      origin_country:
+        type: array
+        items:
+          $ref: "./CountryCode.yaml"
+      production_companies:
+        type: array
+        items:
+          $ref: "./OrganizationBase.yaml"
+      production_countries:
+        type: array
+        items:
+          $ref: "./ProductionCountry.yaml"
+      revenue:
+        type: integer
+        format: int64
+      runtime:
+        type: integer
+      spoken_languages:
+        type: array
+        items:
+          $ref: "./Language.yaml"
+      status:
+        type: string
+      tagline:
+        type: string
+      credits:
+        $ref: "./Credits.yaml"
+      keywords:
+        $ref: "./KeywordsWithID.yaml"
+      recommendations:
+        $ref: "./MultiListPage.yaml"
+      similar:
+        $ref: "./MovieListPage.yaml"

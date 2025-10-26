@@ -1,0 +1,11 @@
+---
+type: object
+description: A country where the movies or TV show was produced.
+properties:
+  iso_3166_1:
+    $ref: "./CountryCode.yaml"
+  name:
+    type: string
+required:
+  - iso_3166_1
+  - name
