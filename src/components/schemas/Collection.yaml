@@ -1,0 +1,15 @@
+---
+description: Detail information about a collection.
+allOf:
+  - $ref: "./CollectionBase.yaml"
+  - type: object
+    required:
+      - overview
+      - parts
+    properties:
+      overview:
+        type: string
+      parts:
+        type: array
+        items:
+          $ref: "./MovieListItemWithMediaType.yaml"

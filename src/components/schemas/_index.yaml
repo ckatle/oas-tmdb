@@ -1,102 +1,73 @@
 ---
 BaseObject:
   $ref: "./BaseObject.yaml"
-
 BaseObjectListPage:
   $ref: "./BaseObjectListPage.yaml"
-
 CastMember:
   $ref: "./CastMember.yaml"
-
+Collection:
+  $ref: "./Collection.yaml"
 CollectionBase:
   $ref: "./CollectionBase.yaml"
-
 CollectionListItem:
   $ref: "./CollectionListItem.yaml"
-
 CollectionListPage:
   $ref: "./CollectionListPage.yaml"
-
 Company:
   $ref: "./Company.yaml"
-
 CompanyListPage:
   $ref: "./CompanyListPage.yaml"
-
 Country:
   $ref: "./Country.yaml"
-
 CountryCode:
   $ref: "./CountryCode.yaml"
-
 CountryWithTimezones:
   $ref: "./CountryWithTimezones.yaml"
-
 Creator:
   $ref: "./Creator.yaml"
-
 CreditBase:
   $ref: "./CreditBase.yaml"
-
 Credits:
   $ref: "./Credits.yaml"
-
 CreditsWithID:
   $ref: "./CreditsWithID.yaml"
-
 CrewMember:
   $ref: "./CrewMember.yaml"
-
 Department:
   $ref: "./Department.yaml"
-
 Error:
   $ref: "./Error.yaml"
-
 GenreList:
   $ref: "./GenreList.yaml"
-
 KeywordsWithID:
   $ref: "./KeywordsWithID.yaml"
-
 Language:
   $ref: "./Language.yaml"
-
 MovieBase:
   $ref: "./MovieBase.yaml"
-
 MovieListItem:
   $ref: "./MovieListItem.yaml"
-
 MovieListPage:
   $ref: "./MovieListPage.yaml"
-
 MovieListPageWithDates:
   $ref: "./MovieListPageWithDates.yaml"
-
+MultiListPage:
+  $ref: "./MultiListPage.yaml"
 Organization:
   $ref: "./Organization.yaml"
-
 OrganizationBase:
   $ref: "./OrganizationBase.yaml"
-
 PersonListItem:
   $ref: "./PersonListItem.yaml"
-
 PersonListPage:
   $ref: "./PersonListPage.yaml"
-
 ResultPage:
   $ref: "./ResultPage.yaml"
-
 TvBase:
   $ref: "./TvBase.yaml"
-
 TvListItem:
   $ref: "./TvListItem.yaml"
-
 TvListItemWithMediaType:
   $ref: "./TvListItemWithMediaType.yaml"
-
 TvListPage:
   $ref: "./TvListPage.yaml"

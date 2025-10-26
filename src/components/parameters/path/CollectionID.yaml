@@ -1,0 +1,8 @@
+---
+in: path
+name: collection_id
+description: The collection ID.
+schema:
+  type: integer
+  format: int32
+required: true
