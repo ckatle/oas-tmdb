@@ -1,0 +1,5 @@
+---
+description: A person item with media type as discriminator for list representation.
+allOf:
+  - $ref: "./MediaType.yaml"
+  - $ref: "./PersonListItem.yaml"

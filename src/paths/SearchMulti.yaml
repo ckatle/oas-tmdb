@@ -1,0 +1,48 @@
+---
+get:
+  summary: Multi
+  description: Use multi search when you want to search for movies, TV shows and people in a single request.
+  operationId: SearchMulti
+  tags:
+    - Search
+  parameters:
+    - $ref: "../components/parameters/query/Query.yaml"
+    - $ref: "../components/parameters/query/IncludeAdult.yaml"
+    - $ref: "../components/parameters/query/LanguageParam.yaml"
+    - $ref: "../components/parameters/query/Page.yaml"
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/MultiListPage.yaml"
+          example:
+            page: 1
+            results:
+              - adult: false
+                backdrop_path: /aDYSnJAK0BTVeE8osOy22Kz3SXY.jpg
+                id: 11
+                title: Star Wars
+                original_language: en
+                original_title: Star Wars
+                overview: "Princess Leia is captured and held hostage by the evil Imperial forces in their effort
+                      to take over the galactic Empire. Venturesome Luke Skywalker and dashing captain Han Solo team
+                      together with the loveable robot duo R2-D2 and C-3PO to rescue the beautiful princess and restore
+                      peace and justice in the Empire."
+                poster_path: /6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg
+                media_type: movie
+                genre_ids: [12]
+                popularity: 78.047
+                release_date: "1977-05-25"
+                video: false
+                vote_average: 8.208
+                vote_count: 18528
+            total_pages: 11
+            total_results: 201
+    "400":
+      $ref: "../components/responses/400InvalidPage.yaml"
+    "401":
+      $ref: "../components/responses/401Unauthorized.yaml"
+    "429":
+      $ref: "../components/responses/429TooManyRequests.yaml"

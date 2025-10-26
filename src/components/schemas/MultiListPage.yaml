@@ -1,0 +1,15 @@
+---
+description: A result page used for a list of movies, people or TV shows.
+allOf:
+  - $ref: "./ResultPage.yaml"
+  - type: object
+    required:
+      - results
+    properties:
+      results:
+        type: array
+        items:
+          oneOf:
+            - $ref: "./MovieListItemWithMediaType.yaml"
+            - $ref: "./PersonListItemWithMediaType.yaml"
+            - $ref: "./TvListItemWithMediaType.yaml"

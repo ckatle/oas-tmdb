@@ -5,7 +5,7 @@ discriminator:
   propertyName: media_type
   mapping:
     movie: "./MovieListItemWithMediaType.yaml"
-    # person: "./PersonListItemWithMediaType.yaml"
+    person: "./PersonListItemWithMediaType.yaml"
     tv: "./TvListItemWithMediaType.yaml"
 required:
   - media_type

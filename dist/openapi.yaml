@@ -747,6 +747,52 @@ paths:
           $ref: '#/components/responses/401Unauthorized'
         '429':
           $ref: '#/components/responses/429TooManyRequests'
+  /search/multi:
+    get:
+      summary: Multi
+      description: Use multi search when you want to search for movies, TV shows and people in a single request.
+      operationId: SearchMulti
+      tags:
+        - Search
+      parameters:
+        - $ref: '#/components/parameters/Query'
+        - $ref: '#/components/parameters/IncludeAdult'
+        - $ref: '#/components/parameters/LanguageParam'
+        - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiListPage'
+              example:
+                page: 1
+                results:
+                  - adult: false
+                    backdrop_path: /aDYSnJAK0BTVeE8osOy22Kz3SXY.jpg
+                    id: 11
+                    title: Star Wars
+                    original_language: en
+                    original_title: Star Wars
+                    overview: Princess Leia is captured and held hostage by the evil Imperial forces in their effort to take over the galactic Empire. Venturesome Luke Skywalker and dashing captain Han Solo team together with the loveable robot duo R2-D2 and C-3PO to rescue the beautiful princess and restore peace and justice in the Empire.
+                    poster_path: /6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg
+                    media_type: movie
+                    genre_ids:
+                      - 12
+                    popularity: 78.047
+                    release_date: '1977-05-25'
+                    video: false
+                    vote_average: 8.208
+                    vote_count: 18528
+                total_pages: 11
+                total_results: 201
+        '400':
+          $ref: '#/components/responses/400InvalidPage'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '429':
+          $ref: '#/components/responses/429TooManyRequests'
   /search/person:
     get:
       summary: Person
@@ -1277,6 +1323,7 @@ components:
         propertyName: media_type
         mapping:
           movie: '#/components/schemas/MovieListItemWithMediaType'
+          person: '#/components/schemas/PersonListItemWithMediaType'
           tv: '#/components/schemas/TvListItemWithMediaType'
       required:
         - media_type
@@ -1346,7 +1393,7 @@ components:
         - $ref: '#/components/schemas/MediaType'
         - $ref: '#/components/schemas/TvListItem'
     PersonListItem:
-      description: A result page used for a list of TV shows.
+      description: A basic person item for list representation.
       allOf:
         - $ref: '#/components/schemas/BaseObject'
         - type: object
@@ -1371,8 +1418,28 @@ components:
                 oneOf:
                   - $ref: '#/components/schemas/MovieListItemWithMediaType'
                   - $ref: '#/components/schemas/TvListItemWithMediaType'
+    PersonListItemWithMediaType:
+      description: A person item with media type as discriminator for list representation.
+      allOf:
+        - $ref: '#/components/schemas/MediaType'
+        - $ref: '#/components/schemas/PersonListItem'
+    MultiListPage:
+      description: A result page used for a list of movies, people or TV shows.
+      allOf:
+        - $ref: '#/components/schemas/ResultPage'
+        - type: object
+          required:
+            - results
+          properties:
+            results:
+              type: array
+              items:
+                oneOf:
+                  - $ref: '#/components/schemas/MovieListItemWithMediaType'
+                  - $ref: '#/components/schemas/PersonListItemWithMediaType'
+                  - $ref: '#/components/schemas/TvListItemWithMediaType'
     PersonListPage:
-      description: A result page used for a list of TV shows.
+      description: A result page used for a list of people.
       allOf:
         - $ref: '#/components/schemas/ResultPage'
         - type: object
@@ -1498,14 +1565,6 @@ components:
         format: int32
         minimum: 1000
         maximum: 9999
-    CollectionID:
-      in: path
-      name: collection_id
-      description: The collection ID.
-      schema:
-        type: integer
-        format: int32
-      required: true
   securitySchemes:
     bearerAuth:
       type: http
