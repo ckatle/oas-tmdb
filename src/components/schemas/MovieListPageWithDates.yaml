@@ -1,4 +1,6 @@
 ---
+description: A result page with min and max dates used for a list of movies that are currently in theatres or upcoming
+  movies.
 allOf:
   - type: object
     properties:

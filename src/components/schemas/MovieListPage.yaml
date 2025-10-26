@@ -1,5 +1,5 @@
 ---
-description: A result page for a search for movies.
+description: A result page used for a list of movies ordered by popularity or rating.
 allOf:
   - $ref: "./ResultPage.yaml"
   - type: object

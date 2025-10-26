@@ -1,0 +1,26 @@
+---
+description: A result page used for a list of TV shows.
+allOf:
+  - $ref: "./BaseObject.yaml"
+  - type: object
+    properties:
+      original_name:
+        type: string
+      adult:
+        type: boolean
+      gender:
+        type: integer
+        format: int32
+      known_for_department:
+        type: string
+      popularity:
+        type: number
+        format: float
+      profile_path:
+        type: string
+      known_for:
+        type: array
+        items:
+          oneOf:
+            - $ref: "./MovieListItemWithMediaType.yaml"
+            - $ref: "./TvListItemWithMediaType.yaml"

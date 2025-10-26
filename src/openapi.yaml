@@ -4,7 +4,7 @@ openapi: 3.1.0
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.32.23
+  version: 0.32.24
 
 servers:
   - url: https://api.themoviedb.org/3
@@ -16,6 +16,8 @@ security:
   - bearerAuth: []
 
 tags:
+  - name: Collections
+    description: Collection details.
   - name: Companies
     description: Company details.
   - name: Configuration
@@ -31,9 +33,12 @@ tags:
   - name: Networks
     description: TV network details.
   - name: Search
-    description: Search for collection, companies, keywords, movies or TV shows.
+    description: Search for collection, companies, keywords, movies, people or TV shows.
 
 paths:
+  # /collection/{collection_id}:
+  # $ref: "./paths/CollectionDetails.yaml"
+
   /company/{company_id}:
     $ref: "./paths/CompanyDetails.yaml"
 
@@ -85,6 +90,8 @@ paths:
     $ref: "./paths/SearchKeyword.yaml"
   /search/movie:
     $ref: "./paths/SearchMovie.yaml"
+  /search/person:
+    $ref: "./paths/SearchPerson.yaml"
   /search/tv:
     $ref: "./paths/SearchTV.yaml"
 

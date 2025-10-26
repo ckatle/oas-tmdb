@@ -1,0 +1,5 @@
+---
+description: A basic TV item with media type as discriminator for list representation.
+allOf:
+  - $ref: "./MediaType.yaml"
+  - $ref: "./TvListItem.yaml"

@@ -71,11 +71,20 @@ MovieListItem:
 MovieListPage:
   $ref: "./MovieListPage.yaml"
 
+MovieListPageWithDates:
+  $ref: "./MovieListPageWithDates.yaml"
+
 Organization:
   $ref: "./Organization.yaml"
 
 OrganizationBase:
   $ref: "./OrganizationBase.yaml"
+
+PersonListItem:
+  $ref: "./PersonListItem.yaml"
+
+PersonListPage:
+  $ref: "./PersonListPage.yaml"
 
 ResultPage:
   $ref: "./ResultPage.yaml"

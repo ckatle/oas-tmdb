@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.32.23
+  version: 0.32.24
 servers:
   - url: https://api.themoviedb.org/3
     description: Main (production) server
@@ -26,7 +26,7 @@ tags:
   - name: Networks
     description: TV network details.
   - name: Search
-    description: Search for collection, companies, keywords, movies or TV shows.
+    description: Search for collection, companies, keywords, movies, people or TV shows.
 paths:
   /company/{company_id}:
     get:
@@ -747,6 +747,61 @@ paths:
           $ref: '#/components/responses/401Unauthorized'
         '429':
           $ref: '#/components/responses/429TooManyRequests'
+  /search/person:
+    get:
+      summary: Person
+      description: Search for people by their name and also known as names.
+      operationId: SearchPerson
+      tags:
+        - Search
+      parameters:
+        - $ref: '#/components/parameters/Query'
+        - $ref: '#/components/parameters/IncludeAdult'
+        - $ref: '#/components/parameters/LanguageParam'
+        - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonListPage'
+              example:
+                page: 1
+                results:
+                  - adult: false
+                    gender: 2
+                    id: 31
+                    known_for_department: Acting
+                    name: Tom Hanks
+                    original_name: Tom Hanks
+                    popularity: 84.631
+                    profile_path: /xndWFsBlClOJFRdhSt4NBwiPq2o.jpg
+                    known_for:
+                      - adult: false
+                        backdrop_path: /3h1JZGDhZ8nzxdgvkxha0qBqi05.jpg
+                        id: 13
+                        title: Forrest Gump
+                        original_language: en
+                        original_title: Forrest Gump
+                        overview: A man with a low IQ has accomplished great things in his life and been present during significant historic events—in each case, far exceeding what anyone imagined he could do. But despite all he has achieved, his one true love eludes him.
+                        poster_path: /arw2vcBveWOVZr6pxd9XTd1TdQa.jpg
+                        media_type: movie
+                        genre_ids:
+                          - 35
+                        popularity: 67.209
+                        release_date: '1994-06-23'
+                        video: false
+                        vote_average: 8.481
+                        vote_count: 24525
+                total_pages: 1
+                total_results: 1
+        '400':
+          $ref: '#/components/responses/400InvalidPage'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '429':
+          $ref: '#/components/responses/429TooManyRequests'
   /search/tv:
     get:
       summary: TV
@@ -1199,6 +1254,7 @@ components:
           required:
             - results
     BaseObjectListPage:
+      description: A result page for basic objects like genres or keywords.
       allOf:
         - $ref: '#/components/schemas/ResultPage'
         - type: object
@@ -1209,6 +1265,33 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/BaseObject'
+    MovieListItemWithMediaType:
+      description: A movie item with media type as discriminator for list representation.
+      allOf:
+        - $ref: '#/components/schemas/MediaType'
+        - $ref: '#/components/schemas/MovieListItem'
+    MediaType:
+      type: object
+      description: A media type
+      discriminator:
+        propertyName: media_type
+        mapping:
+          movie: '#/components/schemas/MovieListItemWithMediaType'
+          tv: '#/components/schemas/TvListItemWithMediaType'
+      required:
+        - media_type
+      properties:
+        media_type:
+          type: string
+          enum:
+            - movie
+            - person
+            - tv
+          x-enum-varnames:
+            - MediaTypeMovie
+            - MediaTypePerson
+            - MediaTypeTv
+          x-go-type-name: MediaType
     TvBase:
       description: A base TV object.
       allOf:
@@ -1257,6 +1340,49 @@ components:
               items:
                 type: integer
                 format: int32
+    TvListItemWithMediaType:
+      description: A basic TV item with media type as discriminator for list representation.
+      allOf:
+        - $ref: '#/components/schemas/MediaType'
+        - $ref: '#/components/schemas/TvListItem'
+    PersonListItem:
+      description: A result page used for a list of TV shows.
+      allOf:
+        - $ref: '#/components/schemas/BaseObject'
+        - type: object
+          properties:
+            original_name:
+              type: string
+            adult:
+              type: boolean
+            gender:
+              type: integer
+              format: int32
+            known_for_department:
+              type: string
+            popularity:
+              type: number
+              format: float
+            profile_path:
+              type: string
+            known_for:
+              type: array
+              items:
+                oneOf:
+                  - $ref: '#/components/schemas/MovieListItemWithMediaType'
+                  - $ref: '#/components/schemas/TvListItemWithMediaType'
+    PersonListPage:
+      description: A result page used for a list of TV shows.
+      allOf:
+        - $ref: '#/components/schemas/ResultPage'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/PersonListItem'
+          required:
+            - results
     TvListPage:
       description: A result page used for a list of TV shows.
       allOf:
@@ -1269,38 +1395,6 @@ components:
                 $ref: '#/components/schemas/TvListItem'
           required:
             - results
-    MediaType:
-      type: object
-      description: A media type
-      discriminator:
-        propertyName: media_type
-        mapping:
-          movie: '#/components/schemas/MovieListItemWithMediaType'
-          tv: '#/components/schemas/TvListItemWithMediaType'
-      required:
-        - media_type
-      properties:
-        media_type:
-          type: string
-          enum:
-            - movie
-            - person
-            - tv
-          x-enum-varnames:
-            - MediaTypeMovie
-            - MediaTypePerson
-            - MediaTypeTv
-          x-go-type-name: MediaType
-    MovieListItemWithMediaType:
-      description: A movie item with media type as discriminator for list representation.
-      allOf:
-        - $ref: '#/components/schemas/MediaType'
-        - $ref: '#/components/schemas/MovieListItem'
-    TvListItemWithMediaType:
-      description: A basic TV item with media type as discriminator for list representation.
-      allOf:
-        - $ref: '#/components/schemas/MediaType'
-        - $ref: '#/components/schemas/TvListItem'
   parameters:
     CompanyID:
       in: path

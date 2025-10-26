@@ -1,0 +1,20 @@
+---
+type: object
+description: A media type
+discriminator:
+  propertyName: media_type
+  mapping:
+    movie: "./MovieListItemWithMediaType.yaml"
+    # person: "./PersonListItemWithMediaType.yaml"
+    tv: "./TvListItemWithMediaType.yaml"
+required:
+  - media_type
+properties:
+  media_type:
+    type: string
+    enum: [movie, person, tv]
+    x-enum-varnames:
+      - MediaTypeMovie
+      - MediaTypePerson
+      - MediaTypeTv
+    x-go-type-name: MediaType

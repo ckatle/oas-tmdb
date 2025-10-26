@@ -1,35 +1,30 @@
 ---
 # Path
+# CollectionID:
+#  $ref: "./path/CollectionID.yaml"
 CompanyID:
   $ref: "./path/CompanyID.yaml"
-
 KeywordID:
   $ref: "./path/KeywordID.yaml"
-
 MovieID:
   $ref: "./path/MovieID.yaml"
-
 NetworkID:
   $ref: "./path/NetworkID.yaml"
 
 # Query
+FirstAirDateYear:
+  $ref: "./query/FirstAirDateYear.yaml"
 IncludeAdult:
   $ref: "./query/IncludeAdult.yaml"
-
 LanguageParam:
   $ref: "./query/LanguageParam.yaml"
-
 Page:
   $ref: "./query/Page.yaml"
-
 PrimaryReleaseYear:
   $ref: "./query/PrimaryReleaseYear.yaml"
-
 Query:
   $ref: "./query/Query.yaml"
-
 Region:
   $ref: "./query/Region.yaml"
-
 Year:
   $ref: "./query/Year.yaml"
