@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.32.26
+  version: 0.32.27
 servers:
   - url: https://api.themoviedb.org/3
     description: Main (production) server
@@ -29,6 +29,8 @@ tags:
     description: TV network details.
   - name: Search
     description: Search for collection, companies, keywords, movies, people or TV shows.
+  - name: TV Series
+    description: similar TV shows.
 paths:
   /collection/{collection_id}:
     get:
@@ -943,6 +945,35 @@ paths:
           $ref: '#/components/responses/401Unauthorized'
         '429':
           $ref: '#/components/responses/429TooManyRequests'
+  /tv/{series_id}/similar:
+    get:
+      summary: Similar
+      description: Get the similar TV shows.
+      operationId: TvSeriesSimilar
+      tags:
+        - TV Series
+      parameters:
+        - $ref: '#/components/parameters/SeriesID'
+        - $ref: '#/components/parameters/LanguageParam'
+        - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TvListPage'
+              examples:
+                TvListPageExample:
+                  $ref: '#/components/examples/TvListPageExample'
+        '400':
+          $ref: '#/components/responses/400InvalidPage'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '429':
+          $ref: '#/components/responses/429TooManyRequests'
 components:
   schemas:
     BaseObject:
@@ -1654,6 +1685,14 @@ components:
         format: int32
         minimum: 1000
         maximum: 9999
+    SeriesID:
+      in: path
+      name: series_id
+      description: The TV show ID.
+      required: true
+      schema:
+        type: integer
+        format: int32
   securitySchemes:
     bearerAuth:
       type: http

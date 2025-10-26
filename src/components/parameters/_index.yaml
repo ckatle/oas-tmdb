@@ -1,7 +1,7 @@
 ---
 # Path
-# CollectionID:
-#  $ref: "./path/CollectionID.yaml"
+CollectionID:
+  $ref: "./path/CollectionID.yaml"
 CompanyID:
   $ref: "./path/CompanyID.yaml"
 KeywordID:
@@ -10,6 +10,8 @@ MovieID:
   $ref: "./path/MovieID.yaml"
 NetworkID:
   $ref: "./path/NetworkID.yaml"
+SeriesID:
+  $ref: "./path/SeriesID.yaml"
 
 # Query
 FirstAirDateYear:

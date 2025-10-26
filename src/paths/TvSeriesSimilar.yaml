@@ -1,0 +1,29 @@
+---
+get:
+  summary: Similar
+  description: Get the similar TV shows.
+  operationId: TvSeriesSimilar
+  tags:
+    - TV Series
+  parameters:
+    - $ref: "../components/parameters/path/SeriesID.yaml"
+    - $ref: "../components/parameters/query/LanguageParam.yaml"
+    - $ref: "../components/parameters/query/Page.yaml"
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/TvListPage.yaml"
+          examples:
+            TvListPageExample:
+              $ref: "../components/examples/TvListPageExample.yaml"
+    '400':
+      $ref: "../components/responses/400InvalidPage.yaml"
+    '401':
+      $ref: "../components/responses/401Unauthorized.yaml"
+    '404':
+      $ref: "../components/responses/404NotFound.yaml"
+    '429':
+      $ref: "../components/responses/429TooManyRequests.yaml"

@@ -1,0 +1,8 @@
+---
+in: path
+name: series_id
+description: The TV show ID.
+required: true
+schema:
+  type: integer
+  format: int32
