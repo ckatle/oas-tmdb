@@ -17,7 +17,7 @@ value:
         wrongs."
       popularity: 59.0192
       poster_path: "/xinqAmYrZ1TEwowcQhgTkZVtVE0.jpg"
-      release_date: "1963-11-23"
+      first_air_date: "1963-11-23"
       name: "Doctor Who"
       vote_average: 7.9
       vote_count: 672
@@ -32,7 +32,7 @@ value:
         very good at it."
       popularity: 69.7645
       poster_path: "/w8enSKCf6Zm0topeQ2XPccDqsqp.jpg"
-      release_date: "2005-03-26"
+      first_air_date: "2005-03-26"
       name: "Doctor Who"
       vote_average: 7.6
       vote_count: 3220

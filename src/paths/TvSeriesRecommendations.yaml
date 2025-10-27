@@ -1,0 +1,64 @@
+---
+get:
+  summary: Recommendations
+  operationId: TvSeriesRecommendations
+  tags:
+    - TV Series
+  parameters:
+    - $ref: "../components/parameters/path/SeriesID.yaml"
+    - $ref: "../components/parameters/query/LanguageParam.yaml"
+    - $ref: "../components/parameters/query/Page.yaml"
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/MultiListPage.yaml"
+          example:
+            page: 1
+            results:
+              - adult: false
+                backdrop_path: "/8VWgyQjExeMgeg6Qzv6agduMU1A.jpg"
+                genre_ids: [18, 10759, 10765]
+                id: 121
+                original_language: en
+                original_name: "Doctor Who"
+                overview: "The adventures of The Doctor, a time-traveling humanoid alien known as a Time Lord. He
+                  explores the universe in his TARDIS, a sentient time-traveling spaceship. Its exterior appears as a
+                  blue British police box, which was a common sight in Britain in 1963 when the series first aired.
+                  Along with a succession of companions, The Doctor faces a variety of foes while working to save
+                  civilizations, help ordinary people, and right many wrongs."
+                popularity: 59.0192
+                poster_path: "/xinqAmYrZ1TEwowcQhgTkZVtVE0.jpg"
+                media_type: tv
+                first_air_date: "1963-11-23"
+                name: "Doctor Who"
+                vote_average: 7.9
+                vote_count: 672
+              - adult: false
+                backdrop_path: "/vcFW09U4834DyFOeRZpsx9x1D3S.jpg"
+                genre_ids: [18, 10759, 10765]
+                id: 57243
+                original_language: en
+                original_name: "Doctor Who"
+                overview: "The Doctor is a Time Lord: a 900 year old alien with 2 hearts, part of a gifted civilization
+                  who mastered time travel. The Doctor saves planets for a living—more of a hobby actually, and the
+                  Doctor's very, very good at it."
+                popularity: 69.7645
+                poster_path: "/w8enSKCf6Zm0topeQ2XPccDqsqp.jpg"
+                media_type: tv
+                first_air_date: "2005-03-26"
+                name: "Doctor Who"
+                vote_average: 7.6
+                vote_count: 3220
+            total_pages: 2
+            total_results: 33
+    '400':
+      $ref: "../components/responses/400InvalidPage.yaml"
+    '401':
+      $ref: "../components/responses/401Unauthorized.yaml"
+    '404':
+      $ref: "../components/responses/404NotFound.yaml"
+    '429':
+      $ref: "../components/responses/429TooManyRequests.yaml"
