@@ -39,10 +39,16 @@ Error:
   $ref: "./Error.yaml"
 GenreList:
   $ref: "./GenreList.yaml"
+Image:
+  $ref: "./Image.yaml"
+ImageBase:
+  $ref: "./ImageBase.yaml"
 KeywordsWithID:
   $ref: "./KeywordsWithID.yaml"
 Language:
   $ref: "./Language.yaml"
+LanguageTag:
+  $ref: "./LanguageTag.yaml"
 MovieBase:
   $ref: "./MovieBase.yaml"
 MovieListItem:
@@ -57,6 +63,8 @@ Organization:
   $ref: "./Organization.yaml"
 OrganizationBase:
   $ref: "./OrganizationBase.yaml"
+OrganizationLogo:
+  $ref: "./OrganizationLogo.yaml"
 PersonListItem:
   $ref: "./PersonListItem.yaml"
 PersonListPage:
@@ -65,9 +73,17 @@ ResultPage:
   $ref: "./ResultPage.yaml"
 TvBase:
   $ref: "./TvBase.yaml"
+TvEpisodeBase:
+  $ref: "./TvEpisodeBase.yaml"
 TvListItem:
   $ref: "./TvListItem.yaml"
 TvListItemWithMediaType:
   $ref: "./TvListItemWithMediaType.yaml"
 TvListPage:
   $ref: "./TvListPage.yaml"
+TvSeasonBase:
+  $ref: "./TvSeasonBase.yaml"
+TvSeries:
+  $ref: "./TvSeries.yaml"
+TvSeriesEpisode:
+  $ref: "./TvSeriesEpisode.yaml"

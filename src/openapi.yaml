@@ -4,7 +4,7 @@ openapi: 3.1.0
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.32.31
+  version: 0.32.32
 
 servers:
   - url: https://api.themoviedb.org/3
@@ -19,7 +19,7 @@ tags:
   - name: Collections
     description: Collection details.
   - name: Companies
-    description: Company details.
+    description: Company details and images.
   - name: Configuration
     description: The configuration methods are useful to get the static lists of data we use throughout the database.
   - name: Genres
@@ -35,7 +35,7 @@ tags:
   - name: Search
     description: Search for collection, companies, keywords, movies, people or TV shows.
   - name: TV Series
-    description: similar TV shows.
+    description: TV series details, credits, recommendations or similar TV shows.
 
 paths:
   /collection/{collection_id}:
@@ -43,6 +43,8 @@ paths:
 
   /company/{company_id}:
     $ref: "./paths/CompanyDetails.yaml"
+  /company/{company_id}/images:
+    $ref: "./paths/CompanyImages.yaml"
 
   /configuration/countries:
     $ref: "./paths/ConfigurationCountries.yaml"

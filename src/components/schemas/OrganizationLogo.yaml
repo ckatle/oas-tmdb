@@ -1,0 +1,9 @@
+---
+allOf:
+  - $ref: "./ImageBase.yaml"
+  - type: object
+    properties:
+      id:
+        type: string
+      file_type:
+        type: string
