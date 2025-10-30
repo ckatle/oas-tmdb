@@ -1,6 +1,12 @@
 ---
 get:
   summary: Credits
+  description: |
+    Get the latest season credits of a TV show.
+
+    > ### **Note**
+    > This is the original TV credits method which returns the **latest season credit data**. If you would like to
+    > request the aggregate view (which is what you see on our website) you should use the /aggregate_credits method.
   operationId: TvSeriesCredits
   tags:
     - TV Series

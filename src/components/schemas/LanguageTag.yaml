@@ -1,0 +1,6 @@
+---
+type: string
+description: ISO 639-1 tag
+minLength: 2
+maxLength: 2
+pattern: "^[a-z]{2}$"

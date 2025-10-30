@@ -4,7 +4,7 @@ openapi: 3.1.0
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.32.30
+  version: 0.32.31
 
 servers:
   - url: https://api.themoviedb.org/3
@@ -101,6 +101,8 @@ paths:
   /search/tv:
     $ref: "./paths/SearchTV.yaml"
 
+  /tv/{series_id}:
+    $ref: "./paths/TvSeriesDetails.yaml"
   /tv/{series_id}/credits:
     $ref: "./paths/TvSeriesCredits.yaml"
   /tv/{series_id}/recommendations:

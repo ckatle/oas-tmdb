@@ -1,6 +1,7 @@
 ---
 get:
-  summary: Get collection details by ID.
+  summary: Details
+  description: Get collection details by ID.
   operationId: CollectionDetails
   tags:
     - Collections

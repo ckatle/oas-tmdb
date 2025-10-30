@@ -1,0 +1,8 @@
+---
+allOf:
+  - $ref: "./TvSeasonBase.yaml"
+  - type: object
+    properties:
+      episode_count:
+        type: integer
+        format: int32

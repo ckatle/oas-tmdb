@@ -1,0 +1,10 @@
+---
+allOf:
+  - $ref: "./TvEpisodeBase.yaml"
+  - type: object
+    properties:
+      episode_type:
+        type: string
+      show_id:
+        type: integer
+        format: int32

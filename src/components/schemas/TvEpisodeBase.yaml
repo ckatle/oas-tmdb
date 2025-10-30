@@ -1,0 +1,29 @@
+---
+allOf:
+  - $ref: "./BaseObject.yaml"
+  - type: object
+    properties:
+      air_date:
+        type: string
+        format: date
+      episode_number:
+        type: integer
+        format: int32
+      overview:
+        type: string
+      production_code:
+        type: string
+      runtime:
+        type: integer
+        format: int32
+      season_number:
+        type: integer
+        format: int32
+      still_path:
+        type: string
+      vote_average:
+        type: number
+        format: float
+      vote_count:
+        type: integer
+        format: int32

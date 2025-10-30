@@ -9,7 +9,7 @@ allOf:
       results:
         type: array
         items:
-          oneOf:
+          anyOf:
             - $ref: "./MovieListItemWithMediaType.yaml"
             - $ref: "./PersonListItemWithMediaType.yaml"
             - $ref: "./TvListItemWithMediaType.yaml"

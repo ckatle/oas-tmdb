@@ -13,7 +13,7 @@ properties:
   title:
     type: string
   original_language:
-    type: string
+    $ref: "./LanguageTag.yaml"
   original_title:
     type: string
   adult:
