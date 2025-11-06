@@ -16,14 +16,7 @@ get:
     - $ref: "../components/parameters/query/Region.yaml"
   responses:
     '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            $ref: "../components/schemas/MovieListPage.yaml"
-          examples:
-            MovieListPageExample:
-              $ref: "../components/examples/MovieListPageExample.yaml"
+      $ref: "../components/responses/MovieListPage.yaml"
     '400':
       $ref: "../components/responses/400InvalidPage.yaml"
     '401':

@@ -14,7 +14,7 @@ get:
             type: array
             items:
               type: string
-            example: ["en-GB", "en-US", "eo-EO"]
+          example: ["en-GB", "en-US", "eo-EO"]
     "401":
       $ref: "../components/responses/401Unauthorized.yaml"
     "429":

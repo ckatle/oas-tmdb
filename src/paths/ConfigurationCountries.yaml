@@ -16,13 +16,13 @@ get:
             type: array
             items:
               $ref: "../components/schemas/Country.yaml"
-            example:
-              - iso_3166_1: "GB"
-                english_name: "United Kingdom"
-                native_name: "United Kingdom"
-              - iso_3166_1: "US"
-                english_name: "United States of America"
-                native_name: "United States"
+          example:
+            - iso_3166_1: "GB"
+              english_name: "United Kingdom"
+              native_name: "United Kingdom"
+            - iso_3166_1: "US"
+              english_name: "United States of America"
+              native_name: "United States"
     "401":
       $ref: "../components/responses/401Unauthorized.yaml"
     "429":

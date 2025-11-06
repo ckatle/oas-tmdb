@@ -1,4 +1,5 @@
 ---
+description: Basic information of a TV season.
 allOf:
   - $ref: "./BaseObject.yaml"
   - type: object

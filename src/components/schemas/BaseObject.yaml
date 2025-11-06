@@ -9,7 +9,8 @@ properties:
     type: integer
     format: int32
     description: The identifier of the item.
-    example: 12
   name:
     type: string
-    example: Adventure
+example:
+  id: 12
+  name: Adventure

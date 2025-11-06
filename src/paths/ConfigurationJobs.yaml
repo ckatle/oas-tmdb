@@ -14,11 +14,11 @@ get:
             type: array
             items:
               $ref: "../components/schemas/Department.yaml"
-            example:
-              - department: "Actors"
-                jobs: ["Actor", "Cameo", "Special Guest", "Voice"]
-              - department: "Directing"
-                jobs: ["Director", "Other"]
+          example:
+            - department: "Actors"
+              jobs: ["Actor", "Cameo", "Special Guest", "Voice"]
+            - department: "Directing"
+              jobs: ["Director", "Other"]
     "401":
       $ref: "../components/responses/401Unauthorized.yaml"
     "429":

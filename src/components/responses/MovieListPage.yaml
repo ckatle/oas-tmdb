@@ -1,0 +1,9 @@
+---
+description: OK
+content:
+  application/json:
+    schema:
+      $ref: "../schemas/MovieListPage.yaml"
+    examples:
+      MovieListPageExample:
+        $ref: "../examples/MovieListPageExample.yaml"

@@ -1,4 +1,5 @@
 ---
+description: An image used by Companies and Networks.
 allOf:
   - $ref: "./ImageBase.yaml"
   - type: object

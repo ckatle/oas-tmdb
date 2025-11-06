@@ -1,5 +1,6 @@
 ---
 type: object
+description: A basic image object.
 properties:
   aspect_ratio:
     type: number

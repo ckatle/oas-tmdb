@@ -10,3 +10,6 @@
 
 429TooManyRequests:
   $ref: "./429TooManyRequests.yaml"
+
+MovieListPage:
+  $ref: "./MovieListPage.yaml"

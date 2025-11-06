@@ -12,3 +12,10 @@ properties:
     type: array
     items:
       $ref: "./BaseObject.yaml"
+example:
+  id: 671
+  keywords:
+    - id: 616
+      name: witch
+    - id: 177912
+      name: wizard

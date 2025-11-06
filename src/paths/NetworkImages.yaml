@@ -2,7 +2,7 @@
 get:
   summary: Images
   description: |
-    Get the company logos by id.
+    Get the TV network logos by id.
 
     > ### **Note**
     > There are two image formats that are supported for companies, PNG's and SVG's.
@@ -13,11 +13,11 @@ get:
     >
     > For more information about how SVG's and PNG's can be used, take a read through
     > [this document](https://developer.themoviedb.org/docs/image-basics).
-  operationId: CompanyImages
+  operationId: NetworkImages
   tags:
-    - Companies
+    - Networks
   parameters:
-    - $ref: "../components/parameters/path/CompanyID.yaml"
+    - $ref: "../components/parameters/path/NetworkID.yaml"
   responses:
     '200':
       description: OK

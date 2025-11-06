@@ -1,4 +1,5 @@
 ---
+description: Basic information of an episode within a TV show.
 allOf:
   - $ref: "./TvEpisodeBase.yaml"
   - type: object
