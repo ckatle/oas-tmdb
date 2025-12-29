@@ -49,6 +49,8 @@ Language:
   $ref: "./Language.yaml"
 LanguageCode:
   $ref: "./LanguageCode.yaml"
+LanguageTag:
+  $ref: "./LanguageTag.yaml"
 MovieBase:
   $ref: "./MovieBase.yaml"
 MovieListItem:

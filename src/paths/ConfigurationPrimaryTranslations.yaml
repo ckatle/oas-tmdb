@@ -13,7 +13,7 @@ get:
           schema:
             type: array
             items:
-              type: string
+              $ref: "../components/schemas/LanguageTag.yaml"
           example: ["en-GB", "en-US", "eo-EO"]
     "401":
       $ref: "../components/responses/401Unauthorized.yaml"

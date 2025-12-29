@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.33.1
+  version: 0.33.2
 servers:
   - url: https://api.themoviedb.org/3
     description: Main (production) server
@@ -262,7 +262,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: string
+                  $ref: '#/components/schemas/LanguageTag'
               example:
                 - en-GB
                 - en-US
@@ -1538,6 +1538,15 @@ paths:
           $ref: '#/components/responses/429TooManyRequests'
 components:
   schemas:
+    LanguageTag:
+      type: string
+      description: |
+        [IETF BCP 47 language tag](https://en.wikipedia.org/wiki/IETF_language_tag)
+      minLength: 2
+      maxLength: 5
+      pattern: ^([a-z]{2})(-([A-Z]{2}))?$
+      default: en-US
+      example: en-GB
     BaseObject:
       type: object
       description: The most generic type of item.
@@ -2448,12 +2457,7 @@ components:
       name: language
       description: '`ISO-639-1`-`ISO-3166-1` code'
       schema:
-        type: string
-        minLength: 2
-        maxLength: 5
-        pattern: ^([a-z]{2})(-([A-Z]{2}))?$
-        default: en-US
-        example: eo
+        $ref: '#/components/schemas/LanguageTag'
     CompanyID:
       in: path
       name: company_id
@@ -2484,10 +2488,7 @@ components:
       in: query
       name: region
       schema:
-        type: string
-        minLength: 2
-        maxLength: 2
-        pattern: ^([A-Z]{2})$
+        $ref: '#/components/schemas/CountryCode'
       description: '`ISO-3166-1` code'
     MovieID:
       in: path

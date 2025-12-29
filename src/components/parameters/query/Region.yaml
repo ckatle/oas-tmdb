@@ -2,8 +2,5 @@
 in: query
 name: region
 schema:
-  type: string
-  minLength: 2
-  maxLength: 2
-  pattern: "^([A-Z]{2})$"
+  $ref: "../../schemas/CountryCode.yaml"
 description: "`ISO-3166-1` code"

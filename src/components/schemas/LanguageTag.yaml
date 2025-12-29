@@ -1,0 +1,9 @@
+---
+type: string
+description: >
+  [IETF BCP 47 language tag](https://en.wikipedia.org/wiki/IETF_language_tag)
+minLength: 2
+maxLength: 5
+pattern: "^([a-z]{2})(-([A-Z]{2}))?$"
+default: en-US
+example: en-GB
