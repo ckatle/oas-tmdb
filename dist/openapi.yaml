@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.33.0
+  version: 0.33.1
 servers:
   - url: https://api.themoviedb.org/3
     description: Main (production) server
@@ -1608,13 +1608,14 @@ components:
       maxLength: 2
       pattern: ^[A-Z]{2}$
       example: GB
-    LanguageTag:
+    LanguageCode:
       type: string
-      description: ISO 639-1 tag
+      description: |
+        [ISO 639-1 Alpha-2 code](https://en.wikipedia.org/wiki/ISO_639-1)
       minLength: 2
       maxLength: 2
       pattern: ^[a-z]{2}$
-      example: eo
+      example: en
     TvBase:
       description: A base TV object.
       allOf:
@@ -1636,7 +1637,7 @@ components:
               items:
                 $ref: '#/components/schemas/CountryCode'
             original_language:
-              $ref: '#/components/schemas/LanguageTag'
+              $ref: '#/components/schemas/LanguageCode'
             original_name:
               type: string
             overview:
@@ -1714,7 +1715,7 @@ components:
         title:
           type: string
         original_language:
-          $ref: '#/components/schemas/LanguageTag'
+          $ref: '#/components/schemas/LanguageCode'
         original_title:
           type: string
         adult:
@@ -1931,7 +1932,7 @@ components:
         - english_name
       properties:
         iso_639_1:
-          $ref: '#/components/schemas/LanguageTag'
+          $ref: '#/components/schemas/LanguageCode'
         english_name:
           type: string
           description: English name of the language
@@ -2382,7 +2383,7 @@ components:
             languages:
               type: array
               items:
-                $ref: '#/components/schemas/LanguageTag'
+                $ref: '#/components/schemas/LanguageCode'
             last_air_date:
               type: string
               format: date

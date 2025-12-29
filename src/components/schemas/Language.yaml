@@ -7,7 +7,7 @@ required:
   - english_name
 properties:
   iso_639_1:
-    $ref: "./LanguageTag.yaml"
+    $ref: "./LanguageCode.yaml"
   english_name:
     type: string
     description: English name of the language

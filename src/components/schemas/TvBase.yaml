@@ -19,7 +19,7 @@ allOf:
         items:
           $ref: "./CountryCode.yaml"
       original_language:
-        $ref: "./LanguageTag.yaml"
+        $ref: "./LanguageCode.yaml"
       original_name:
         type: string
       overview:

@@ -47,8 +47,8 @@ KeywordsWithID:
   $ref: "./KeywordsWithID.yaml"
 Language:
   $ref: "./Language.yaml"
-LanguageTag:
-  $ref: "./LanguageTag.yaml"
+LanguageCode:
+  $ref: "./LanguageCode.yaml"
 MovieBase:
   $ref: "./MovieBase.yaml"
 MovieListItem:

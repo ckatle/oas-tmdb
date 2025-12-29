@@ -24,7 +24,7 @@ allOf:
       languages:
         type: array
         items:
-          $ref: "./LanguageTag.yaml"
+          $ref: "./LanguageCode.yaml"
       last_air_date:
         type: string
         format: date
