@@ -30,5 +30,5 @@ Query:
   $ref: "./query/Query.yaml"
 Region:
   $ref: "./query/Region.yaml"
-Year:
-  $ref: "./query/Year.yaml"
+YearParam:
+  $ref: "./query/YearParam.yaml"

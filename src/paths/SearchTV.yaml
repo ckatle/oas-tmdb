@@ -11,7 +11,7 @@ get:
     - $ref: "../components/parameters/query/IncludeAdult.yaml"
     - $ref: "../components/parameters/query/LanguageParam.yaml"
     - $ref: "../components/parameters/query/Page.yaml"
-    - $ref: "../components/parameters/query/Year.yaml"
+    - $ref: "../components/parameters/query/YearParam.yaml"
   responses:
     '200':
       description: OK

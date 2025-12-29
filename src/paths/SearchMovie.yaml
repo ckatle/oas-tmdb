@@ -12,7 +12,7 @@ get:
     - $ref: "../components/parameters/query/PrimaryReleaseYear.yaml"
     - $ref: "../components/parameters/query/Page.yaml"
     - $ref: "../components/parameters/query/Region.yaml"
-    - $ref: "../components/parameters/query/Year.yaml"
+    - $ref: "../components/parameters/query/YearParam.yaml"
   responses:
     '200':
       $ref: "../components/responses/MovieListPage.yaml"

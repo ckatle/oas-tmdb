@@ -3,7 +3,4 @@ in: query
 name: year
 description: Search for all release dates or air dates.
 schema:
-  type: integer
-  format: int32
-  minimum: 1000
-  maximum: 9999
+  $ref: "../../schemas/Year.yaml"

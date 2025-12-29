@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.33.2
+  version: 0.33.3
 servers:
   - url: https://api.themoviedb.org/3
     description: Main (production) server
@@ -1116,7 +1116,7 @@ paths:
         - $ref: '#/components/parameters/PrimaryReleaseYear'
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Region'
-        - $ref: '#/components/parameters/Year'
+        - $ref: '#/components/parameters/YearParam'
       responses:
         '200':
           $ref: '#/components/responses/MovieListPage'
@@ -1240,7 +1240,7 @@ paths:
         - $ref: '#/components/parameters/IncludeAdult'
         - $ref: '#/components/parameters/LanguageParam'
         - $ref: '#/components/parameters/Page'
-        - $ref: '#/components/parameters/Year'
+        - $ref: '#/components/parameters/YearParam'
       responses:
         '200':
           description: OK
@@ -2273,6 +2273,11 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/BaseObject'
+    Year:
+      type: integer
+      format: int32
+      minimum: 1000
+      maximum: 9999
     PersonListPage:
       description: A result page used for a list of people.
       allOf:
@@ -2553,28 +2558,19 @@ components:
       name: primary_release_year
       description: Search only the primary release year.
       schema:
-        type: integer
-        format: int32
-        minimum: 1000
-        maximum: 9999
-    Year:
+        $ref: '#/components/schemas/Year'
+    YearParam:
       in: query
       name: year
       description: Search for all release dates or air dates.
       schema:
-        type: integer
-        format: int32
-        minimum: 1000
-        maximum: 9999
+        $ref: '#/components/schemas/Year'
     FirstAirDateYear:
       in: query
       name: first_air_date_year
       description: 'Search only the first air date. Valid values are: 1000..9999'
       schema:
-        type: integer
-        format: int32
-        minimum: 1000
-        maximum: 9999
+        $ref: '#/components/schemas/Year'
     SeriesID:
       in: path
       name: series_id

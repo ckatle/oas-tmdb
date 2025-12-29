@@ -89,3 +89,5 @@ TvSeries:
   $ref: "./TvSeries.yaml"
 TvSeriesEpisode:
   $ref: "./TvSeriesEpisode.yaml"
+Year:
+  $ref: "./Year.yaml"
