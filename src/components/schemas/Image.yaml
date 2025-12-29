@@ -1,0 +1,10 @@
+---
+description: An image object with country and language codes.
+allOf:
+  - $ref: "./ImageBase.yaml"
+  - type: object
+    properties:
+      iso_3166_1:
+        $ref: "./CountryCode.yaml"
+      iso_639_1:
+        $ref: "./LanguageCode.yaml"

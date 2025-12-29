@@ -1,0 +1,43 @@
+---
+get:
+  summary: Images
+  description: |
+    Get the images that belong to a collection.
+
+    This method will return the backdrops and posters that have been added to a collection.
+
+    > ### **Note**
+    > If you have a `language` specified, it will act as a filter on the returned items.
+    > You can use the `include_image_language` param to query additional languages.
+  operationId: CollectionImages
+  tags:
+    - Collections
+  parameters:
+    - $ref: "../components/parameters/path/CollectionID.yaml"
+    - $ref: "../components/parameters/query/IncludeImageLanguage.yaml"
+    - $ref: "../components/parameters/query/LanguageParam.yaml"
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+              backdrops:
+                type: array
+                items:
+                  $ref: "../components/schemas/Image.yaml"
+              posters:
+                type: array
+                items:
+                  $ref: "../components/schemas/Image.yaml"
+    "401":
+      $ref: "../components/responses/401Unauthorized.yaml"
+    "404":
+      $ref: "../components/responses/404NotFound.yaml"
+    "429":
+      $ref: "../components/responses/429TooManyRequests.yaml"

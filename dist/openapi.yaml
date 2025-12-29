@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.33.3
+  version: 0.34.0
 servers:
   - url: https://api.themoviedb.org/3
     description: Main (production) server
@@ -90,6 +90,49 @@ paths:
                     video: false
                     vote_average: 7.7
                     vote_count: 21775
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '429':
+          $ref: '#/components/responses/429TooManyRequests'
+  /collection/{collection_id}/images:
+    get:
+      summary: Images
+      description: |
+        Get the images that belong to a collection.
+
+        This method will return the backdrops and posters that have been added to a collection.
+
+        > ### **Note**
+        > If you have a `language` specified, it will act as a filter on the returned items.
+        > You can use the `include_image_language` param to query additional languages.
+      operationId: CollectionImages
+      tags:
+        - Collections
+      parameters:
+        - $ref: '#/components/parameters/CollectionID'
+        - $ref: '#/components/parameters/IncludeImageLanguage'
+        - $ref: '#/components/parameters/LanguageParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                  backdrops:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Image'
+                  posters:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Image'
         '401':
           $ref: '#/components/responses/401Unauthorized'
         '404':
@@ -1558,11 +1601,10 @@ components:
           type: integer
           format: int32
           description: The identifier of the item.
+          example: 12
         name:
           type: string
-      example:
-        id: 12
-        name: Adventure
+          example: Adventure
     CollectionBase:
       description: A basic movie collection model.
       allOf:
@@ -1810,6 +1852,37 @@ components:
         status_message:
           type: string
           example: Success.
+    ImageBase:
+      type: object
+      description: A basic image object.
+      properties:
+        aspect_ratio:
+          type: number
+          format: double
+        file_path:
+          type: string
+        height:
+          type: integer
+          format: int32
+        vote_average:
+          type: number
+          format: float
+        vote_count:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+    Image:
+      description: An image object with country and language codes.
+      allOf:
+        - $ref: '#/components/schemas/ImageBase'
+        - type: object
+          properties:
+            iso_3166_1:
+              $ref: '#/components/schemas/CountryCode'
+            iso_639_1:
+              $ref: '#/components/schemas/LanguageCode'
     OrganizationBase:
       description: Basic information about an organization.
       allOf:
@@ -1841,27 +1914,6 @@ components:
               type: string
             parent_company:
               type: string
-    ImageBase:
-      type: object
-      description: A basic image object.
-      properties:
-        aspect_ratio:
-          type: number
-          format: double
-        file_path:
-          type: string
-        height:
-          type: integer
-          format: int32
-        vote_average:
-          type: number
-          format: float
-        vote_count:
-          type: integer
-          format: int32
-        width:
-          type: integer
-          format: int32
     OrganizationLogo:
       description: An image used by Companies and Networks.
       allOf:
@@ -2274,6 +2326,7 @@ components:
               items:
                 $ref: '#/components/schemas/BaseObject'
     Year:
+      description: 'Valid values are: 1000..9999'
       type: integer
       format: int32
       minimum: 1000
@@ -2441,13 +2494,6 @@ components:
               $ref: '#/components/schemas/MultiListPage'
             similar:
               $ref: '#/components/schemas/TvListPage'
-    Image:
-      allOf:
-        - $ref: '#/components/schemas/ImageBase'
-        - type: object
-          properties:
-            iso_639_1:
-              type: string
   parameters:
     CollectionID:
       in: path
@@ -2463,6 +2509,12 @@ components:
       description: '`ISO-639-1`-`ISO-3166-1` code'
       schema:
         $ref: '#/components/schemas/LanguageTag'
+    IncludeImageLanguage:
+      in: query
+      name: include_image_language
+      schema:
+        type: string
+      description: 'specify a comma separated list of ISO-639-1 values to query, for example: en,null'
     CompanyID:
       in: path
       name: company_id

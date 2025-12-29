@@ -1,4 +1,5 @@
 ---
+description: "Valid values are: 1000..9999"
 type: integer
 format: int32
 minimum: 1000

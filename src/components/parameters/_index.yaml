@@ -18,6 +18,8 @@ FirstAirDateYear:
   $ref: "./query/FirstAirDateYear.yaml"
 IncludeAdult:
   $ref: "./query/IncludeAdult.yaml"
+IncludeImageLanguage:
+  $ref: "./query/IncludeImageLanguage.yaml"
 LanguageParam:
   $ref: "./query/LanguageParam.yaml"
 MovieAppendToResponse:
