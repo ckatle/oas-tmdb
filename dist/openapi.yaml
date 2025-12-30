@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.34.0
+  version: 0.35.0
 servers:
   - url: https://api.themoviedb.org/3
     description: Main (production) server
@@ -201,6 +201,95 @@ paths:
           $ref: '#/components/responses/401Unauthorized'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '429':
+          $ref: '#/components/responses/429TooManyRequests'
+  /configuration:
+    get:
+      summary: Details
+      description: Query the API configuration details.
+      operationId: ConfigurationDetails
+      tags:
+        - Configuration
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  images:
+                    type: object
+                    properties:
+                      base_url:
+                        type: string
+                        format: uri
+                        example: http://image.tmdb.org/t/p/
+                      secure_base_url:
+                        type: string
+                        format: uri
+                        example: https://image.tmdb.org/t/p/
+                      backdrop_sizes:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          - w300
+                          - w700
+                          - original
+                      logo_sizes:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          - w45
+                          - w185
+                          - original
+                      poster_sizes:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          - w92
+                          - w342
+                          - original
+                      profile_sizes:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          - w45
+                          - h632
+                          - original
+                      still_sizes:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          - w92
+                          - w185
+                          - original
+                    required:
+                      - base_url
+                      - secure_base_url
+                      - backdrop_sizes
+                      - logo_sizes
+                      - poster_sizes
+                      - profile_sizes
+                      - still_sizes
+                  change_keys:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - adult
+                      - revenue
+                      - status
+                required:
+                  - images
+                  - change_keys
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
         '429':
           $ref: '#/components/responses/429TooManyRequests'
   /configuration/countries:
