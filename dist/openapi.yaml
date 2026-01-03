@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: TMDB API
   description: The Movie Database (TMDB) API
-  version: 0.35.0
+  version: 0.36.0
 servers:
   - url: https://api.themoviedb.org/3
     description: Main (production) server
@@ -503,6 +503,32 @@ paths:
               example:
                 id: 1701
                 name: hero
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '429':
+          $ref: '#/components/responses/429TooManyRequests'
+  /keyword/{keyword_id}/movies:
+    get:
+      deprecated: true
+      summary: Movies
+      description: |
+        > ### **This method is deprecated**
+        > Use `/discover/movie` with `with_keywords` instead.
+      operationId: KeywordMovies
+      tags:
+        - Keywords
+      parameters:
+        - $ref: '#/components/parameters/KeywordID'
+        - $ref: '#/components/parameters/IncludeAdult'
+        - $ref: '#/components/parameters/LanguageParam'
+        - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          $ref: '#/components/responses/MovieListPage'
+        '400':
+          $ref: '#/components/responses/400InvalidPage'
         '401':
           $ref: '#/components/responses/401Unauthorized'
         '404':
@@ -2620,6 +2646,13 @@ components:
       schema:
         type: integer
         format: int32
+    IncludeAdult:
+      in: query
+      name: include_adult
+      schema:
+        type: boolean
+        default: false
+      description: Include adult items.
     Page:
       in: query
       name: page
@@ -2687,13 +2720,6 @@ components:
       required: true
       schema:
         type: string
-    IncludeAdult:
-      in: query
-      name: include_adult
-      schema:
-        type: boolean
-        default: false
-      description: Include adult items.
     PrimaryReleaseYear:
       in: query
       name: primary_release_year
@@ -2778,6 +2804,15 @@ components:
             success: false
             status_code: 25
             status_message: Your request count is over the allowed limit.
+    MovieListPage:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MovieListPage'
+          examples:
+            MovieListPageExample:
+              $ref: '#/components/examples/MovieListPageExample'
     400InvalidPage:
       description: Invalid page number
       content:
@@ -2788,23 +2823,11 @@ components:
             success: false
             status_code: 22
             status_message: 'Invalid page: Pages start at 1 and max at 500. They are expected to be an integer.'
-    MovieListPage:
-      description: OK
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/MovieListPage'
-          examples:
-            MovieListPageExample:
-              $ref: '#/components/examples/MovieListPageExample'
   examples:
-    MovieListPageWithDatesExample:
-      summary: A sample of a movie list page with a minimum and a maximum date.
-      description: A sample of a movie list page with a minimum and a maximum date.
+    MovieListPageExample:
+      summary: A sample of a movie list page.
+      description: A sample of a movie list page.
       value:
-        dates:
-          minimum: '2001-11-16'
-          maximum: '2002-11-13'
         page: 1
         results:
           - adult: false
@@ -2841,10 +2864,13 @@ components:
             vote_count: 21775
         total_pages: 2
         total_results: 39
-    MovieListPageExample:
-      summary: A sample of a movie list page.
-      description: A sample of a movie list page.
+    MovieListPageWithDatesExample:
+      summary: A sample of a movie list page with a minimum and a maximum date.
+      description: A sample of a movie list page with a minimum and a maximum date.
       value:
+        dates:
+          minimum: '2001-11-16'
+          maximum: '2002-11-13'
         page: 1
         results:
           - adult: false

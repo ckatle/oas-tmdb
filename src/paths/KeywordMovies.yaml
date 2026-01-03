@@ -1,0 +1,26 @@
+---
+get:
+  deprecated: true
+  summary: Movies
+  description: |
+    > ### **This method is deprecated**
+    > Use `/discover/movie` with `with_keywords` instead.
+  operationId: KeywordMovies
+  tags:
+    - Keywords
+  parameters:
+    - $ref: "../components/parameters/path/KeywordID.yaml"
+    - $ref: "../components/parameters/query/IncludeAdult.yaml"
+    - $ref: "../components/parameters/query/LanguageParam.yaml"
+    - $ref: "../components/parameters/query/Page.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MovieListPage.yaml"
+    '400':
+      $ref: "../components/responses/400InvalidPage.yaml"
+    "401":
+      $ref: "../components/responses/401Unauthorized.yaml"
+    "404":
+      $ref: "../components/responses/404NotFound.yaml"
+    "429":
+      $ref: "../components/responses/429TooManyRequests.yaml"
