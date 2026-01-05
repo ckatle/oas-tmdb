@@ -10,6 +10,7 @@ properties:
   id:
     type: integer
     format: int32
+    readOnly: true
   title:
     type: string
   original_language:

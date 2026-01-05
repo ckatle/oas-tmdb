@@ -1,0 +1,16 @@
+---
+description: With the given genres. Can be a comma (`AND`) or pipe (`OR`) separated query.
+in: query
+name: with_genres
+schema:
+  type: string
+examples:
+  oneGenre:
+    summary: Example of a single genre
+    value: "16"
+  multipleGenreWithComma:
+    summary: Example of genres 'Comedy' `AND` 'Western'
+    value: "35,37"
+  multipleGenreWithPipe:
+    summary: Example of genres 'Drama' `OR` 'Crime'
+    value: "18|80"

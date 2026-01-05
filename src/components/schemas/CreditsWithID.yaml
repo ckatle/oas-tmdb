@@ -6,4 +6,5 @@ allOf:
       id:
         type: integer
         format: int32
+        readOnly: true
   - $ref: "./Credits.yaml"

@@ -1,0 +1,7 @@
+---
+description: "`ISO-3166-1` code"
+in: query
+name: with_origin_country
+schema:
+  $ref: "../../schemas/CountryCode.yaml"
+example: "GB"

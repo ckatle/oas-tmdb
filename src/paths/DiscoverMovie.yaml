@@ -1,0 +1,43 @@
+---
+get:
+  summary: Movie
+  description: |
+    Find movies using over 30 filters and sort options.
+
+    ## Advanced Filtering
+    If you specify the region parameter, the regional release date will be used instead of the
+    primary release date. The date returned will be the first date based on your query (ie. if
+    a `with_release_type` is specified). It's important to note the order of the release types
+    that are used. Specifying `2|3` would return the limited theatrical release date as
+    opposed to `3|2` which would return the theatrical date.
+
+    ## `AND`/`OR` Logic
+    Also note that a number of filters support being comma (`,`) or pipe (`|`) separated.
+    Comma's are treated like an `AND` query while pipe's are treated like an `OR`. This allows
+    for quite complex filtering depending on your desired results.
+  operationId: DiscoverMovie
+  tags:
+    - Discover
+  parameters:
+    - $ref: "../components/parameters/query/IncludeAdult.yaml"
+    - in: query
+      name: include_video
+      schema:
+        type: boolean
+        default: false
+    - $ref: "../components/parameters/query/LanguageParam.yaml"
+    - $ref: "../components/parameters/query/Page.yaml"
+    - $ref: "../components/parameters/query/PrimaryReleaseYear.yaml"
+    - $ref: "../components/parameters/query/Region.yaml"
+    - $ref: "../components/parameters/query/MoviesSortBy.yaml"
+    - $ref: "../components/parameters/query/WithGenres.yaml"
+    - $ref: "../components/parameters/query/WithOriginCountry.yaml"
+  responses:
+    '200':
+      $ref: "../components/responses/MovieListPage.yaml"
+    "400":
+      $ref: "../components/responses/400InvalidPage.yaml"
+    "401":
+      $ref: "../components/responses/401Unauthorized.yaml"
+    "429":
+      $ref: "../components/responses/429TooManyRequests.yaml"
