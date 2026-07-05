@@ -5,4 +5,4 @@ on: push
 
 jobs:
   ci:
-    uses: ckatle/actions/.github/workflows/oas-ci.yml@master
+    uses: ckatle/actions/.github/workflows/oas-ci.yml@e0c6356617a4b5c0ab1223339521d1d6c496ac04 # master
